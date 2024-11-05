@@ -16,7 +16,7 @@
                             class="text-sm">({{ $search != '' ? $found : $total }})</span></span>
                 </div>
                 <div class="px-4">
-                    {{-- <a href="{{ route('codetype.create') }}" class="text-white text-sm sm:text-md rounded-lg py-2 px-4 bg-black hover:bg-gray-600 transition duration-1000 ease-in-out" title="Create New Type">New</a> --}}
+                    <a href="{{ route('wk_types.create') }}" class="text-white text-sm sm:text-md rounded-lg py-2 px-4 bg-black hover:bg-gray-600 transition duration-1000 ease-in-out" title="Create New Type">New</a>
                 </div>
             </div>
             <!-- Search -->
