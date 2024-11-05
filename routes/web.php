@@ -1,9 +1,13 @@
 <?php
 
-use App\Http\Controllers\Workout\WorkoutTypeController;
 use Illuminate\Support\Facades\Route;
 
+// Controllers
+use App\Http\Controllers\Workout\WorkoutTypeController;
+
 // Livewire Full Component Pages
+use App\Livewire\Workout\WorkoutMain;
+
 use App\Livewire\Workout\WorkoutTypes;
 use App\Livewire\Workout\WorkoutTypesCreate;
 use App\Livewire\Workout\WorkoutTypesEdit;
@@ -19,6 +23,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         return view('dashboard');
     })->name('dashboard');
 
+    /* WORKOUTS */
+    Route::get('/workouts', WorkoutMain::class)->name('workouts.index');
 
     /* WORKOUT TYPES */
     Route::get('/wk_types', WorkoutTypes::class)->name('wk_types.index');       
