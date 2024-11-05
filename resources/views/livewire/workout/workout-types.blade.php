@@ -16,7 +16,9 @@
                             class="text-sm">({{ $search != '' ? $found : $total }})</span></span>
                 </div>
                 <div class="px-4">
-                    <a href="{{ route('wk_types.create') }}" class="text-white text-sm sm:text-md rounded-lg py-2 px-4 bg-black hover:bg-gray-600 transition duration-1000 ease-in-out" title="Create New Type">New</a>
+                    <a href="{{ route('wk_types.create') }}"
+                        class="text-white text-sm sm:text-md rounded-lg py-2 px-4 bg-black hover:bg-gray-600 transition duration-1000 ease-in-out"
+                        title="Create New Type">New</a>
                 </div>
             </div>
             <!-- Search -->
@@ -93,29 +95,35 @@
                                                 class="text-green-600 outline-none focus:ring-0 checked:bg-green-500"
                                                 value={{ $type->id }}></td>
                                         <td class="p-2">{{ $type->id }}</td>
-                                        <td class="p-2">{{-- <a href="{{ route('codetype.show', $type) }}">{{ $type->name }}</a> --}}{{ $type->name }}</td>
+                                        <td class="p-2"><a
+                                                href="{{ route('wk_types.show', $type) }}">{{ $type->name }}</a></td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($type->created_at)) }}</td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($type->updated_at)) }}</td>
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-2">
                                                 <!-- Show -->
-                                                {{-- <a href="{{ route('codetype.show', $type) }}" title="Show">
-                                            <i class="fa-solid fa-circle-info text-blue-600 hover:text-black transition duration-1000 ease-in-out"></i>
-                                        </a> --}}
+                                                <a href="{{ route('wk_types.show', $type) }}" title="Show">
+                                                    <i
+                                                        class="fa-solid fa-circle-info text-blue-600 hover:text-black transition duration-1000 ease-in-out"></i>
+                                                </a>
                                                 <!-- Edit -->
-                                                {{-- <a href="{{ route('codetype.edit', $type) }}" title="Edit">
-                                            <i class="fa-solid fa-pen-to-square text-green-600 hover:text-black transition duration-1000 ease-in-out"></i>
-                                        </a> --}}
+                                                <a href="{{ route('wk_types.edit', $type) }}" title="Edit">
+                                                    <i
+                                                        class="fa-solid fa-pen-to-square text-green-600 hover:text-black transition duration-1000 ease-in-out"></i>
+                                                </a>
                                                 <!-- Delete -->
-                                                {{-- <form action="{{ route('codetype.destroy', $type) }}" method="POST">
-                                            <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
-                                            @csrf
-                                            <!-- Dirtective to Override the http method -->
-                                            @method('DELETE')
-                                            <button onclick="return confirm('Are you sure you want to delete the type: {{ $type->name }}?')" title="Delete">
-                                                <i class="fa-solid fa-trash text-red-600 hover:text-black transition duration-1000 ease-in-out"></i>
-                                            </button>
-                                        </form> --}}
+                                                <form action="{{ route('wk_types.destroy', $type) }}" method="POST">
+                                                    <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
+                                                    @csrf
+                                                    <!-- Dirtective to Override the http method -->
+                                                    @method('DELETE')
+                                                    <button
+                                                        onclick="return confirm('Are you sure you want to delete the type: {{ $type->name }}?')"
+                                                        title="Delete">
+                                                        <i
+                                                            class="fa-solid fa-trash text-red-600 hover:text-black transition duration-1000 ease-in-out"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
