@@ -58,8 +58,8 @@
                 <div class="flex flex-row justify-start items-center gap-2">
                     <span x-data="{ show: false }" class="relative" data-tooltip="Copy Title">
                         <button class="btn" data-clipboard-target="#title" x-on:click="show = true"
-                            x-on:mouseout="show = false">
-                            <i class="fa-solid fa-pen-to-square w-6 text-center"></i>
+                            x-on:mouseout="show = false" title="Copy Title">
+                            <i class="fa-solid fa-pen-to-square w-6 text-center text-black hover:text-blue-600 transition-all duration-500"></i>
                         </button>
                         <span x-show="show" class="absolute -top-8 -right-6">
                             <span class="bg-green-600 text-white rounded-lg p-2 opacity-100">Copied!</span>
@@ -75,8 +75,8 @@
                 <div class="flex flex-row justify-start items-center gap-2">
                     <span x-data="{ show: false }" class="relative" data-tooltip="Copy Author">
                         <button class="btn" data-clipboard-target="#author" x-on:click="show = true"
-                            x-on:mouseout="show = false">
-                            <i class="fa-solid fa-circle-user w-6 text-center"></i>
+                            x-on:mouseout="show = false" title="Copy Author name">
+                            <i class="fa-solid fa-circle-user w-6 text-center text-black hover:text-blue-600 transition-all duration-500"></i>
                         </button>
                         <span x-show="show" class="absolute -top-8 -right-6">
                             <span class="bg-green-600 text-white rounded-lg p-2 opacity-100">Copied!</span>
@@ -261,3 +261,7 @@
 </div>
 
 </div>
+
+<script>
+    new ClipboardJS('.btn');
+</script>
