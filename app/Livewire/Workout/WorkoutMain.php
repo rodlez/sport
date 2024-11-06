@@ -34,7 +34,8 @@ class WorkoutMain extends Component
     #[Url(as: 'ty', except: '')]
     public $tipo = 0;
 
-    public $durationFrom = 0;
+    public $durationFrom;
+    public $initialDurationFrom;
     public $durationTo;
     public $initialDurationTo;
 
@@ -50,6 +51,8 @@ class WorkoutMain extends Component
         $this->dateTo = date('Y-m-d', strtotime(Workout::max('created_at')));
         $this->initialDateTo = date('Y-m-d', strtotime(Workout::max('created_at')));
 
+        $this->durationFrom = Workout::min('duration');
+        $this->initialDurationFrom = Workout::min('duration');
         $this->durationTo = Workout::max('duration');
         $this->initialDurationTo = Workout::max('duration');
     } 
@@ -65,7 +68,7 @@ class WorkoutMain extends Component
         $this->dateTo = date('Y-m-d', strtotime(Workout::max('created_at')));
         $this->tipo = 0;
 
-        $this->durationFrom = 0;
+        $this->durationFrom = Workout::min('duration');
         $this->durationTo = Workout::max('duration');
     }
 
@@ -77,7 +80,7 @@ class WorkoutMain extends Component
 
     public function clearFilterDuration()
     {
-        $this->durationFrom = 0;
+        $this->durationFrom = Workout::min('duration');
         $this->durationTo = Workout::max('duration');
     }
 
@@ -148,6 +151,7 @@ class WorkoutMain extends Component
                 ->whereDate('workouts.created_at', '<=', $this->dateTo);
             }
             else {
+                 // TODO: Show error
                 //dd('errorcito');
             }
         }  
@@ -160,6 +164,9 @@ class WorkoutMain extends Component
         // interval duration filter
         if ($this->durationFrom <= $this->durationTo) {
             $entries = $entries->whereBetween('workouts.duration', [$this->durationFrom, $this->durationTo]);
+        } else {
+            // TODO: Show error            
+            //dd('error');
         }
 
         // Search

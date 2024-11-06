@@ -7,7 +7,7 @@ use App\Http\Controllers\Workout\WorkoutTypeController;
 
 // Livewire Full Component Pages
 use App\Livewire\Workout\WorkoutMain;
-
+use App\Livewire\Workout\WorkoutShow;
 use App\Livewire\Workout\WorkoutTypes;
 use App\Livewire\Workout\WorkoutTypesCreate;
 use App\Livewire\Workout\WorkoutTypesEdit;
@@ -25,6 +25,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     /* WORKOUTS */
     Route::get('/workouts', WorkoutMain::class)->name('workouts.index');
+    Route::get('/workouts/{workout}', WorkoutShow::class)->name('workouts.show');
 
     /* WORKOUT TYPES */
     Route::get('/wk_types', WorkoutTypes::class)->name('wk_types.index');       

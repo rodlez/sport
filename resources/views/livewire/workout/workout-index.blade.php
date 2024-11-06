@@ -2,7 +2,7 @@
 
     <!-- Sitemap -->
     <div class="flex flex-row justify-start items-start gap-1 text-sm py-3 px-4 text-slate-500">
-        <a href="/wk_types" class="font-bold text-black border-b-2 border-b-red-600">Workouts</a>
+        <a href="/workouts" class="font-bold text-black border-b-2 border-b-red-600">Workouts</a>
     </div>
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -10,7 +10,7 @@
         <div>
 
             <!-- Header -->
-            <div class="flex flex-row justify-between items-center py-4 bg-green-600">
+            <div class="flex flex-row justify-between items-center py-4 bg-red-600">
                 <div>
                     <span class="text-lg text-white px-4">Entries <span
                             class="text-md">({{ $search != '' ? $found : $total }})</span></span>
@@ -43,13 +43,13 @@
                 </div>
             </div>
             <!-- Filters -->
-            @if ($showFilters % 2 != 0)
+            @if ($showFilters % 2 == 0)
                 <div class="text-black bg-gray-200 rounded-lg mx-4 my-2 py-2 w-100">
                     <!-- Date -->
                     <div
                         class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
 
-                        <div class="w-full px-2 md:w-40 md:mx-auto md:text-start">
+                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
                             <span><i class="text-violet-600 fa-lg fa-solid fa-calendar-days"></i></span>
                             <span class="px-2">Date</span>
                         </div>
@@ -95,8 +95,8 @@
                     </div>
                     <!-- Type -->
                     <div
-                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
-                        <div class="w-full px-2 md:w-40 md:mx-auto md:text-start">
+                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2">
+                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
                             <span><i class="text-yellow-600 fa-lg fa-solid fa-sitemap"></i></span>
                             <span class="px-2">Type (<span
                                     class="font-semibold text-sm">{{ count($types) }}</span>)</span>
@@ -116,23 +116,59 @@
                             @endif
                         </div>
                     </div>
+
+
                     <!-- Duration -->
                     <div
-                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-start sm:items-center gap-2 px-4 py-4">
-                        <div class="text-white text-lg w-100 sm:w-1/3">
-                            <span><i class="fa-xl fa-regular fa-clock"></i></span>
-                            <span class="">Duration (<span class="font-semibold text-sm">mins</span>)</span>
+                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
+
+                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
+                            <span><i class="text-blue-600 fa-lg fa-solid fa-clock"></i></span>
+                            <span class="px-2">Duration <span class="text-xs">(mins)</span></span>
                         </div>
-                        <div class="sm:flex flex-row w-full sm:pl-2 gap-2 py-2">
-                            <div class=" w-full sm:w-1/3"><input type="number" class="rounded-lg w-full"
-                                    placeholder="From" wire:model.live="durationFrom"></div>
-                            <div class=" w-full sm:w-1/3 py-2 sm:py-0"><input type="number" class="rounded-lg w-full"
-                                    placeholder="To" wire:model.live="durationTo"></div>
+
+                        <div class="flex flex-col justify-start items-start w-full md:w-1/2 md:text-start">
+                            <div class="w-full md:w-80">
+                                <span class="text-sm font-bold px-2">From</span>
+                                <div class="flex flex-row justify-center items-center">
+                                    <input type="number" class="rounded-lg w-full" placeholder="From"
+                                    wire:model.live="durationFrom">
+                                    @if ($initialDurationFrom != $durationFrom)
+                                        <a wire:click.prevent="clearFilterDuration" title="Reset Filter"
+                                            class="cursor-pointer">
+                                            <span class="text-red-600 hover:text-red-400 px-2">
+                                                <i class="fa-solid fa-circle-xmark"></i>
+                                            </span>
+                                        </a>
+                                    @endif
+                                </div>                                
+                            </div>
+                            <div class="w-full md:w-80">
+                                <span class="text-sm font-bold px-2">To</span>
+                                <div class="flex flex-row justify-center items-center">
+                                    <input type="number" class="rounded-lg w-full" placeholder="To"
+                                        wire:model.live="durationTo">
+                                    @if ($initialDurationTo != $durationTo)
+                                        <a wire:click.prevent="clearFilterDuration" title="Reset Filter"
+                                            class="cursor-pointer">
+                                            <span class="text-red-600 hover:text-red-400 px-2">
+                                                <i class="fa-solid fa-circle-xmark"></i>
+                                            </span>
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                            <!-- Filter Error Date -->
+                            <div>
+                                @if ($durationTo < $durationFrom)
+                                    <span class="text-sm text-red-600 px-2">To must be bigger than From</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
 
                     <!-- Reset Filters -->
-                    <div class="flex flex-row md:justify-end md:w-full px-4 pb-2 pt-0">
+                    <div class="flex flex-row md:justify-end md:w-full px-4 py-2">
                         <div class="w-full md:w-1/2">
                             <button type="button"
                                 class="w-full md:w-80 bg-black text-white p-2 hover:bg-slate-700 rounded-lg"
@@ -176,7 +212,7 @@
                     $initialDateFrom != $dateFrom ||
                     $tipo > 0 ||
                     $initialDurationTo != $durationTo || 
-                    $durationFrom != 0)
+                    $initialDurationFrom != $durationFrom)
                 <div class="flex flex-row justify-between mx-4 pb-1 border-b-2 border-b-green-600">
                     <span class="text-lg text-zinc-800 px-2">Criteria</span>
                     <a wire:click.prevent="resetAll" title="Clear All">
@@ -191,7 +227,7 @@
                         @if ($search != '')
                             <div class="flex relative">
                                 <span
-                                    class="bg-green-600 opacity-75 p-2 rounded-lg">{{ $search != '' ? 'Search' : '' }}</span>
+                                    class="bg-red-600 opacity-75 p-2 rounded-lg">{{ $search != '' ? 'Search' : '' }}</span>
                                 <a wire:click.prevent="clearSearch" title="Clear" class="cursor-pointer">
                                     <span class="text-red-600 hover:text-black px-2 absolute -top-2 -right-4"><i
                                             class="fa-lg fa-solid fa-circle-xmark"></i></span>
@@ -221,10 +257,10 @@
                             </div>
                         @endif
                         <!-- Duration -->
-                        @if ($initialDurationTo != $durationTo || $durationFrom != 0)
+                        @if ($initialDurationTo != $durationTo || $initialDurationFrom != $durationFrom)
                             <div class="flex relative">
                                 <span
-                                    class="bg-blue-600 opacity-75 p-2 rounded-lg">{{ $initialDurationTo != $durationTo || $durationFrom != 0 ? 'Duration (' . $durationFrom . ' - ' . $durationTo . ')' : '' }}</span>
+                                    class="bg-blue-600 opacity-75 p-2 rounded-lg">{{ $initialDurationTo != $durationTo || $initialDurationFrom != $durationFrom ? 'Duration (' . $durationFrom . ' - ' . $durationTo . ')' : '' }}</span>
                                 <a wire:click.prevent="clearFilterDuration" title="Clear" class="cursor-pointer">
                                     <span class="text-red-600 hover:text-black px-2 absolute -top-2 -right-4"><i
                                             class="fa-lg fa-solid fa-circle-xmark"></i></span>
@@ -378,7 +414,7 @@
                                         </td>
                                         <td class="px-2">{{ $entry->author }}</td>
                                         <td class="px-2">{{ $entry->type_name }}</td>
-                                        <td class="px-2">{{ $entry->duration }}</td>
+                                        <td class="px-2 text-center">{{ $entry->duration }}</td>
                                         <td class="px-2">{{ date('d-m-Y', strtotime($entry->created)) }}</td>                                        
                                         <td class="text-sm text-black p-2">
                                             {{-- <div class="flex flex-col justify-between items-center gap-2">
@@ -392,13 +428,13 @@
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-3">
                                                 <!-- Show -->
-                                                {{-- <a href="{{ route('codeentry.show', $entry) }}">
+                                                <a href="{{ route('workouts.show', $entry) }}">
                                                     <span
                                                         class="text-blue-600 hover:text-black transition-all duration-500 tooltip">
                                                         <i class="fa-lg fa-solid fa-circle-info"></i>
                                                         <span class="tooltiptext">Open Entry</span>
                                                     </span>
-                                                </a> --}}
+                                                </a>
                                                 <!-- PDF -->
                                                 {{-- <a href="{{ route('pdf.generate', $entry) }}"
                                                     title="Download as PDF">
@@ -466,7 +502,7 @@
                 {{ $entries->links() }}
             </div>
             <!-- Footer -->
-            <div class="flex flex-row justify-end items-center py-4 px-4 bg-green-600 sm:rounded-b-lg">
+            <div class="flex flex-row justify-end items-center py-4 px-4 bg-red-600 sm:rounded-b-lg">
                 <a href="{{ route('dashboard') }}">
                     <i class="fa-lg fa-solid fa-backward-step text-white hover:text-black transition duration-1000 ease-in-out"
                         title="Go Back"></i>
