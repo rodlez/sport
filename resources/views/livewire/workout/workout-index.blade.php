@@ -43,7 +43,7 @@
                 </div>
             </div>
             <!-- Filters -->
-            @if ($showFilters % 2 == 0)
+            @if ($showFilters % 2 != 0)
                 <div class="text-black bg-gray-200 rounded-lg mx-4 my-2 py-2 w-100">
                     <!-- Date -->
                     <div

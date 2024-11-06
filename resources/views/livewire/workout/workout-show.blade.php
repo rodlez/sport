@@ -118,7 +118,12 @@
                     <i class="fa-solid fa-globe w-6 text-center"></i>
                     <span class="sm:text-lg font-bold sm:font-normal sm:w-24">URL</span>
                 </div>
-                <span class="w-full px-8 sm:px-2">{{ $workout->url }}</span>
+                <div class="flex flex-row justify-between items-center w-full gap-2">
+                    <span class="px-8 sm:px-2">{{ $workout->url }}</span>
+                    <a href="{{ $workout->url }}" target="_blank" title="Open Url">
+                        <i class="fa-solid fa-up-right-from-square px-2"></i>
+                    </a>
+                </div>
             </div>        
             <!-- Description -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
@@ -243,7 +248,7 @@
     </div>
 
     <!-- To the Top Button -->
-    <button onclick="topFunction()" id="myBtn" title="Go to top">&uarr;</button>
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa-solid fa-angle-up"></i></button>
 
     <!-- Footer -->
     <div class="py-4 flex flex-row justify-end items-center px-4 bg-red-600 sm:rounded-b-lg">
