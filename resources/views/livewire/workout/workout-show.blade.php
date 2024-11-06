@@ -2,7 +2,7 @@
     
     <!-- Sitemap -->
     <div class="flex flex-row justify-start items-start gap-1 text-sm py-3 px-4 text-slate-500">
-        <a href="/workouts" class="text-black">Workouts</a> /
+        <a href="/workouts" class="hover:text-red-600">Workouts</a> /
         <a href="/workouts/{{$workout->id}}" class="font-bold text-black border-b-2 border-b-red-600">Info</a>
     </div>
 
@@ -24,10 +24,10 @@
                             class="fa-solid fa-file-pdf text-white hover:text-orange-600 transition-all duration-500"></i>
                     </a> --}}
                     <!-- Edit -->
-                    {{-- <a href="{{ route('codeentry.edit', $entry) }}" title="Edit">
+                    <a href="{{ route('workouts.edit', $workout) }}" title="Edit">
                         <i
                             class="fa-solid fa-pencil text-white hover:text-blue-600 transition-all duration-500"></i>
-                    </a> --}}
+                    </a>
                     <!-- Delete -->
                     {{-- <form action="{{ route('codeentry.destroy', $entry) }}" method="POST">
                         <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
