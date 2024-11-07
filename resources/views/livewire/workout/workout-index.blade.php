@@ -417,13 +417,13 @@
                                         <td class="px-2 text-center">{{ $entry->duration }}</td>
                                         <td class="px-2">{{ date('d-m-Y', strtotime($entry->created)) }}</td>                                        
                                         <td class="text-sm text-black p-2">
-                                            {{-- <div class="flex flex-col justify-between items-center gap-2">
+                                            <div class="flex flex-col justify-between items-center gap-2">
                                                 @foreach ($entry->files as $file)
                                                     @include(
-                                                        'livewire.code.entry.partial-media-file',
+                                                        'partials.mediatypes-file', 
                                                         $file)
                                                 @endforeach
-                                            </div> --}}
+                                            </div>
                                         </td>
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-3">

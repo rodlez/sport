@@ -2,7 +2,7 @@
     @case('video/mp4')
         <td class="py-2">
             <a href="{{ asset('storage/' . $file->path) }}" title="Open Video" target="_blank">
-                <i class="fa-3x fa-solid fa-file-video"></i>
+                <i class="fa-2x fa-solid fa-file-video"></i>
             </a>
         </td>
     @break
