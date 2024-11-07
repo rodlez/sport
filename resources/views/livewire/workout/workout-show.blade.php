@@ -156,14 +156,14 @@
             </div>
            
             <!-- Files -->
-            {{-- <div class="flex flex-col sm:flex-row py-2 px-3 gap-1">
+            <div class="flex flex-col sm:flex-row py-2 px-3 gap-1">
                 <div class="flex flex-row justify-start items-center sm:items-start pb-2 gap-2">
                     <i class="fa-solid fa-file py-1 w-6 text-center"></i>
-                    <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Files ({{ $files->count() }})</span>
+                    <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Files ({{ $workout->files->count() }})</span>
                 </div>
                 <!-- file Table -->
                 <div class="w-full overflow-x-auto">
-                    @if ($files->count() !== 0)
+                    @if ($workout->files->count() !== 0)
                         <table class="table-auto w-full border text-sm">
                             <thead class="text-sm text-center text-white bg-black">
                                 <th></th>
@@ -174,13 +174,15 @@
                                 <th></th>
                             </thead>
 
-                            @foreach ($files as $file)
+                            @foreach ($workout->files as $file)
                                 <tr class="bg-white border-b text-center">
 
-                                    @include('code.entry.partial-media-file', $file)
+                                    @include('partials.mediatypes-file', $file)
 
                                     <td class="p-2 max-lg:hidden">
-                                        {{ shortFilename(getFileName($file->original_filename), 20) }}</td>
+                                        {{-- {{ shortFilename(getFileName($file->original_filename), 20) }} --}}
+                                    {{$file->original_filename}}
+                                    </td>
                                     <td class="p-2 max-sm:hidden">{{ $file->created_at->format('d-m-Y') }}
                                     </td>
                                     <td class="p-2 max-sm:hidden">{{ round($file->size / 1000) }} </td>
@@ -188,15 +190,15 @@
                                     <td class="p-2">
                                         <div class="flex justify-center items-center gap-2">
                                             <!-- Download file -->
-                                            <a href="{{ route('codefile.download', [$entry, $file]) }}"
+                                           {{--  <a href="{{ route('codefile.download', [$entry, $file]) }}"
                                                 title="Download File">
                                                 <span
                                                     class="text-green-600 hover:text-black transition-all duration-500">
                                                     <i class="fa-lg fa-solid fa-file-arrow-down"></i>
                                                 </span>
-                                            </a>
+                                            </a> --}}
                                             <!-- Delete file -->
-                                            <form action="{{ route('codefile.destroy', [$entry, $file]) }}"
+                                            {{-- <form action="{{ route('codefile.destroy', [$entry, $file]) }}"
                                                 method="POST">
                                                 <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                                                 @csrf
@@ -209,7 +211,7 @@
                                                         class="text-red-600 hover:text-black transition-all duration-500"><i
                                                             class="fa-lg fa-solid fa-trash"></i></span>
                                                 </button>
-                                            </form>
+                                            </form> --}}
                                         </div>
                                     </td>
 
@@ -219,14 +221,14 @@
                         </table>
                     @endif
                     <div class="py-2">
-                        @if ($files->count() >= 5)
+                        @if ($workout->files->count() >= 5)
                             <span class="text-red-400 font-semibold">Max files (5) reached. Delete some to
                                 upload a
                                 new File.</span>
                         @else
                             <!-- Upload file -->
                             <div class="flex flex-row">
-                                <a href="{{ route('codefile.index', $entry) }}"
+                                <a href="{{ route('workouts.upload', $workout) }}"
                                     class="w-full sm:w-40 p-2 rounded-md text-white text-sm text-center bg-green-600 hover:bg-green-400 transition-all duration-500">
                                     <span> Upload File</span>
                                     <span class="px-2"><i class="fa-solid fa-file-arrow-up"></i></span>
@@ -236,7 +238,7 @@
                     </div>
 
                 </div>
-            </div> --}}
+            </div>
 
             <div class="bg-black py-4 sm:rounded-b-md">
 

@@ -445,13 +445,13 @@
                                                     </span>
                                                 </a> --}}
                                                 <!-- Upload File -->
-                                                {{-- <a href="{{ route('codefile.index', $entry) }}">
+                                                <a href="{{ route('workouts.upload', $entry) }}">
                                                     <span
                                                         class="text-violet-600 hover:text-black transition-all duration-500 tooltip"><i
                                                             class="fa-lg fa-solid fa-file-arrow-up"></i>
                                                         <span class="tooltiptext">Upload File</span>
                                                     </span>
-                                                </a> --}}
+                                                </a>
                                                 <!-- Edit -->
                                                 <a href="{{ route('workouts.edit', $entry) }}"
                                                     title="Edit this entry">

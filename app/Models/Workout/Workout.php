@@ -33,13 +33,13 @@ class Workout extends Model
     /**
      * Get the Files associated.
      */
-    /* public function files()
+    public function files()
     {
         return $this->hasMany(
             WorkoutFile::class,
             foreignKey: 'workout_id'
         );
-    } */
+    }
 
 
 }

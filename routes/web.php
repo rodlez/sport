@@ -11,6 +11,7 @@ use App\Livewire\Workout\WorkoutMain;
 use App\Livewire\Workout\WorkoutCreate;
 use App\Livewire\Workout\WorkoutShow;
 use App\Livewire\Workout\WorkoutEdit;
+use App\Livewire\Workout\WorkoutFileUpload;
 use App\Livewire\Workout\WorkoutTypes;
 use App\Livewire\Workout\WorkoutTypesCreate;
 use App\Livewire\Workout\WorkoutTypesEdit;
@@ -32,6 +33,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/workouts/{workout}', WorkoutShow::class)->name('workouts.show');
     Route::delete('/workouts/{workout}', [WorkoutController::class, 'destroy'])->name('workouts.destroy');
     Route::get('/workouts/edit/{workout}', WorkoutEdit::class)->name('workouts.edit');
+
+    /* WORKOUT FILES */
+    Route::get('/workouts/{workout}/file', WorkoutFileUpload::class)->name('workouts.upload');
 
     /* WORKOUT TYPES */
     Route::get('/wk_types', WorkoutTypes::class)->name('wk_types.index');       
