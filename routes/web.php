@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 // Controllers
 use App\Http\Controllers\Workout\WorkoutTypeController;
+use App\Livewire\Workout\WorkoutCreate;
 // Livewire Full Component Pages
 use App\Livewire\Workout\WorkoutMain;
 use App\Livewire\Workout\WorkoutShow;
@@ -25,6 +26,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     /* WORKOUTS */
     Route::get('/workouts', WorkoutMain::class)->name('workouts.index');
+    Route::get('/workouts/create', WorkoutCreate::class)->name('workouts.create');
     Route::get('/workouts/{workout}', WorkoutShow::class)->name('workouts.show');
     Route::get('/workouts/edit/{workout}', WorkoutEdit::class)->name('workouts.edit');
 

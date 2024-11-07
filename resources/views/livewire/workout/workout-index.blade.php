@@ -16,9 +16,9 @@
                             class="text-md">({{ $search != '' ? $found : $total }})</span></span>
                 </div>
                 <div class="px-4">
-                    {{-- <a href="{{ route('codeentry.create') }}"
+                    <a href="{{ route('workouts.create') }}"
                         class="text-white text-sm sm:text-md rounded-lg py-2 px-4 bg-black hover:bg-slate-600 transition duration-1000 ease-in-out"
-                        title="Create New Entry">New</a> --}}
+                        title="Create New Workout">Create</a>
                 </div>
             </div>
             <!-- Filters Text-->
@@ -453,12 +453,12 @@
                                                     </span>
                                                 </a> --}}
                                                 <!-- Edit -->
-                                                {{-- <a href="{{ route('codeentry.edit', $entry) }}"
+                                                <a href="{{ route('workouts.edit', $entry) }}"
                                                     title="Edit this entry">
                                                     <span
                                                         class="text-green-600 hover:text-black transition-all duration-500"><i
                                                             class="fa-lg fa-solid fa-pen-to-square"></i></span>
-                                                </a> --}}
+                                                </a>
                                                 <!-- Delete -->
                                                 {{-- <form action="{{ route('codeentry.destroy', $entry) }}"
                                                     method="POST">
