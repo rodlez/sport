@@ -24,7 +24,7 @@
 
                 <div class="relative">
                     <input wire:model="title" name="title" id="title" type="text" value="{{ $workout->title }}"
-                        maxlength="255"
+                        maxlength="200"
                         class="w-full pl-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 focus:border-green-500">
                     <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
                         <i class="fa-solid fa-pen-to-square  bg-gray-200 p-3 rounded-l-md"></i>
@@ -41,11 +41,11 @@
                 <h2 class="text-lg font-bold pt-2 pb-1 px-2">Author <span class="text-red-600">*</span></h2>
 
                 <div class="relative">
-                    <input wire:model="author" name="author" id="author" type="text"
-                        value="{{ $workout->author }}" maxlength="255"
+                    <input wire:model="author" name="author" id="author" type="text" value="{{ $workout->author }}"
+                        maxlength="200"
                         class="w-full pl-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 focus:border-green-500">
                     <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
-                        <i class="fa-solid fa-pen-to-square  bg-gray-200 p-3 rounded-l-md"></i>
+                        <i class="fa-solid fa-circle-user bg-gray-200 p-3 rounded-l-md"></i>
                     </div>
                 </div>
 
@@ -54,35 +54,18 @@
                         {{ $message }}
                     @enderror
                 </div>
-                
-                <!-- Date -->
-                <h2 class="text-lg font-bold pt-2 pb-1 px-2">Date <span class="text-red-600">*</span></h2>
-                
-                <div class="relative">
-                    <input wire:model="date" name="date" id="date" type="date" min="2024-01-01"
-                        value="{{ $workout->created_at }}"
-                        class="w-full pl-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 focus:border-green-500">
-                    <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
-                        <i class="fa-solid fa-calendar-days bg-gray-200 p-3 rounded-l-md"></i>
-                    </div>
-                </div>
-
-
-                <div class="text-sm text-red-600 font-bold py-1 pl-12">
-                    @error('date')
-                        {{ $message }}
-                    @enderror
-                </div>
 
                 <!-- Duration -->
-                <h2 class="text-lg font-bold pt-2 pb-1 px-2">Duration <span class="text-red-600">*</span></h2>
+                <h2 class="text-lg font-bold pt-2 pb-1 px-2">Duration <span class="text-xs">(mins)</span> <span
+                        class="text-red-600">*</span></h2>
 
                 <div class="relative">
-                    <input wire:model="duration" name="duration" id="duration" type="number"
-                        value="{{ $workout->duration }}"
+                    <input wire:model="duration" name="duration" id="duration" type="number" step="1"
+                        value="{{ $workout->duration }}" maxlength="200"
                         class="w-full pl-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 focus:border-green-500">
+
                     <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
-                        <i class="fa-solid fa-clock  bg-gray-200 p-3 rounded-l-md"></i>
+                        <i class="fa-solid fa-clock bg-gray-200 p-3 rounded-l-md"></i>
                     </div>
                 </div>
 
@@ -91,36 +74,37 @@
                         {{ $message }}
                     @enderror
                 </div>
-
+                {{-- Types - {{ $types }}
+                Type name - {{ $workout->type_id }} --}}
                 <!-- Type -->
-                {{-- <h2 class="text-lg font-bold pt-2 pb-1 px-2">Type <span class="text-red-600">*</span></h2>
+                <h2 class="text-lg font-bold pt-2 pb-1 px-2">Type <span class="text-red-600">*</span></h2>
                 <div class="relative">
                     <select wire:model="type_id" name="type_id" id="type_id"
                         class="w-full pl-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 focus:border-green-500">
                         @foreach ($types as $type)
-                            <option value="{{ $type->id }}" @if (old('type_id') == $type->id) selected @endif>
-                                {{ $type->name }}</option>
+                            <option class="text-green-600" value="{{ $type->id }}" 
+                                @if ($workout->type_id == $type->id) selected @endif>{{ $type->name }}</option>
                         @endforeach
                     </select>
                     <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
-                        <i class="fa-solid fa-sitemap bg-gray-200 p-3 rounded-l-md"></i>
+                        <i class="fa-solid fa-dumbbell bg-gray-200 p-3 rounded-l-md"></i>
                     </div>
                 </div>
                 <div class="text-sm text-red-600 font-bold py-1 pl-12">
                     @error('type_id')
                         {{ $message }}
                     @enderror
-                </div> --}}
+                </div>
 
                 <!-- URL -->
-                <h2 class="text-lg font-bold pt-2 pb-1 px-2">URL <span class="text-red-600">*</span></h2>
+                <h2 class="text-lg font-bold pt-2 pb-1 px-2">URL</h2>
 
                 <div class="relative">
-                    <input wire:model="url" name="url" id="url" type="text"
-                        value="{{ $workout->url }}"
+                    <input wire:model="url" name="url" id="url" type="text" value="{{ $workout->url }}"
+                        maxlength="2048"
                         class="w-full pl-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 focus:border-green-500">
                     <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
-                        <i class="fa-solid fa-clock  bg-gray-200 p-3 rounded-l-md"></i>
+                        <i class="fa-solid fa-globe bg-gray-200 p-3 rounded-l-md"></i>
                     </div>
                 </div>
 
@@ -131,24 +115,23 @@
                 </div>
 
                 <!-- Description -->
-                {{-- <h2 class="text-lg font-bold pt-2 pb-1 px-2">Info</h2>
+                <h2 class="text-lg font-bold pt-2 pb-1 px-2">Description</h2>
                 <div class="flex">
                     <span><i class="bg-zinc-200 p-3 rounded-l-md fa-solid fa-circle-info"></i></span>
                     <div class="w-full">
-                        @livewire('quilleditor.quill', ['value' => $info])
+                        @livewire('texteditor.quill', ['value' => $workout->description])
+                        {{-- <livewire:quilleditor.quill /> --}}
                     </div>
                 </div>
                 <!-- Errors -->
-                <div class="text-sm text-red-600 font-bold px-14">
-                    @error('info')
+                <div class="text-sm text-red-600 font-bold py-1 pl-12">
+                    @error('description')
                         {{ $message }}
                     @enderror
-                </div> --}}
-
-
+                </div>
 
                 <!-- Save -->
-                <div class="py-4 sm:ml-0">
+                <div class="py-4 sm:pl-10">
                     <button type="submit"
                         class="w-full sm:w-60 bg-black hover:bg-slate-700 text-white uppercase p-2 rounded-md shadow-none transition duration-1000 ease-in-out">
                         Save

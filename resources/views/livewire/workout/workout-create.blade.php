@@ -56,7 +56,6 @@
                 </div>
 
                 <!-- Duration -->
-
                 <h2 class="text-lg font-bold pt-2 pb-1 px-2">Duration <span class="text-xs">(mins)</span> <span
                         class="text-red-600">*</span></h2>
 
@@ -87,7 +86,7 @@
                         @endforeach
                     </select>
                     <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
-                        <i class="fa-solid fa-sitemap bg-gray-200 p-3 rounded-l-md"></i>
+                        <i class="fa-solid fa-dumbbell bg-gray-200 p-3 rounded-l-md"></i>
                     </div>
                 </div>
                 <div class="text-sm text-red-600 font-bold py-1 pl-12">
@@ -112,7 +111,7 @@
                     @error('url')
                         {{ $message }}
                     @enderror
-                </div>                
+                </div>
 
                 <!-- Description -->
                 <h2 class="text-lg font-bold pt-2 pb-1 px-2">Description</h2>
@@ -128,7 +127,7 @@
                     @error('description')
                         {{ $message }}
                     @enderror
-                </div>               
+                </div>
 
                 <!-- Save -->
                 <div class="py-4 sm:pl-10">

@@ -406,11 +406,11 @@
                                         </td>
                                         <td class="px-2">{{ $entry->id }}</td>
                                         <td class="cursor-pointer min-w-[10rem] max-w-[12rem] whitespace-normal leading-relaxed px-2"
-                                            title="{{ $entry->title }}">
-                                            {{-- <a href="{{ route('codeentry.show', $entry) }}">
-                                                {{ excerpt($entry->title, 40) }}                                                
-                                            </a> --}}
-                                            {{ $entry->title }}
+                                            title="Open Workout">
+                                            <a href="{{ route('workouts.show', $entry) }}">
+                                                {{-- {{ excerpt($entry->title, 40) }} --}}   
+                                                {{ $entry->title }}                                             
+                                            </a>                                            
                                         </td>
                                         <td class="px-2">{{ $entry->author }}</td>
                                         <td class="px-2">{{ $entry->type_name }}</td>
