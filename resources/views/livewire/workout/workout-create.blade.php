@@ -76,24 +76,6 @@
                     @enderror
                 </div>
 
-                <!-- URL -->
-                <h2 class="text-lg font-bold pt-2 pb-1 px-2">URL</h2>
-
-                <div class="relative">
-                    <input wire:model="url" name="url" id="url" type="text" value="{{ old('url') }}"
-                        maxlength="2048"
-                        class="w-full pl-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 focus:border-green-500">
-                    <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
-                        <i class="fa-solid fa-globe bg-gray-200 p-3 rounded-l-md"></i>
-                    </div>
-                </div>
-
-                <div class="text-sm text-red-600 font-bold py-1 pl-12">
-                    @error('url')
-                        {{ $message }}
-                    @enderror
-                </div>
-
                 <!-- Type -->
                 <h2 class="text-lg font-bold pt-2 pb-1 px-2">Type <span class="text-red-600">*</span></h2>
                 <div class="relative">
@@ -114,12 +96,32 @@
                     @enderror
                 </div>
 
+                <!-- URL -->
+                <h2 class="text-lg font-bold pt-2 pb-1 px-2">URL</h2>
+
+                <div class="relative">
+                    <input wire:model="url" name="url" id="url" type="text" value="{{ old('url') }}"
+                        maxlength="2048"
+                        class="w-full pl-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 focus:border-green-500">
+                    <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
+                        <i class="fa-solid fa-globe bg-gray-200 p-3 rounded-l-md"></i>
+                    </div>
+                </div>
+
+                <div class="text-sm text-red-600 font-bold py-1 pl-12">
+                    @error('url')
+                        {{ $message }}
+                    @enderror
+                </div>
+
+                
+
                 <!-- Info -->
                 <h2 class="text-lg font-bold pt-2 pb-1 px-2">Info</h2>
                 <div class="flex">
                     <span><i class="bg-zinc-200 p-3 rounded-l-md fa-solid fa-circle-info"></i></span>
                     <div class="w-full">
-                        {{-- @livewire('quilleditor.quill') --}}
+                        @livewire('texteditor.quill')
                         {{-- <livewire:quilleditor.quill /> --}}
                     </div>
                 </div>
@@ -128,10 +130,10 @@
                     @error('info')
                         {{ $message }}
                     @enderror
-                </div>
+                </div>               
 
                 <!-- Save -->
-                <div class="py-4">
+                <div class="py-4 sm:pl-10">
                     <button type="submit"
                         class="w-full sm:w-60 bg-black hover:bg-slate-700 text-white uppercase p-2 rounded-md shadow-none transition duration-1000 ease-in-out">
                         Save

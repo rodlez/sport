@@ -66,3 +66,25 @@ html {
     visibility: visible;
     opacity: 1;
 }
+
+/* Quill Editor */
+
+.ql-container {    
+    border-radius: 0px 0px 0px 0px;
+    background-color: transparent;
+}
+
+.ql-toolbar {
+    border-radius: 0px 5px 0px 0px;
+    background-color: #f9fafb;
+}
+
+.ql-editor {
+    border-radius: 0px 0px 5px 5px;
+    background-color: #f9fafb;
+    height: 250px;
+}
+
+.ql-editor:focus {
+    outline: 2px solid rgb(34 197 94);
+}
