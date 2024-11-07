@@ -112,12 +112,10 @@
                     @error('url')
                         {{ $message }}
                     @enderror
-                </div>
+                </div>                
 
-                
-
-                <!-- Info -->
-                <h2 class="text-lg font-bold pt-2 pb-1 px-2">Info</h2>
+                <!-- Description -->
+                <h2 class="text-lg font-bold pt-2 pb-1 px-2">Description</h2>
                 <div class="flex">
                     <span><i class="bg-zinc-200 p-3 rounded-l-md fa-solid fa-circle-info"></i></span>
                     <div class="w-full">
@@ -127,7 +125,7 @@
                 </div>
                 <!-- Errors -->
                 <div class="text-sm text-red-600 font-bold py-1 pl-12">
-                    @error('info')
+                    @error('description')
                         {{ $message }}
                     @enderror
                 </div>               
