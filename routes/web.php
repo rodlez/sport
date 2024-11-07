@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 
 // Controllers
+use App\Http\Controllers\Workout\WorkoutController;
 use App\Http\Controllers\Workout\WorkoutTypeController;
-use App\Livewire\Workout\WorkoutCreate;
+
 // Livewire Full Component Pages
 use App\Livewire\Workout\WorkoutMain;
+use App\Livewire\Workout\WorkoutCreate;
 use App\Livewire\Workout\WorkoutShow;
 use App\Livewire\Workout\WorkoutEdit;
 use App\Livewire\Workout\WorkoutTypes;
@@ -28,6 +30,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/workouts', WorkoutMain::class)->name('workouts.index');
     Route::get('/workouts/create', WorkoutCreate::class)->name('workouts.create');
     Route::get('/workouts/{workout}', WorkoutShow::class)->name('workouts.show');
+    Route::delete('/workouts/{workout}', [WorkoutController::class, 'destroy'])->name('workouts.destroy');
     Route::get('/workouts/edit/{workout}', WorkoutEdit::class)->name('workouts.edit');
 
     /* WORKOUT TYPES */

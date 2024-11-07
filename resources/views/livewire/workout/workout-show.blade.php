@@ -29,18 +29,18 @@
                             class="fa-solid fa-pencil text-white hover:text-blue-600 transition-all duration-500"></i>
                     </a>
                     <!-- Delete -->
-                    {{-- <form action="{{ route('codeentry.destroy', $entry) }}" method="POST">
+                    <form action="{{ route('workouts.destroy', $workout) }}" method="POST">
                         <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                         @csrf
                         <!-- Dirtective to Override the http method -->
                         @method('DELETE')
                         <button
-                            onclick="return confirm('Are you sure you want to delete the entry: {{ $entry->title }}?')"
+                            onclick="return confirm('Are you sure you want to delete the entry: {{ $workout->title }}?')"
                             title="Delete">
                             <i
                                 class="fa-solid fa-trash pr-4 text-white hover:text-red-600 transition-all duration-500"></i>
                         </button>
-                    </form> --}}
+                    </form>
                 </div>
             </div>
 

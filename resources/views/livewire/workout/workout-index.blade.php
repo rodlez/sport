@@ -460,7 +460,7 @@
                                                             class="fa-lg fa-solid fa-pen-to-square"></i></span>
                                                 </a>
                                                 <!-- Delete -->
-                                                {{-- <form action="{{ route('codeentry.destroy', $entry) }}"
+                                                <form action="{{ route('workouts.destroy', $entry) }}"
                                                     method="POST">
                                                     <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                                                     @csrf
@@ -473,7 +473,7 @@
                                                             class="text-red-600 hover:text-black transition-all duration-500"><i
                                                                 class="fa-lg fa-solid fa-trash"></i></span>
                                                     </button>
-                                                </form> --}}
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
