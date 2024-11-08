@@ -4,6 +4,7 @@ namespace App\Services;
 
 // Models
 use App\Models\Workout\Workout;
+use App\Models\Workout\WorkoutFile;
 use App\Models\Workout\WorkoutType;
 
 // Files
@@ -49,6 +50,49 @@ class WorkoutService
              'size' => $size,
          ];
      }
+
+     /**
+     * Download a file, disposition inline(browser) or attachment(download)
+     */
+
+    public function downloadFile(WorkoutFile $file, string $disposition)
+    {
+        // No need to specify the disposition to download the file.
+
+        $dispositionHeader = [
+            'Content-Disposition' => $disposition,
+        ];
+
+        if (Storage::disk('public')->exists($file->path)) {
+            //return Storage::disk('public')->download($file->path, $file->original_filename, $dispositionHeader);
+            return Storage::disk('public')->download($file->path, $file->original_filename);
+        } else {
+            return back()->with('message', 'Error: File ' . $file->original_filename . ' can not be downloaded.');
+        }
+    }
+
+    /**
+     * Inset new Note and insert the tags in the intermediate table note_tag
+     */
+    public function deleteFiles(Collection $files)
+    {
+        foreach ($files as $file) {
+            $this->deleteOneFile($file);
+        }
+    }
+
+    /**
+     * Inset new Note and insert the tags in the intermediate table note_tag
+     */
+    public function deleteOneFile(WorkoutFile $file)
+    {
+        if (Storage::disk('public')->exists($file->path)) {
+            /*  echo $file->path;
+             dd('borradito'); */
+            Storage::disk('public')->delete($file->path);
+            $file->delete();
+        }
+    }
 
 
 }

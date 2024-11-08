@@ -24,7 +24,7 @@ class WorkoutFileUpload extends Component
     protected $rules = [
         'files' => 'array|min:1|max:5',
         //'files.*' => 'required|mimes:pdf,jpeg,png,jpg|max:2048',
-        'files.*' => 'required|file|mimetypes:text/plain,application/pdf,image/jpeg,image/png,application/vnd.oasis.opendocument.text,application/vnd.openxmlformats-officedocument.wordprocessingml.document,video/mp4|max:102400',
+        'files.*' => 'required|file|mimetypes:text/plain,application/pdf,image/jpeg,image/png,application/vnd.oasis.opendocument.text,application/vnd.openxmlformats-officedocument.wordprocessingml.document,video/mp4|max:1024000',
     ];
 
     protected $messages = [

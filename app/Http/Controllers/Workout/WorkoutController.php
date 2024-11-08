@@ -4,12 +4,17 @@ namespace App\Http\Controllers\Workout;
 
 use App\Http\Controllers\Controller;
 use App\Models\Workout\Workout;
+use App\Services\WorkoutService;
+
 use Illuminate\Http\Request;
 
 use Exception;
 
 class WorkoutController extends Controller
 {
+    public function __construct(private WorkoutService $workoutService) {        
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -67,7 +72,14 @@ class WorkoutController extends Controller
         if ($type->user_id !== request()->user()->id) {
             abort(403);
         }*/
-        
+       
+        // First delete the files associated to this workout
+        $files = $workout->files;
+
+        if ($files->count() > 0) {
+            $this->workoutService->deleteFiles($files);
+        }  
+        // Delete the workout entry in the DB
         try {
             $workout->delete();
             return to_route('workouts.index')->with('message', 'Workout (' . $workout->title . ') successfully deleted.');

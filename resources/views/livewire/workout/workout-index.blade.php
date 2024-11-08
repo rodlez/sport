@@ -23,7 +23,7 @@
             </div>
             <!-- Filters Text-->
             <div
-                class="flex flex-row justify-between items-center py-2 mx-4 mt-2 border-green-600 border-b-2 w-100 sm:w-100">
+                class="flex flex-row justify-between items-center py-2 mx-4 mt-2 border-red-600 border-b-2 w-100 sm:w-100">
                 <div>
                     <span class="px-2 text-lg text-zinc-800">Filters</span>
                 </div>
@@ -188,7 +188,7 @@
                         <i class="fa-lg fa-solid fa-magnifying-glass"></i>
                     </div>
                     <input type="search"
-                        class="w-full rounded-lg pl-12 placeholder-zinc-400 focus:outline-none focus:ring-0 focus:border-green-600 border-2 border-zinc-200 placeholder:text-sm"
+                        class="w-full rounded-lg pl-12 placeholder-zinc-400 focus:outline-none focus:ring-0 focus:border-red-600 border-2 border-zinc-200 placeholder:text-sm"
                         placeholder="Search by title" wire:model.live="search">
                 </div>
                 <!-- Pagination -->
@@ -197,7 +197,7 @@
                         <i class="fa-solid fa-book-open"></i>
                     </div>
                     <select wire:model.live="perPage"
-                        class="w-full rounded-lg text-end focus:outline-none focus:ring-0 focus:border-green-500 border-2 border-zinc-200 ">
+                        class="w-full rounded-lg text-end focus:outline-none focus:ring-0 focus:border-red-500 border-2 border-zinc-200 ">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
@@ -213,7 +213,7 @@
                     $tipo > 0 ||
                     $initialDurationTo != $durationTo || 
                     $initialDurationFrom != $durationFrom)
-                <div class="flex flex-row justify-between mx-4 pb-1 border-b-2 border-b-green-600">
+                <div class="flex flex-row justify-between mx-4 pb-1 border-b-2 border-b-red-600">
                     <span class="text-lg text-zinc-800 px-2">Criteria</span>
                     <a wire:click.prevent="resetAll" title="Clear All">
                         <i class="fa-solid fa-square-xmark text-red-600 hover:text-black cursor-pointer"></i>
@@ -357,7 +357,7 @@
                     @if ($entries->count())
                         <table class="table-fixed min-w-full">
                             <thead class="h-12">
-                                <tr class="text-black text-left text-sm uppercase border-t-2 border-t-green-600">
+                                <tr class="text-black text-left text-sm uppercase border-t-2 border-t-red-600">
                                     <th class="p-2">
                                         {{-- <input type="checkbox" wire:model.live="selectAll"
                                             class="text-green-600 outline-none focus:ring-0 checked:bg-green-500"> --}}
@@ -420,8 +420,11 @@
                                             <div class="flex flex-col justify-between items-center gap-2">
                                                 @foreach ($entry->files as $file)
                                                     @include(
-                                                        'partials.mediatypes-file', 
-                                                        $file)
+                                                        'partials.mediatypes-file', [ 
+                                                        'file' => $file,
+                                                        'iconSize' => 'fa-lg',
+                                                        'imagesBig' => false,
+                                                        ])
                                                 @endforeach
                                             </div>
                                         </td>

@@ -1,9 +1,9 @@
 <div class="max-w-7xl mx-auto sm:pb-8 sm:px-6 lg:px-8">
-    
+
     <!-- Sitemap -->
     <div class="flex flex-row justify-start items-start gap-1 text-sm py-3 px-4 text-slate-500">
         <a href="/workouts" class="hover:text-red-600">Workouts</a> /
-        <a href="/workouts/{{$workout->id}}" class="font-bold text-black border-b-2 border-b-red-600">Info</a>
+        <a href="/workouts/{{ $workout->id }}" class="font-bold text-black border-b-2 border-b-red-600">Info</a>
     </div>
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -25,8 +25,7 @@
                     </a> --}}
                     <!-- Edit -->
                     <a href="{{ route('workouts.edit', $workout) }}" title="Edit">
-                        <i
-                            class="fa-solid fa-pencil text-white hover:text-blue-600 transition-all duration-500"></i>
+                        <i class="fa-solid fa-pencil text-white hover:text-blue-600 transition-all duration-500"></i>
                     </a>
                     <!-- Delete -->
                     <form action="{{ route('workouts.destroy', $workout) }}" method="POST">
@@ -59,7 +58,8 @@
                     <span x-data="{ show: false }" class="relative" data-tooltip="Copy Title">
                         <button class="btn" data-clipboard-target="#title" x-on:click="show = true"
                             x-on:mouseout="show = false" title="Copy Title">
-                            <i class="fa-solid fa-pen-to-square w-6 text-center text-black hover:text-blue-600 transition-all duration-500"></i>
+                            <i
+                                class="fa-solid fa-pen-to-square w-6 text-center text-black hover:text-blue-600 transition-all duration-500"></i>
                         </button>
                         <span x-show="show" class="absolute -top-8 -right-6">
                             <span class="bg-green-600 text-white rounded-lg p-2 opacity-100">Copied!</span>
@@ -76,7 +76,8 @@
                     <span x-data="{ show: false }" class="relative" data-tooltip="Copy Author">
                         <button class="btn" data-clipboard-target="#author" x-on:click="show = true"
                             x-on:mouseout="show = false" title="Copy Author name">
-                            <i class="fa-solid fa-circle-user w-6 text-center text-black hover:text-blue-600 transition-all duration-500"></i>
+                            <i
+                                class="fa-solid fa-circle-user w-6 text-center text-black hover:text-blue-600 transition-all duration-500"></i>
                         </button>
                         <span x-show="show" class="absolute -top-8 -right-6">
                             <span class="bg-green-600 text-white rounded-lg p-2 opacity-100">Copied!</span>
@@ -111,7 +112,7 @@
                 <div class="w-full px-8 sm:px-2">
                     <span class="bg-yellow-400 text-sm font-bold rounded-md p-2">{{ $workout->type->name }}</span>
                 </div>
-            </div>   
+            </div>
             <!-- URL -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
                 <div class="flex flex-row justify-start items-center gap-2">
@@ -124,7 +125,7 @@
                         <i class="fa-solid fa-up-right-from-square px-2"></i>
                     </a>
                 </div>
-            </div>        
+            </div>
             <!-- Description -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
                 <div class="flex flex-row justify-start items-center sm:items-start pb-2 gap-2">
@@ -154,12 +155,13 @@
                     <div class="w-full px-8 sm:px-2">-</div>
                 @endif
             </div>
-           
+
             <!-- Files -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1">
                 <div class="flex flex-row justify-start items-center sm:items-start pb-2 gap-2">
                     <i class="fa-solid fa-file py-1 w-6 text-center"></i>
-                    <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Files ({{ $workout->files->count() }})</span>
+                    <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Files
+                        ({{ $workout->files->count() }})</span>
                 </div>
                 <!-- file Table -->
                 <div class="w-full overflow-x-auto">
@@ -176,12 +178,16 @@
 
                             @foreach ($workout->files as $file)
                                 <tr class="bg-white border-b text-center">
-
-                                    @include('partials.mediatypes-file', $file)
-
+                                    <td class="p-2">
+                                        @include('partials.mediatypes-file', [
+                                            'file' => $file,
+                                            'iconSize' => 'fa-lg',
+                                            'imagesBig' => false,
+                                        ])
+                                    </td>
                                     <td class="p-2 max-lg:hidden">
                                         {{-- {{ shortFilename(getFileName($file->original_filename), 20) }} --}}
-                                    {{$file->original_filename}}
+                                        {{ $file->original_filename }}
                                     </td>
                                     <td class="p-2 max-sm:hidden">{{ $file->created_at->format('d-m-Y') }}
                                     </td>
@@ -190,15 +196,15 @@
                                     <td class="p-2">
                                         <div class="flex justify-center items-center gap-2">
                                             <!-- Download file -->
-                                           {{--  <a href="{{ route('codefile.download', [$entry, $file]) }}"
+                                             <a href="{{ route('workoutsfile.download', [$workout, $file]) }}"
                                                 title="Download File">
                                                 <span
                                                     class="text-green-600 hover:text-black transition-all duration-500">
                                                     <i class="fa-lg fa-solid fa-file-arrow-down"></i>
                                                 </span>
-                                            </a> --}}
+                                            </a>
                                             <!-- Delete file -->
-                                            {{-- <form action="{{ route('codefile.destroy', [$entry, $file]) }}"
+                                            <form action="{{ route('workoutsfile.destroy', [$workout, $file]) }}"
                                                 method="POST">
                                                 <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                                                 @csrf
@@ -211,7 +217,7 @@
                                                         class="text-red-600 hover:text-black transition-all duration-500"><i
                                                             class="fa-lg fa-solid fa-trash"></i></span>
                                                 </button>
-                                            </form> --}}
+                                            </form>
                                         </div>
                                     </td>
 

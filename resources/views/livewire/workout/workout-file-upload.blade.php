@@ -26,54 +26,16 @@
 
         @if ($workout->files->count() > 0)
             <div
-                class="mx-4 py-2 flex flex-col md:flex-row justify-start items-center w-fit px-4 border-2 rounded-lg gap-4 bg-gray-200">
+                class="mx-4 py-2 flex flex-row md:flex-row justify-start items-center w-fit px-4 border-2 rounded-lg gap-4 bg-gray-200">
                 @foreach ($workout->files as $file)
                     <div class="relative py-2">
 
-                        @switch($file->media_type)
-                            @case('video/mp4')
-                                <td class="py-2"><i class="fa-3x fa-solid fa-file-video"></i></td>
-                            @break
+                        @include('partials.mediatypes-file', [
+                            'file' => $file,
+                            'iconSize' => 'fa-3x',
+                            'imagesBig' => true,
+                        ])
 
-                            @case('text/plain')
-                                <td class="py-2"><i class="fa-2x fa-regular fa-file-lines"></i></td>
-                            @break
-
-                            @case('application/pdf')
-                                <a href="{{ asset('storage/' . $file->path) }}" title="{{ $file->original_filename }}">
-                                    <i class="fa-regular fa-file-pdf fa-3x"></i>
-                                </a>
-                            @break
-
-                            @case('application/vnd.oasis.opendocument.text')
-                                <td class="py-2"><i class="fa-2x fa-regular fa-file-word"></i></td>
-                            @break
-
-                            @case('application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-                                <td class="py-2"><i class="fa-2x fa-regular fa-file-word"></i></td>
-                            @break
-
-                            @case('image/jpeg')
-                                <a href="{{ asset('storage/' . $file->path) }}">
-                                    <img src="{{ asset('storage/' . $file->path) }}"
-                                        class="w-full md:w-12 md:h-12 mx-auto rounded-lg"
-                                        title="{{ $file->original_filename }}">
-                                </a>
-                            @break
-
-                            @case('image/png')
-                                <a href="{{ asset('storage/' . $file->path) }}">
-                                    <img src="{{ asset('storage/' . $file->path) }}"
-                                        class="w-full md:w-12 md:h-12 mx-auto rounded-lg"
-                                        title="{{ $file->original_filename }}">
-                                </a>
-                            @break
-
-                            @default
-                                <td class="py-2"><i
-                                        class="fa-2x fa-solid fa-triangle-exclamation text-red-600 hover:text-red-400"
-                                        title="Not a valid Format"></i></td>
-                        @endswitch
                         <!-- Delete file -->
                         {{-- <form action="{{ route('codefile.destroy', [$entry, $file]) }}" method="POST">
                             <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
@@ -110,6 +72,7 @@
                         class="w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-black file:hover:bg-slate-600 file:text-white rounded ease-linear transition-all duration-500" />
                     <p class="text-xs text-black font-semibold mt-2">Allowed formats: PDF, JPG, JPEG, PNG, TXT, DOC,
                         ODT.</p>
+                        <p class="text-xs text-black font-semibold mt-0">Max Size File: 1Gb</p>
 
                     @if (count($files) + $workout->files->count() > 5)
                         <div class="my-4">
@@ -142,7 +105,8 @@
 
             <div class="mx-4 mb-12">
                 @if (count($files) !== 0)
-                    <div class="py-0"><span class="text-md px-2">Files selected ({{ count($files) }})</span></div>
+                    <div class="py-0"><span class="text-md px-2">Files selected to upload
+                            ({{ count($files) }})</span></div>
 
                     <table class="table-auto w-full">
                         <thead class="text-sm text-center text-white bg-black h-10">
@@ -159,42 +123,12 @@
                             @foreach ($files as $file)
                                 <tr class="text-center even:bg-zinc-200 odd:bg-white">
 
-                                    @switch($file->getMimeType())
-                                        @case('video/mp4')
-                                            <td class="py-2"><i class="fa-2x fa-solid fa-file-video"></i></td>
-                                        @break
-
-                                        @case('text/plain')
-                                            <td class="py-2"><i class="fa-2x fa-regular fa-file-lines"></i></td>
-                                        @break
-
-                                        @case('application/pdf')
-                                            <td class="py-2"><i class="fa-2x fa-regular fa-file-pdf"></i></td>
-                                        @break
-
-                                        @case('application/vnd.oasis.opendocument.text')
-                                            <td class="py-2"><i class="fa-2x fa-regular fa-file-word"></i></td>
-                                        @break
-
-                                        @case('application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-                                            <td class="py-2"><i class="fa-2x fa-regular fa-file-word"></i></td>
-                                        @break
-
-                                        @case('image/jpeg')
-                                            <td class="py-2"><img class="w-12 md:w-24 mx-auto rounded-lg"
-                                                    src="{{ $file->temporaryURL() }}"></td>
-                                        @break
-
-                                        @case('image/png')
-                                            <td class="py-2"><img class="w-12 md:w-24 mx-auto rounded-lg"
-                                                    src="{{ $file->temporaryURL() }}"></td>
-                                        @break
-
-                                        @default
-                                            <td class="py-2"><i
-                                                    class="fa-2x fa-solid fa-triangle-exclamation text-red-600 hover:text-red-400"
-                                                    title="Not a valid Format"></i></td>
-                                    @endswitch
+                                    <td class="py-2">
+                                        @include('partials.mediatypes-fileupload', [
+                                            'file' => $file,
+                                            'iconSize' => 'fa-2x',
+                                        ])
+                                    </td>
 
                                     <td class="py-2">{{ $file->getClientOriginalName() }}</td>
                                     <td class="py-2 max-w-10 max-md:hidden">{{ round($file->getSize() / 1000) }}</td>
