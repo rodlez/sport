@@ -21,6 +21,9 @@
                     <x-nav-link href="{{ route('wk_types.index') }}" :active="request()->routeIs('wk_types.index')">
                         {{ __('WK Types') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('wk_levels.index') }}" :active="request()->routeIs('wk_levels.index')">
+                        {{ __('WK Levels') }}
+                    </x-nav-link>
                 </div>
             </div>
 
