@@ -3,21 +3,30 @@
 use Illuminate\Support\Facades\Route;
 
 // Controllers
+use App\Http\Controllers\Sport\SportCategoryController;
 use App\Http\Controllers\Workout\WorkoutController;
 use App\Http\Controllers\Workout\WorkoutFileController;
 use App\Http\Controllers\Workout\WorkoutLevelController;
 use App\Http\Controllers\Workout\WorkoutTypeController;
-
 // Livewire Full Component Pages
+
+// SP Categories
+use App\Livewire\Sport\SportCategories;
+use App\Livewire\Sport\SportCategoriesCreate;
+use App\Livewire\Sport\SportCategoriesEdit;
+use App\Livewire\Sport\SportCategoriesShow;
+// Workouts
 use App\Livewire\Workout\WorkoutMain;
 use App\Livewire\Workout\WorkoutCreate;
 use App\Livewire\Workout\WorkoutShow;
 use App\Livewire\Workout\WorkoutEdit;
 use App\Livewire\Workout\WorkoutFileUpload;
+// WK Levels
 use App\Livewire\Workout\WorkoutLevels;
 use App\Livewire\Workout\WorkoutLevelsCreate;
 use App\Livewire\Workout\WorkoutLevelsEdit;
 use App\Livewire\Workout\WorkoutLevelsShow;
+//WK Types
 use App\Livewire\Workout\WorkoutTypes;
 use App\Livewire\Workout\WorkoutTypesCreate;
 use App\Livewire\Workout\WorkoutTypesEdit;
@@ -62,5 +71,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/wk_levels/edit/{level}', WorkoutLevelsEdit::class)->name('wk_levels.edit');
 
     /* WORKOUT LEVELS */
-    //Route::get('/sp_categories', SportCategory::class)->name('sp_categories.index');
+    Route::get('/sp_categories', SportCategories::class)->name('sp_categories.index');
+    Route::get('/sp_categories/create', SportCategoriesCreate::class)->name('sp_categories.create');
+    Route::get('/sp_categories/{category}', SportCategoriesShow::class)->name('sp_categories.show');
+    Route::put('/sp_categories/{category}', [SportCategoryController::class, 'update'])->name('sp_categories.update');
+    Route::delete('/sp_categories/{category}', [SportCategoryController::class, 'destroy'])->name('sp_categories.destroy');
+    Route::get('/sp_categories/edit/{category}', SportCategoriesEdit::class)->name('sp_categories.edit');
 });
