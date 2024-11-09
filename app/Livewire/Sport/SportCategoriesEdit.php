@@ -19,7 +19,6 @@ class SportCategoriesEdit extends Component
         return view('livewire.sport.sport-categories-edit', [
             'category' => $this->category
         ])->layout('layouts.app');
-    }
-    
+    }  
    
 }

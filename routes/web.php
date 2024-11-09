@@ -4,17 +4,22 @@ use Illuminate\Support\Facades\Route;
 
 // Controllers
 use App\Http\Controllers\Sport\SportCategoryController;
+use App\Http\Controllers\Sport\SportTagController;
 use App\Http\Controllers\Workout\WorkoutController;
 use App\Http\Controllers\Workout\WorkoutFileController;
 use App\Http\Controllers\Workout\WorkoutLevelController;
 use App\Http\Controllers\Workout\WorkoutTypeController;
-// Livewire Full Component Pages
-
+/************** Livewire Full Component Pages *******************/
 // SP Categories
 use App\Livewire\Sport\SportCategories;
 use App\Livewire\Sport\SportCategoriesCreate;
 use App\Livewire\Sport\SportCategoriesEdit;
 use App\Livewire\Sport\SportCategoriesShow;
+// SP Tags
+use App\Livewire\Sport\SportTags;
+use App\Livewire\Sport\SportTagsCreate;
+use App\Livewire\Sport\SportTagsEdit;
+use App\Livewire\Sport\SportTagsShow;
 // Workouts
 use App\Livewire\Workout\WorkoutMain;
 use App\Livewire\Workout\WorkoutCreate;
@@ -70,11 +75,19 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::delete('/wk_levels/{level}', [WorkoutLevelController::class, 'destroy'])->name('wk_levels.destroy');
     Route::get('/wk_levels/edit/{level}', WorkoutLevelsEdit::class)->name('wk_levels.edit');
 
-    /* WORKOUT LEVELS */
+    /* SPORT CATEGORIES */
     Route::get('/sp_categories', SportCategories::class)->name('sp_categories.index');
     Route::get('/sp_categories/create', SportCategoriesCreate::class)->name('sp_categories.create');
     Route::get('/sp_categories/{category}', SportCategoriesShow::class)->name('sp_categories.show');
     Route::put('/sp_categories/{category}', [SportCategoryController::class, 'update'])->name('sp_categories.update');
     Route::delete('/sp_categories/{category}', [SportCategoryController::class, 'destroy'])->name('sp_categories.destroy');
     Route::get('/sp_categories/edit/{category}', SportCategoriesEdit::class)->name('sp_categories.edit');
+
+    /* SPORT TAGS */
+    Route::get('/sp_tags', SportTags::class)->name('sp_tags.index');
+    Route::get('/sp_tags/create', SportTagsCreate::class)->name('sp_tags.create');
+    Route::get('/sp_tags/{tag}', SportTagsShow::class)->name('sp_tags.show');
+    Route::put('/sp_tags/{tag}', [SportTagController::class, 'update'])->name('sp_tags.update');
+    Route::delete('/sp_tags/{tag}', [SportTagController::class, 'destroy'])->name('sp_tags.destroy');
+    Route::get('/sp_tags/edit/{tag}', SportTagsEdit::class)->name('sp_tags.edit');
 });
