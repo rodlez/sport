@@ -4,7 +4,6 @@
     <div class="flex flex-row justify-start items-start gap-1 text-sm py-3 px-4 text-slate-500">
         <a href="/wk_types" class="font-bold text-black border-b-2 border-b-yellow-600">WK Types</a>
     </div>
-
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
         <div>
@@ -71,18 +70,19 @@
                             <thead>
                                 <tr class="text-black text-left text-sm font-normal uppercase">
                                     <th></th>
-                                    <th wire:click="sorting('id')" scope="col"
-                                        class="p-2 hover:cursor-pointer hover:text-yellow-600 {{ $column == 'id' ? 'text-yellow-600' : '' }}">
+                                    <th wire:click="sorting('workout_types.id')" scope="col"
+                                        class="p-2 hover:cursor-pointer hover:text-yellow-600 {{ $column == 'workout_types.id' ? 'text-yellow-600' : '' }}">
                                         id {!! $sortLink !!}</th>
                                     <th wire:click="sorting('name')" scope="col"
                                         class="p-2 hover:cursor-pointer hover:text-yellow-600 {{ $column == 'name' ? 'text-yellow-600' : '' }}">
                                         name {!! $sortLink !!}</th>
-                                    <th wire:click="sorting('created_at')" scope="col"
-                                        class="p-2 hover:cursor-pointer hover:text-yellow-600 {{ $column == 'created_at' ? 'text-yellow-600' : '' }}">
+                                    <th wire:click="sorting('workout_types.created_at')" scope="col"
+                                        class="p-2 hover:cursor-pointer hover:text-yellow-600 {{ $column == 'workout_types.created_at' ? 'text-yellow-600' : '' }}">
                                         created {!! $sortLink !!}</th>
-                                    <th wire:click="sorting('updated_at')" scope="col"
-                                        class="p-2 hover:cursor-pointer hover:text-yellow-600 {{ $column == 'updated_at' ? 'text-yellow-600' : '' }}">
+                                    <th wire:click="sorting('workout_types.updated_at')" scope="col"
+                                        class="p-2 hover:cursor-pointer hover:text-yellow-600 {{ $column == 'workout_types.updated_at' ? 'text-yellow-600' : '' }}">
                                         updated {!! $sortLink !!}</th>
+                                        <th scope="col" class="p-2 text-center capitalize">Workouts</th>
                                     <th scope="col" class="p-2 text-center capitalize">actions</th>
                                 </tr>
                             </thead>
@@ -99,6 +99,7 @@
                                                 href="{{ route('wk_types.show', $type) }}">{{ $type->name }}</a></td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($type->created_at)) }}</td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($type->updated_at)) }}</td>
+                                        <td class="p-2 text-center">{{ $type->total }}</td>
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-2">
                                                 <!-- Show -->
