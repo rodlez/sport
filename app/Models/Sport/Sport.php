@@ -3,6 +3,7 @@
 namespace App\Models\Sport;
 
 use App\Models\User;
+use App\Models\Workout\Workout;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -54,6 +55,18 @@ class Sport extends Model
         return $this->belongsToMany(
             SportTag::class,
             table: 'sports_tag',
+            foreignPivotKey: 'sport_id'
+        )->withTimestamps();
+    }
+
+    /**
+     * Get the workouts associated with the Sport.
+     */
+    public function workouts()
+    {
+        return $this->belongsToMany(
+            Workout::class,
+            table: 'sports_workouts',
             foreignPivotKey: 'sport_id'
         )->withTimestamps();
     }

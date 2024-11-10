@@ -16,9 +16,9 @@
                             class="text-md">({{ $search != '' ? $found : $total }})</span></span>
                 </div>
                 <div class="px-4">
-                    {{-- <a href="{{ route('sports.create') }}"
+                    <a href="{{ route('sports.create') }}"
                         class="text-white text-sm sm:text-md rounded-lg py-2 px-4 bg-black hover:bg-slate-600 transition duration-1000 ease-in-out"
-                        title="Create New Workout">Create</a> --}}
+                        title="Create New Workout">Create</a>
                 </div>
             </div>
             <!-- Filters Text-->
@@ -220,7 +220,7 @@
                         class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
 
                         <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
-                            <span><i class="text-blue-600 fa-lg fa-solid fa-clock"></i></span>
+                            <span><i class="text-blue-600 fa-lg fa-solid fa-route"></i></span>
                             <span class="px-2">Distance <span class="text-xs">(km)</span></span>
                         </div>
 

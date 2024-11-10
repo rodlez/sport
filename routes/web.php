@@ -18,6 +18,7 @@ use App\Livewire\Sport\SportCategories;
 use App\Livewire\Sport\SportCategoriesCreate;
 use App\Livewire\Sport\SportCategoriesEdit;
 use App\Livewire\Sport\SportCategoriesShow;
+use App\Livewire\Sport\SportCreate;
 use App\Livewire\Sport\SportMain;
 // SP Tags
 use App\Livewire\Sport\SportTags;
@@ -81,6 +82,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     /* SPORTS */
     Route::get('/sports', SportMain::class)->name('sports.index');
+    Route::get('/sports/create', SportCreate::class)->name('sports.create');
+
 
     /* SPORT CATEGORIES */
     Route::get('/sp_categories', SportCategories::class)->name('sp_categories.index');
