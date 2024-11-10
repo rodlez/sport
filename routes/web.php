@@ -3,13 +3,16 @@
 use Illuminate\Support\Facades\Route;
 
 // Controllers
+
 use App\Http\Controllers\Sport\SportCategoryController;
 use App\Http\Controllers\Sport\SportTagController;
 use App\Http\Controllers\Workout\WorkoutController;
 use App\Http\Controllers\Workout\WorkoutFileController;
 use App\Http\Controllers\Workout\WorkoutLevelController;
 use App\Http\Controllers\Workout\WorkoutTypeController;
-/************** Livewire Full Component Pages *******************/
+
+// Livewire Full Component Pages
+
 // SP Categories
 use App\Livewire\Sport\SportCategories;
 use App\Livewire\Sport\SportCategoriesCreate;
