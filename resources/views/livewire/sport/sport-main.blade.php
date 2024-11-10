@@ -551,10 +551,9 @@
                                         <td class="px-2">{{ $entry->id }}</td>
                                         <td class="cursor-pointer min-w-[10rem] max-w-[12rem] whitespace-normal leading-relaxed px-2"
                                             title="Open Workout">
-                                            {{-- <a href="{{ route('sports.show', $entry) }}">
+                                            <a href="{{ route('sports.show', $entry) }}">
                                                 {{ $entry->title }}
-                                            </a> --}}
-                                            {{ $entry->title }}
+                                            </a>
                                         </td>
                                         <td class="px-2">{{ $entry->category_name }}</td>
                                         <td class="px-2">{!! $entry->status == 1 ? '<span class="text-red-600">' . $entry->status . '</span>' : '<span class="text-green-600">' . $entry->status . '</span>' !!}</td>
@@ -576,13 +575,13 @@
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-3">
                                                 <!-- Show -->
-                                                {{-- <a href="{{ route('sports.show', $entry) }}">
+                                                <a href="{{ route('sports.show', $entry) }}">
                                                     <span
                                                         class="text-blue-600 hover:text-black transition-all duration-500 tooltip">
                                                         <i class="fa-lg fa-solid fa-circle-info"></i>
                                                         <span class="tooltiptext">Open Entry</span>
                                                     </span>
-                                                </a> --}}
+                                                </a>
                                                 <!-- PDF -->
                                                 {{-- <a href="{{ route('pdf.generate', $entry) }}"
                                                     title="Download as PDF">

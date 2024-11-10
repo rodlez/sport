@@ -64,4 +64,29 @@ class SportService
         }
         return $tagsNames;
     }
+
+    /**
+     *  Get tags for this entry
+     * 
+     * @param Sport $entry
+     * @param string $separator Value to separate between tags (- / *) 
+     */
+    public function displayEntryTags(Sport $entry, string $separator): array
+    {
+        $tags = $entry->tags;
+        $count = 0;
+        $result = [];
+
+        foreach ($tags as $tag) {
+            $count++;
+            if ($count == count($tags))
+                $result[] = $tag->name;
+
+            else {
+                $result[] = $tag->name . ' ' . $separator . ' ';
+            }
+        }
+
+        return $result;
+    }
 }
