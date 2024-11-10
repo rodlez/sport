@@ -189,7 +189,7 @@ class WorkoutMain extends Component
 
         $entries = $entries->paginate($this->perPage);
 
-        return view('livewire.workout.workout-index', [
+        return view('livewire.workout.workout-main', [
             'entries' => $entries,
             'found' => $found,
             'total' => $totalEntries,

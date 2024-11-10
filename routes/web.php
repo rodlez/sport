@@ -18,6 +18,7 @@ use App\Livewire\Sport\SportCategories;
 use App\Livewire\Sport\SportCategoriesCreate;
 use App\Livewire\Sport\SportCategoriesEdit;
 use App\Livewire\Sport\SportCategoriesShow;
+use App\Livewire\Sport\SportMain;
 // SP Tags
 use App\Livewire\Sport\SportTags;
 use App\Livewire\Sport\SportTagsCreate;
@@ -77,6 +78,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::put('/wk_levels/{level}', [WorkoutLevelController::class, 'update'])->name('wk_levels.update');
     Route::delete('/wk_levels/{level}', [WorkoutLevelController::class, 'destroy'])->name('wk_levels.destroy');
     Route::get('/wk_levels/edit/{level}', WorkoutLevelsEdit::class)->name('wk_levels.edit');
+
+    /* SPORTS */
+    Route::get('/sports', SportMain::class)->name('sports.index');
 
     /* SPORT CATEGORIES */
     Route::get('/sp_categories', SportCategories::class)->name('sp_categories.index');

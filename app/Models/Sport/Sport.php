@@ -49,13 +49,13 @@ class Sport extends Model
     /**
      * Get the tags associated with the Sport.
      */
-    /* public function tags()
+    public function tags()
     {
         return $this->belongsToMany(
             SportTag::class,
-            table: 'sport_entry_tag',
-            foreignPivotKey: 'sport_entry_id'
+            table: 'sports_tag',
+            foreignPivotKey: 'sport_id'
         )->withTimestamps();
-    } */
+    }
 
 }
