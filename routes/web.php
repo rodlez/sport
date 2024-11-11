@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Sport\SportController;
 use App\Http\Controllers\Sport\SportCategoryController;
+use App\Http\Controllers\Sport\SportFileController;
 use App\Http\Controllers\Sport\SportTagController;
 use App\Http\Controllers\Workout\WorkoutController;
 use App\Http\Controllers\Workout\WorkoutFileController;
@@ -24,6 +25,7 @@ use App\Livewire\Sport\SportCategories;
 use App\Livewire\Sport\SportCategoriesCreate;
 use App\Livewire\Sport\SportCategoriesEdit;
 use App\Livewire\Sport\SportCategoriesShow;
+use App\Livewire\Sport\SportFileUpload;
 // SP Tags
 use App\Livewire\Sport\SportTags;
 use App\Livewire\Sport\SportTagsCreate;
@@ -61,6 +63,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/sports/{sport}', SportShow::class)->name('sports.show');
     Route::delete('/sports/{sport}', [SportController::class, 'destroy'])->name('sports.destroy');
     Route::get('/sports/edit/{sport}', SportEdit::class)->name('sports.edit');
+
+     /* SPORT FILES */
+     Route::get('/sports/{sport}/file', SportFileUpload::class)->name('sports.upload');
+     Route::get('/sports/{sport}/file/{file}', [SportFileController::class, 'download'])->name('sportsfile.download');
+     Route::delete('/sports/{sport}/file/{file}', [SportFileController::class, 'destroy'])->name('sportsfile.destroy');
 
     /* SPORT CATEGORIES */
     Route::get('/sp_categories', SportCategories::class)->name('sp_categories.index');

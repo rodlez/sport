@@ -232,7 +232,7 @@
             </div>
 
             <!-- Files -->
-            {{-- <div class="flex flex-col sm:flex-row py-2 px-3 gap-1">
+            <div class="flex flex-col sm:flex-row py-2 px-3 gap-1">
                 <div class="flex flex-row justify-start items-center sm:items-start pb-2 gap-2">
                     <i class="fa-solid fa-file py-1 w-6 text-center"></i>
                     <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Files
@@ -318,7 +318,7 @@
                     </div>
 
                 </div>
-            </div> --}}
+            </div>
 
             <div class="bg-black py-4 sm:rounded-b-md">
 

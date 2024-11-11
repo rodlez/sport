@@ -71,4 +71,15 @@ class Sport extends Model
         )->withTimestamps();
     }
 
+    /**
+     * Get the Files associated.
+     */
+    public function files()
+    {
+        return $this->hasMany(
+            SportFile::class,
+            foreignKey: 'sport_id'
+        );
+    }
+
 }

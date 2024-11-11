@@ -591,7 +591,7 @@
                                         <td class="px-2 text-center">{{ $entry->distance }}</td>
                                         <td class="px-2">{{ date('d-m-Y', strtotime($entry->date)) }}</td>
                                         <td class="text-sm text-black p-2">
-                                            {{-- <div class="flex flex-col justify-between items-center gap-2">
+                                            <div class="flex flex-col justify-between items-center gap-2">
                                                 @foreach ($entry->files as $file)
                                                     @include('partials.mediatypes-file', [
                                                         'file' => $file,
@@ -599,7 +599,7 @@
                                                         'imagesBig' => false,
                                                     ])
                                                 @endforeach
-                                            </div> --}}
+                                            </div>
                                         </td>
                                         <!-- ACTIONS-->
                                         <td class="p-2">
@@ -622,13 +622,13 @@
                                                     </span>
                                                 </a> --}}
                                                 <!-- Upload File -->
-                                                {{-- <a href="{{ route('sports.upload', $entry) }}">
+                                                <a href="{{ route('sports.upload', $entry) }}">
                                                     <span
                                                         class="text-violet-600 hover:text-black transition-all duration-500 tooltip"><i
                                                             class="fa-lg fa-solid fa-file-arrow-up"></i>
                                                         <span class="tooltiptext">Upload File</span>
                                                     </span>
-                                                </a> --}}
+                                                </a>
                                                 <!-- Edit -->
                                                 <a href="{{ route('sports.edit', $entry) }}" title="Edit this entry">
                                                     <span
