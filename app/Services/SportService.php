@@ -20,7 +20,29 @@ class SportService
      */
     public function insertSport(array $data): Sport
     {
+        // If category_id is NOT 12 (Workout), selectedWorkouts must be empty
+        if ($data['category_id'] != 12) {
+            $data['selectedWorkouts'] = [];
+        }
+
         $sport = Sport::create($data);
+        $sport->tags()->sync($data['selectedTags']);
+        $sport->workouts()->sync($data['selectedWorkouts']);
+
+        return $sport;
+    }
+
+    /**
+     * Inset new Sport and update the tags in the pivot table sports_tag and if any, the workouts in the pivot table sports_workouts
+     */
+    public function updateSport(Sport $sport,array $data): Sport
+    {
+        // If category_id is NOT 12 (Workout), selectedWorkouts must be empty
+        if ($data['category_id'] != 12) {
+            $data['selectedWorkouts'] = [];
+        }       
+       
+        $sport->update($data);
         $sport->tags()->sync($data['selectedTags']);
         $sport->workouts()->sync($data['selectedWorkouts']);
 
@@ -41,6 +63,32 @@ class SportService
     public function getTags(): Collection
     {
         return SportTag::orderBy('name')->get();
+    }
+
+    /**
+     *  Get the tags Ids associated to this Sport entry
+     */
+    public function getSportEntryTags(Sport $sport): array
+    {
+        $tags = [];
+        foreach ($sport->tags as $tag) {
+            $tags[] = $tag->pivot->sport_tag_id;
+        }
+
+        return $tags;
+    }
+
+    /**
+     *  Get the workouts Ids associated to this Sport entry
+     */
+    public function getSportEntryWorkouts(Sport $sport): array
+    {
+        $tags = [];
+        foreach ($sport->workouts as $workout) {
+            $tags[] = $workout->pivot->workout_id;
+        }
+
+        return $tags;
     }
 
     /**
@@ -71,7 +119,7 @@ class SportService
      * @param Sport $entry
      * @param string $separator Value to separate between tags (- / *) 
      */
-    public function displayEntryTags(Sport $entry, string $separator): array
+    public function displaySportEntryRelatedTags(Sport $entry, string $separator): array
     {
         $tags = $entry->tags;
         $count = 0;

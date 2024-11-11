@@ -27,7 +27,7 @@ class SportShow extends Component
     
     public function render()
     {
-        //$tags = $this->sportService->displayEntryTags($this->sport, '');
+        //$tags = $this->sportService->displaySportEntryRelatedTags($this->sport, '');
 
         // Without using SportService       
         

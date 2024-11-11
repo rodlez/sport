@@ -165,6 +165,29 @@
                             @endif
                         </div>
                     </div>
+                    {{-- <div
+                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-start gap-1 px-4 py-2">
+                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start ">
+                            <span><i class="text-orange-600 fa-lg fa-solid fa-tags"></i></span>
+                            <span class="px-2">Tagis (<span
+                                    class="font-semibold text-sm">{{ count($tags) }}</span>)</span>
+                        </div>
+                        <div wire:ignore class="flex flex-row items-start w-full md:w-1/2 md:text-start">
+                            <select wire:model="selectedTags" name="selectedTags" id="selectedTags" multiple
+                                class="rounded-lg w-full md:w-80" size="6">
+                                <option value="0">All</option>
+                                @foreach ($tags as $tag)
+                                    <option value="{{ $tag['id'] }}">{{ $tag['name'] }}</option>
+                                @endforeach
+                            </select>
+                            @if ($selectedTags != [])
+                                <a wire:click.prevent="clearFilterTag" title="Reset Filter" class="cursor-pointer">
+                                    <span class="text-red-600 hover:text-red-400 px-2"><i
+                                            class="fa-solid fa-circle-xmark"></i></span>
+                                </a>
+                            @endif
+                        </div>
+                    </div> --}}
 
                     <!-- Duration -->
                     <div
@@ -408,7 +431,7 @@
             @endif
 
             <!-- Bulk Actions -->
-            {{-- @if (count($selections) > 0)
+            @if (count($selections) > 0)
                 <div class="flex flex-row justify-start items-center mx-4 pt-2 pb-1 border-b-2 border-b-green-600">
 
                     <div class="flex flex-row items-center gap-1">
@@ -426,7 +449,7 @@
                                 <i class="fa-solid fa-trash"></i>
                             </a>
 
-                            <form action="{{ route('codeexportbulk.index') }}" method="POST">
+                            {{-- <form action="{{ route('codeexportbulk.index') }}" method="POST">
                                 <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                                 @csrf
                                 <input type="hidden" id="listEntriesBulk" name="listEntriesBulk"
@@ -434,7 +457,7 @@
                                 <button class="cursor-pointer text-blue-600" title="Export as Excel">
                                     <i class="fa-solid fa-file-export"></i>
                                 </button>
-                            </form>
+                            </form> --}}
 
                         </div>
 
@@ -448,18 +471,18 @@
                     </div>
 
                 </div>
-            @endif --}}
+            @endif
 
             {{-- Bulk Entries {{ var_dump($selections) }} --}}
 
             <!-- Export -->
-            {{-- <div class="flex flex-row justify-end items-end sm:flex-row sm:justify-end gap-2 pt-2 px-0 mx-4">
+            <div class="flex flex-row justify-end items-end sm:flex-row sm:justify-end gap-2 pt-2 px-0 mx-4">
 
                 <div class="flex flex-row gap-2 items-end">
                     <span class="text-xs text-gray-500 font-bold">Export to Excel </span>
 
                     @if ($entries->count() > 0)
-                        <form action="{{ route('codeexporting.index') }}" method="POST">
+                        {{-- <form action="{{ route('codeexporting.index') }}" method="POST">
                             <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                             @csrf
                             <input type="hidden" id="listEntries" name="listEntries"
@@ -469,17 +492,17 @@
                                 title="Export Current Page">
                                 <span class="text-xs">Page</span>
                             </button>
-                        </form>
+                        </form> --}}
                     @endif
 
-                    <a href="{{ route('codeexport.index') }}"
+                    {{-- <a href="{{ route('codeexport.index') }}"
                         class="text-white text-sm sm:text-md rounded-md p-2 bg-black hover:bg-slate-600 transition duration-1000 ease-in-out"
                         title="Export All Entries">
                         <span class="text-xs px-1">All</span>
-                    </a>
+                    </a> --}}
                 </div>
 
-            </div> --}}
+            </div>
 
             {{-- Entries ({{gettype($entries)}}) -> {{$entries->count()}} -> IDs ({{$entries->pluck('id')}}) --}}
 
@@ -492,10 +515,10 @@
                     @if ($entries->count())
                         <table class="table-fixed min-w-full">
                             <thead class="h-12">
-                                <tr class="text-black text-left text-sm uppercase border-t-2 border-t-red-600">
+                                <tr class="text-black text-left text-sm uppercase border-t-2 border-t-green-600">
                                     <th class="p-2">
-                                        {{-- <input type="checkbox" wire:model.live="selectAll"
-                                            class="text-green-600 outline-none focus:ring-0 checked:bg-green-500"> --}}
+                                        <input type="checkbox" wire:model.live="selectAll"
+                                            class="text-green-600 outline-none focus:ring-0 checked:bg-green-500">
                                     </th>
                                     <th wire:click="sorting('id')" scope="col"
                                         class="hover:cursor-pointer hover:text-green-600 {{ $column == 'id' ? 'text-green-600' : '' }}">
@@ -507,21 +530,25 @@
                                     </th>
                                     <th wire:click="sorting('category_name')" scope="col"
                                         class="hover:cursor-pointer  hover:text-green-600 {{ $column == 'category_name' ? 'text-green-600' : '' }} px-2">
-                                        <span>Category <span class="text-xs">{{ '(' . $differentCategories . ')' }}</span>
-                                        {!! $sortLink !!}</span>
+                                        <span>Category <span
+                                                class="text-xs">{{ '(' . $differentCategories . ')' }}</span>
+                                            {!! $sortLink !!}</span>
                                     </th>
-                                    <th wire:click="sorting('status')" title="0 - Complete, 1 - Pending" scope="col"
+                                    <th wire:click="sorting('status')" title="0 - Complete, 1 - Pending"
+                                        scope="col"
                                         class="hover:cursor-pointer  hover:text-green-600 {{ $column == 'status' ? 'text-green-600' : '' }} px-2 min-w-[6rem] max-w-[8rem]">
                                         P {!! $sortLink !!}</span>
                                     </th>
                                     <th wire:click="sorting('location')" scope="col"
                                         class="hover:cursor-pointer  hover:text-green-600 {{ $column == 'location' ? 'text-green-600' : '' }} px-2">
-                                        <span>Location <span class="text-xs">{{ '(' . $differentLocations . ')' }}</span>
-                                        {!! $sortLink !!}</span>
+                                        <span>Location <span
+                                                class="text-xs">{{ '(' . $differentLocations . ')' }}</span>
+                                            {!! $sortLink !!}</span>
                                     </th>
                                     <th wire:click="sorting('duration')" scope="col"
                                         class="hover:cursor-pointer  hover:text-green-600 {{ $column == 'duration' ? 'text-green-600' : '' }} px-2 min-w-[8rem] max-w-[10rem]">
-                                        <span>Duration min<span class="text-xs">{{ '(' . $totalDuration . ')' }}</span>
+                                        <span>Duration min<span
+                                                class="text-xs">{{ '(' . $totalDuration . ')' }}</span>
                                             {!! $sortLink !!}</span>
                                     </th>
                                     <th wire:click="sorting('distance')" scope="col"
@@ -543,10 +570,10 @@
                                     <tr
                                         class="text-sm even:bg-gray-200 odd:bg-gray-300 transition-all duration-1000 hover:bg-yellow-400">
                                         <td class="px-2">
-                                            {{-- <input wire:model.live="selections" type="checkbox"
+                                            <input wire:model.live="selections" type="checkbox"
                                                 class="text-green-600 outline-none focus:ring-0 checked:bg-green-500"
                                                 value={{ $entry->id }} id={{ $entry->id }}
-                                                {{ in_array($entry->id, $selections) ? 'checked' : '' }}> --}}
+                                                {{ in_array($entry->id, $selections) ? 'checked' : '' }}>
                                         </td>
                                         <td class="px-2">{{ $entry->id }}</td>
                                         <td class="cursor-pointer min-w-[10rem] max-w-[12rem] whitespace-normal leading-relaxed px-2"
@@ -556,7 +583,9 @@
                                             </a>
                                         </td>
                                         <td class="px-2">{{ $entry->category_name }}</td>
-                                        <td class="px-2">{!! $entry->status == 1 ? '<span class="text-red-600">' . $entry->status . '</span>' : '<span class="text-green-600">' . $entry->status . '</span>' !!}</td>
+                                        <td class="px-2">{!! $entry->status == 1
+                                            ? '<span class="text-red-600">' . $entry->status . '</span>'
+                                            : '<span class="text-green-600">' . $entry->status . '</span>' !!}</td>
                                         <td class="px-2 text-center">{{ $entry->location }}</td>
                                         <td class="px-2 text-center">{{ $entry->duration }}</td>
                                         <td class="px-2 text-center">{{ $entry->distance }}</td>
@@ -572,6 +601,7 @@
                                                 @endforeach
                                             </div> --}}
                                         </td>
+                                        <!-- ACTIONS-->
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-3">
                                                 <!-- Show -->
@@ -600,13 +630,13 @@
                                                     </span>
                                                 </a> --}}
                                                 <!-- Edit -->
-                                                {{-- <a href="{{ route('sports.edit', $entry) }}" title="Edit this entry">
+                                                <a href="{{ route('sports.edit', $entry) }}" title="Edit this entry">
                                                     <span
                                                         class="text-green-600 hover:text-black transition-all duration-500"><i
                                                             class="fa-lg fa-solid fa-pen-to-square"></i></span>
-                                                </a> --}}
+                                                </a>
                                                 <!-- Delete -->
-                                                {{-- <form action="{{ route('sports.destroy', $entry) }}" method="POST">
+                                                <form action="{{ route('sports.destroy', $entry) }}" method="POST">
                                                     <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                                                     @csrf
                                                     <!-- Dirtective to Override the http method -->
@@ -618,7 +648,7 @@
                                                             class="text-red-600 hover:text-black transition-all duration-500"><i
                                                                 class="fa-lg fa-solid fa-trash"></i></span>
                                                     </button>
-                                                </form> --}}
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -658,5 +688,24 @@
 
 
     </div>
+
+    {{-- @script()
+    <script>
+        $(document).ready(function() {
+            $('#selectedTags').select2();
+
+            // event
+            $('#selectedTags').on('change', function() {
+                let selected = $(this).val();
+                //console.log(selected);
+                //$wire.set('selectedTags', selected); -> equivalent to model.live, makes a request for each selection
+                //$wire.set('selectedTags', selected, false);     // only update when click, equivalent to model
+                $wire.selectedTags = selected; // same as $wire.set('selectedTags', selected, false);
+            });
+
+        });
+       
+    </script>
+@endscript --}}
 
 </div>

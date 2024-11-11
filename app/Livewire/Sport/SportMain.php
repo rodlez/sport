@@ -159,11 +159,11 @@ class SportMain extends Component
     public function bulkDelete()
     {
         foreach ($this->selections as $selection) {
-            $entry = Sport::find($selection);
-            $entry->delete();
+            $sport = Sport::find($selection);
+            $sport->delete();
         }
 
-        return to_route('sports.index')->with('message', 'Sports: deleted.');
+        return to_route('sports.index')->with('message', 'Sports Selected successfully deleted.');
     }
 
     public function resetAll()
@@ -192,14 +192,14 @@ class SportMain extends Component
     {
         $found = 0;
 
-        // get only the categories that have at least one entry
+        // get only the categories that have at least one sport entry
         $categories = Sport::select(
             'sport_categories.id as id',
             'sport_categories.name as name'
         )
             ->join('sport_categories', 'sports.category_id', '=', 'sport_categories.id')->distinct('category_id')->orderBy('name', 'asc')->get()->toArray();
 
-        // get only the tags that have at least one entry    
+        // get only the tags that have at least one sport entry    
         $tags = SportTag::select(
             'sport_tags.id as id',
             'sport_tags.name as name'
@@ -291,7 +291,6 @@ class SportMain extends Component
         } else {
             $tagNames = [];
         }
-
 
         return view('livewire.sport.sport-main', [
             'entries' => $entries,

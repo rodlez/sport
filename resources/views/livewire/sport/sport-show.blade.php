@@ -24,11 +24,11 @@
                             class="fa-solid fa-file-pdf text-white hover:text-orange-600 transition-all duration-500"></i>
                     </a> --}}
                     <!-- Edit -->
-                    {{-- <a href="{{ route('sports.edit', $sport) }}" title="Edit">
+                    <a href="{{ route('sports.edit', $sport) }}" title="Edit">
                         <i class="fa-solid fa-pencil text-white hover:text-blue-600 transition-all duration-500"></i>
-                    </a> --}}
+                    </a>
                     <!-- Delete -->
-                    {{-- <form action="{{ route('sports.destroy', $sport) }}" method="POST">
+                    <form action="{{ route('sports.destroy', $sport) }}" method="POST">
                         <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                         @csrf
                         <!-- Dirtective to Override the http method -->
@@ -39,7 +39,7 @@
                             <i
                                 class="fa-solid fa-trash pr-4 text-white hover:text-red-600 transition-all duration-500"></i>
                         </button>
-                    </form> --}}
+                    </form>
                 </div>
             </div>
 
@@ -58,6 +58,14 @@
                     <span class="sm:text-lg font-bold sm:font-normal sm:w-24">User</span>
                 </div>
                 <span class="w-full px-8 sm:px-2">{{ $sport->user->name }}</span>
+            </div>
+            <!-- Status -->
+            <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 sm:border-t border-b border-b-gray-200">
+                <div class="flex flex-row justify-start items-center gap-2">
+                    <i class="fa-solid fa-toggle-on w-6 text-center"></i>
+                    <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Status</span>
+                </div>
+                <span class="w-full px-8 sm:px-2 {{ $sport->status == 0 ? 'text-green-600' : 'text-red-600' }}">{{ $sport->status == 0 ? 'Complete' : 'Pending' }}</span>
             </div>
             <!-- Title -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
@@ -92,7 +100,8 @@
                     <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Category</span>
                 </div>
                 <div class="w-full px-8 sm:px-2">
-                    <span class="bg-yellow-400 text-sm font-bold rounded-md p-2">{{ $sport->category->name }}</span>
+                    <span
+                        class="bg-blue-600 text-white text-sm font-bold rounded-md p-2">{{ $sport->category->name }}</span>
                 </div>
             </div>
             <!-- Tags -->
@@ -103,27 +112,32 @@
                 </div>
                 <div class="flex flex-row flex-wrap w-full px-8 sm:px-2 gap-2">
                     @foreach ($tags as $tag)
-                        <span class="bg-orange-400 text-sm font-bold rounded-md p-2">{{ $tag->name }}</span>
+                        <span
+                            class="bg-orange-600 text-white text-sm font-bold rounded-md p-2">{{ $tag->name }}</span>
                     @endforeach
                 </div>
             </div>
-            <!-- Workouts -->
-            <div class="flex flex-col sm:flex-row py-2 px-3 gap-2 sm:gap-1 border-b border-b-gray-200">
-                <div class="flex flex-row justify-start items-center gap-2">
-                    <i class="fa-solid fa-dumbbell w-6 text-center"></i>
-                    <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Workouts</span>
+            <!-- Workouts Only show if the Category is also Workout -->
+            @if (count($workouts) != 0)
+                <div class="flex flex-col sm:flex-row py-2 px-3 gap-2 sm:gap-1 border-b border-b-gray-200">
+                    <div class="flex flex-row justify-start items-center gap-2">
+                        <i class="fa-solid fa-dumbbell w-6 text-center"></i>
+                        <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Workouts</span>
+                    </div>
+                    <div class="flex flex-row flex-wrap w-full px-8 sm:px-2 gap-2">
+
+                        @foreach ($workouts as $workout)
+                            <span class="bg-red-600 text-white text-sm font-bold rounded-md p-2">
+                                <a href="{{ route('workouts.show', $workout) }}">
+                                    {{-- {{ excerpt($entry->title, 40) }} --}}
+                                    {{ $workout->title }}
+                                </a>
+                            </span>
+                        @endforeach
+
+                    </div>
                 </div>
-                <div class="flex flex-row flex-wrap w-full px-8 sm:px-2 gap-2">
-                    @foreach ($workouts as $workout)
-                        <span class="bg-orange-400 text-sm font-bold rounded-md p-2">
-                            <a href="{{ route('workouts.show', $workout) }}">
-                                {{-- {{ excerpt($entry->title, 40) }} --}}
-                                {{ $workout->title }}
-                            </a>
-                        </span>
-                    @endforeach
-                </div>
-            </div>
+            @endif
             <!-- Location -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
                 <div class="flex flex-row justify-start items-center gap-2">
@@ -157,14 +171,16 @@
                             <span x-data="{ show: false }" class="relative" data-tooltip="Copy Url">
                                 <button class="btn" data-clipboard-target="#url{{ $key }}"
                                     x-on:click="show = true" x-on:mouseout="show = false">
-                                    <i class="fa-solid fa-globe w-6 text-center p-0"></i>
+                                    <i
+                                        class="fa-solid fa-globe w-6 text-center hover:text-blue-600 transition-all duration-500"></i>
                                 </button>
                                 <span x-show="show" class="absolute -top-8 -right-6">
                                     <span class="bg-green-600 text-white rounded-lg p-2 opacity-100">Copied!</span>
                                 </span>
                             </span>
 
-                            <span class="sm:text-lg font-bold sm:font-normal sm:w-24">URL</span>
+                            <span class="sm:text-lg font-bold sm:font-normal sm:w-24">URL <span
+                                    class="text-xs">({{ $key + 1 }})</span></span>
                         </div>
                         <div class="flex flex-row justify-start items-center w-full gap-2">
                             <div id="url{{ $key }}" class="text-sm overflow-hidden w-full px-8 sm:px-2">
@@ -302,11 +318,11 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
 
             <div class="bg-black py-4 sm:rounded-b-md">
 
-            </div> --}}
+            </div>
 
 
         </div>
