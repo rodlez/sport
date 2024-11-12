@@ -65,7 +65,8 @@
                     <i class="fa-solid fa-toggle-on w-6 text-center"></i>
                     <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Status</span>
                 </div>
-                <span class="w-full px-8 sm:px-2 {{ $sport->status == 0 ? 'text-green-600' : 'text-red-600' }}">{{ $sport->status == 0 ? 'Complete' : 'Pending' }}</span>
+                <span
+                    class="w-full px-8 sm:px-2 {{ $sport->status == 0 ? 'text-green-600' : 'text-red-600' }}">{{ $sport->status == 0 ? 'Complete' : 'Pending' }}</span>
             </div>
             <!-- Title -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
@@ -137,7 +138,71 @@
 
                     </div>
                 </div>
+
+                @if (count($playlist) > 0)
+                <!-- Playlist, URLs of each Workout, if any -->
+                <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
+                    <div class="flex flex-row justify-start items-center gap-2">
+                        <i class="fa-brands fa-youtube w-6 text-center"></i>
+                        <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Playlist</span>
+                    </div>
+                    <div class="flex flex-col gap-2 w-full overflow-hidden">
+
+                        @foreach ($playlist as $video)
+                            <div class="flex flex-row justify-between items-center w-full">
+                                <div class="overflow-hidden w-full pl-8 pr-2 sm:px-2 text-sm">{{ $video->title }}
+                                </div>
+                                <div>
+                                    <a href="{{ $video->url }}" target="_blank" title="Open Url">
+                                        <i class="fa-solid fa-up-right-from-square px-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
+                @endif                
+
+                <!-- Video Files inside the Workout -->
+                @if ($totalVideos > 0)                    
+                    <div class="flex flex-col py-2 px-3 gap-1 border-b border-b-gray-200">
+                        <div class="flex flex-row justify-between items-center sm:items-start gap-2">
+                            <div class="flex flex-row justify-start items-center gap-2">
+                                <i class="fa-solid fa-video py-1 w-6 text-center"></i>
+                                <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Videos ({{ $totalVideos }})</span>                            
+                            </div>
+                            <div class="flex flex-row">
+                                <button wire:click="$set('showVideos', true)">
+                                    <i class="fa-solid fa-eye px-2" title="Show"></i>
+                                </button>
+                            </div>
+                        </div>                      
+                        @if ($showVideos)
+                            <div wire:transition class="text-center">
+                                @foreach ($videos as $video)
+                                    @foreach ($video as $value)
+                                        <span class="font-bold text-sm">{{ $value['original_filename'] }}</span>
+                                        <div class="aspect-video sm:pl-0 py-4">
+                                            {{-- <iframe src="{{ asset('storage/' . $value['path']) }}" class="w-full h-full"
+                                                frameborder="0"
+                                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe> --}}
+                                                <video class="w-full h-full" controls>
+                                                    <source src="{{ asset('storage/' . $value['path']) }}" type="video/mp4">
+                                                </video>
+                                                
+                                        </div>
+                                    @endforeach
+                                @endforeach
+                            </div>
+                        @endif
+
+                    </div>
+                @endif
+
             @endif
+
             <!-- Location -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
                 <div class="flex flex-row justify-start items-center gap-2">
@@ -270,7 +335,7 @@
                                     <td class="p-2">
                                         <div class="flex justify-center items-center gap-2">
                                             <!-- Download file -->
-                                             <a href="{{ route('sportsfile.download', [$sport, $file]) }}"
+                                            <a href="{{ route('sportsfile.download', [$sport, $file]) }}"
                                                 title="Download File">
                                                 <span
                                                     class="text-green-600 hover:text-black transition-all duration-500">

@@ -156,6 +156,33 @@
                 @endif
             </div>
 
+            @if (count($videos) > 0)
+                <!-- Videos -->
+                <div class="flex flex-col py-2 px-3 gap-2">
+                    <div class="flex flex-row justify-start items-center sm:items-start pb-2 gap-2">
+                        <i class="fa-solid fa-video py-1 w-6 text-center"></i>
+                        <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Videos
+                            ({{ count($videos) }})</span>
+                    </div>
+                    {{-- <div class="bg-red-300 flex flex-col w-full overflow-x-auto">
+                    @foreach ($videos as $video)
+                        <iframe src="{{ asset('storage/' . $video) }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+                    @endforeach
+                </div> --}}
+
+                    @foreach ($videos as $key => $video)
+                        <span class="font-bold sm:text-center">{{ $video['original_filename'] }}</span>
+                        <div class="aspect-video sm:pl-28 py-4">
+                            <iframe src="{{ asset('storage/' . $video['path']) }}" class="w-full h-full"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    @endforeach
+
+                </div>
+            @endif
+
             <!-- Files -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1">
                 <div class="flex flex-row justify-start items-center sm:items-start pb-2 gap-2">
@@ -196,7 +223,7 @@
                                     <td class="p-2">
                                         <div class="flex justify-center items-center gap-2">
                                             <!-- Download file -->
-                                             <a href="{{ route('workoutsfile.download', [$workout, $file]) }}"
+                                            <a href="{{ route('workoutsfile.download', [$workout, $file]) }}"
                                                 title="Download File">
                                                 <span
                                                     class="text-green-600 hover:text-black transition-all duration-500">

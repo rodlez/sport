@@ -92,6 +92,31 @@
                     @enderror
                 </div>
 
+                <div class="{{($category_id == 12) ? '' : 'hidden'}}">
+                    <!-- Workouts -->
+                    <h2 class="text-lg font-bold pt-2 pb-1 px-2">Workouts<span class="text-red-600">*</span></h2>
+
+                    <div class="flex flex-row">
+
+                        <div class="flex items-start inset-y-0 left-0 pointer-events-none">
+                            <i class="fa-solid fa-dumbbell bg-gray-200 p-3 rounded-l-md"></i>
+                        </div>
+
+                        <div wire:ignore class="w-full">
+                            <select wire:model="selectedWorkouts" name="selectedWorkouts" id="selectedWorkouts"
+                                multiple>
+                                @foreach ($workouts as $workout)
+                                    <option value="{{ $workout->id }}"
+                                        @if (old('selectedWorkouts') == $workout->id) selected @endif>
+                                        {{ $workout->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+
                 <!-- Tags -->
                 <h2 class="text-lg font-bold pt-2 pb-1 px-2">Tags <span class="text-red-600">*</span></h2>
 
@@ -116,31 +141,7 @@
                     @error('selectedTags')
                         {{ $message }}
                     @enderror
-                </div>
-
-                @if ($category_id == 12)
-                    <!-- Workouts -->
-                    <h2 class="text-lg font-bold pt-2 pb-1 px-2">Workouts</h2>
-
-                    <div class="flex flex-row">
-
-                        <div class="flex items-start inset-y-0 left-0 pointer-events-none">
-                            <i class="fa-solid fa-dumbbell bg-gray-200 p-3 rounded-l-md"></i>
-                        </div>
-
-                        <div wire:ignore class="w-full">
-                            <select wire:model="selectedWorkouts" name="selectedWorkouts" id="selectedWorkouts"
-                                multiple>
-                                @foreach ($workouts as $workout)
-                                    <option value="{{ $workout->id }}"
-                                        @if (old('selectedWorkouts') == $workout->id) selected @endif>
-                                        {{ $workout->title }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                    </div>
-                @endif
+                </div>               
 
                 <!-- Location -->
                 <h2 class="text-lg font-bold pt-2 pb-1 px-2">Location <span class="text-red-600">*</span></h2>

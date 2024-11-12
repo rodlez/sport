@@ -560,6 +560,7 @@
                                         class="hover:cursor-pointer hover:text-green-600 {{ $column == 'date' ? 'text-green-600' : '' }} px-2">
                                         <span>Date {!! $sortLink !!}</span>
                                     </th>
+                                    <th scope="col" class="capitalize text-center">WKs</th>
                                     <th scope="col" class="capitalize text-center">Files</th>
                                     <th scope="col" class="capitalize text-center">actions</th>
                                 </tr>
@@ -590,6 +591,10 @@
                                         <td class="px-2 text-center">{{ $entry->duration }}</td>
                                         <td class="px-2 text-center">{{ $entry->distance }}</td>
                                         <td class="px-2">{{ date('d-m-Y', strtotime($entry->date)) }}</td>
+                                        <td
+                                            class="text-sm {{ $entry->workouts->count() > 0 ? 'text-green-600' : 'text-black' }}  p-2">
+                                            {{ $entry->workouts->count() }}
+                                        </td>
                                         <td class="text-sm text-black p-2">
                                             <div class="flex flex-col justify-between items-center gap-2">
                                                 @foreach ($entry->files as $file)
@@ -601,6 +606,7 @@
                                                 @endforeach
                                             </div>
                                         </td>
+
                                         <!-- ACTIONS-->
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-3">
