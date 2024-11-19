@@ -156,7 +156,7 @@
                                 <span class="text-sm font-bold px-2">From</span>
                                 <div class="flex flex-row justify-center items-center">
                                     <input type="number" class="rounded-lg w-full" placeholder="From"
-                                    wire:model.live="durationFrom">
+                                        wire:model.live="durationFrom">
                                     @if ($initialDurationFrom != $durationFrom)
                                         <a wire:click.prevent="clearFilterDuration" title="Reset Filter"
                                             class="cursor-pointer">
@@ -165,7 +165,7 @@
                                             </span>
                                         </a>
                                     @endif
-                                </div>                                
+                                </div>
                             </div>
                             <div class="w-full md:w-80">
                                 <span class="text-sm font-bold px-2">To</span>
@@ -236,7 +236,7 @@
                     $initialDateFrom != $dateFrom ||
                     $tipo > 0 ||
                     $nivel > 0 ||
-                    $initialDurationTo != $durationTo || 
+                    $initialDurationTo != $durationTo ||
                     $initialDurationFrom != $durationFrom)
                 <div class="flex flex-row justify-between mx-4 pb-1 border-b-2 border-b-red-600">
                     <span class="text-lg text-zinc-800 px-2">Criteria</span>
@@ -302,7 +302,7 @@
                                             class="fa-lg fa-solid fa-circle-xmark"></i></span>
                                 </a>
                             </div>
-                        @endif                        
+                        @endif
                     </div>
 
                 </div>
@@ -422,8 +422,7 @@
                                     </th>
                                     <th wire:click="sorting('duration')" scope="col"
                                         class="hover:cursor-pointer  hover:text-green-600 {{ $column == 'category_name' ? 'text-green-600' : '' }} px-2 min-w-[8rem] max-w-[10rem]">
-                                        <span>Duration <span
-                                                class="text-xs">{{ '(' . $totalDuration . ')' }}</span>
+                                        <span>Duration <span class="text-xs">{{ '(' . $totalDuration . ')' }}</span>
                                             {!! $sortLink !!}</span>
                                     </th>
                                     <th wire:click="sorting('created')" scope="col"
@@ -449,24 +448,27 @@
                                         <td class="cursor-pointer min-w-[10rem] max-w-[12rem] whitespace-normal leading-relaxed px-2"
                                             title="Open Workout">
                                             <a href="{{ route('workouts.show', $entry) }}">
-                                                {{-- {{ excerpt($entry->title, 40) }} --}}   
-                                                {{ $entry->title }}                                             
-                                            </a>                                            
+                                                {{-- {{ excerpt($entry->title, 40) }} --}}
+                                                {{ $entry->title }}
+                                            </a>
                                         </td>
                                         <td class="px-2">{{ $entry->author }}</td>
                                         <td class="px-2">{{ $entry->type_name }}</td>
-                                        <td class="px-2">{{ $entry->level_name }}</td>
+                                        <td class="px-2">
+                                            @include('partials.workouts-levels', [
+                                                'level' => $entry->level_name,
+                                            ])
+                                        </td>
                                         <td class="px-2 text-center">{{ $entry->duration }}</td>
-                                        <td class="px-2">{{ date('d-m-Y', strtotime($entry->created)) }}</td>                                        
+                                        <td class="px-2">{{ date('d-m-Y', strtotime($entry->created)) }}</td>
                                         <td class="text-sm text-black p-2">
                                             <div class="flex flex-col justify-between items-center gap-2">
                                                 @foreach ($entry->files as $file)
-                                                    @include(
-                                                        'partials.mediatypes-file', [ 
+                                                    @include('partials.mediatypes-file', [
                                                         'file' => $file,
                                                         'iconSize' => 'fa-lg',
                                                         'imagesBig' => false,
-                                                        ])
+                                                    ])
                                                 @endforeach
                                             </div>
                                         </td>

@@ -137,12 +137,16 @@
                     <i class="fa-solid fa-globe w-6 text-center"></i>
                     <span class="sm:text-lg font-bold sm:font-normal sm:w-24">URL</span>
                 </div>
-                <div class="flex flex-row justify-between items-center w-full gap-2">
-                    <span class="px-8 sm:px-2">{{ $workout->url }}</span>
-                    <a href="{{ $workout->url }}" target="_blank" title="Open Url">
-                        <i class="fa-solid fa-up-right-from-square px-2"></i>
-                    </a>
-                </div>
+                @if (is_null($workout->url))
+                    <div class="w-full px-8 sm:px-2">-</div>
+                @else
+                    <div class="flex flex-row justify-between items-center w-full gap-2">
+                        <span class="px-8 sm:px-2">{{ $workout->url }}</span>
+                        <a href="{{ $workout->url }}" target="_blank" title="Open Url">
+                            <i class="fa-solid fa-up-right-from-square px-2"></i>
+                        </a>
+                    </div>
+                @endif
             </div>
             <!-- Description -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
