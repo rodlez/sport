@@ -6,9 +6,9 @@ namespace App\Services;
 use App\Models\Workout\Workout;
 use App\Models\Workout\WorkoutFile;
 use App\Models\Workout\WorkoutType;
+use App\Models\Workout\WorkoutLevel;
 
 use App\Models\Sport\Sport;
-
 // Files
 use Illuminate\Support\Facades\Storage;
 
@@ -24,6 +24,14 @@ class WorkoutService
     public function getTypes(): Collection
     {
         return WorkoutType::orderBy('name')->get();
+    }
+
+     /**
+     *  Get all the levels orderby id
+     */
+    public function getLevels(): Collection
+    {
+        return WorkoutLevel::orderBy('id')->get();
     }
 
      /**

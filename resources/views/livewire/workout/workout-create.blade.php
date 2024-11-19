@@ -95,6 +95,26 @@
                     @enderror
                 </div>
 
+                <!-- Level -->
+                <h2 class="text-lg font-bold pt-2 pb-1 px-2">Level <span class="text-red-600">*</span></h2>
+                <div class="relative">
+                    <select wire:model="level_id" name="level_id" id="level_id"
+                        class="w-full pl-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 focus:border-green-500">
+                        @foreach ($levels as $level)
+                            <option value="{{ $level->id }}" class="text-green-600"
+                                @if (old('level_id') == $level->id) selected @endif>{{ $level->name }}</option>
+                        @endforeach
+                    </select>
+                    <div class="absolute flex items-center inset-y-0 left-0 pointer-events-none">
+                        <i class="fa-solid fa-gauge bg-gray-200 p-3 rounded-l-md"></i>
+                    </div>
+                </div>
+                <div class="text-sm text-red-600 font-bold py-1 pl-12">
+                    @error('level_id')
+                        {{ $message }}
+                    @enderror
+                </div>
+
                 <!-- URL -->
                 <h2 class="text-lg font-bold pt-2 pb-1 px-2">URL</h2>
 

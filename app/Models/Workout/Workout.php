@@ -11,7 +11,8 @@ class Workout extends Model
 
     // protected array with the keys that are valid, when create method get the data array will have access to this keys
     protected $fillable = [        
-        'type_id',        
+        'type_id',
+        'level_id',        
         'title',
         'author',
         'duration',
@@ -27,6 +28,17 @@ class Workout extends Model
         return $this->belongsTo(
             WorkoutType::class,
             foreignKey: 'type_id'
+        );
+    }
+
+     /**
+     * Get the level associated.
+     */
+    public function level()
+    {
+        return $this->belongsTo(
+            WorkoutLevel::class,
+            foreignKey: 'level_id'
         );
     }
 

@@ -34,6 +34,9 @@ class WorkoutMain extends Component
     #[Url(as: 'ty', except: '')]
     public $tipo = 0;
 
+    #[Url(as: 'lev', except: '')]
+    public $nivel = 0;
+
     public $durationFrom;
     public $initialDurationFrom;
     public $durationTo;
@@ -67,7 +70,7 @@ class WorkoutMain extends Component
         $this->dateFrom = date('Y-m-d', strtotime(Workout::min('created_at')));
         $this->dateTo = date('Y-m-d', strtotime(Workout::max('created_at')));
         $this->tipo = 0;
-
+        $this->nivel = 0;
         $this->durationFrom = Workout::min('duration');
         $this->durationTo = Workout::max('duration');
     }
@@ -87,6 +90,11 @@ class WorkoutMain extends Component
     public function clearFilterTipo()
     {
         $this->tipo = 0;
+    }
+
+    public function clearFilterNivel()
+    {
+        $this->nivel = 0;
     }
 
     public function clearSearch()
@@ -129,10 +137,18 @@ class WorkoutMain extends Component
         )
             ->join('workout_types', 'workouts.type_id', '=', 'workout_types.id')->distinct('type_id')->orderBy('name', 'asc')->get()->toArray();
 
+        // get only the levels that have at least one entry
+        $levels = Workout::select(
+            'workout_levels.id as id',
+            'workout_levels.name as name'
+        )
+            ->join('workout_levels', 'workouts.level_id', '=', 'workout_levels.id')->distinct('level_id')->orderBy('id', 'asc')->get()->toArray();
+
         // Main Selection, Join tables code_entries, code_categories and code_entry_tag
         $entries = Workout::select(
             'workouts.id as id',
-            'workout_types.name as type_name',            
+            'workout_types.name as type_name', 
+            'workout_levels.name as level_name',           
             'workouts.title as title',
             'workouts.author as author',
             'workouts.duration as duration',
@@ -141,6 +157,7 @@ class WorkoutMain extends Component
             'workouts.created_at as created',
         )
             ->join('workout_types', 'workouts.type_id', '=', 'workout_types.id')
+            ->join('workout_levels', 'workouts.level_id', '=', 'workout_levels.id')
             ->distinct('workouts.id')
             ->orderby($this->orderColumn, $this->sortOrder);
 
@@ -159,6 +176,11 @@ class WorkoutMain extends Component
         // tipo filter
         if ($this->tipo != 0) {
             $entries = $entries->where('workout_types.name', '=', $this->tipo);
+        }
+
+        // level filter
+        if ($this->nivel != 0) {
+            $entries = $entries->where('workout_levels.name', '=', $this->nivel);
         }
 
         // interval duration filter
@@ -184,6 +206,7 @@ class WorkoutMain extends Component
         $stats = clone $entries;
         $totalEntries = $stats->count();
         $differentTypes = $stats->distinct('workout_types.id')->count();
+        $differentLevels = $stats->distinct('workout_levels.id')->count();
         $totalDuration = $stats->get()->sum('duration');
 
 
@@ -194,8 +217,10 @@ class WorkoutMain extends Component
             'found' => $found,
             'total' => $totalEntries,
             'differentTypes' => $differentTypes,
+            'differentLevels' => $differentLevels,
             'column' => $this->orderColumn,
             'types' => $types,
+            'levels' => $levels,
             'totalDuration' => $totalDuration,
         ])->layout('layouts.app');
     }

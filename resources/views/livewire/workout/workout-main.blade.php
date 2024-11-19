@@ -117,6 +117,30 @@
                         </div>
                     </div>
 
+                    <!-- Level -->
+                    <div
+                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2">
+                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
+                            <span><i class="text-orange-600 fa-lg fa-solid fa-gauge"></i></span>
+                            <span class="px-2">Level (<span
+                                    class="font-semibold text-sm">{{ count($levels) }}</span>)</span>
+                        </div>
+                        <div class="flex flex-row items-center w-full md:w-1/2 md:text-start">
+                            <select wire:model.live="nivel" class="rounded-lg w-full md:w-80">
+                                <option value="0">All</option>
+                                @foreach ($levels as $level)
+                                    <option value="{{ $level['name'] }}">{{ $level['name'] }}</option>
+                                @endforeach
+                            </select>
+                            @if ($nivel > 0)
+                                <a wire:click.prevent="clearFilterNivel" title="Reset Filter" class="cursor-pointer">
+                                    <span class="text-red-600 hover:text-red-400 px-2"><i
+                                            class="fa-solid fa-circle-xmark"></i></span>
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+
 
                     <!-- Duration -->
                     <div
@@ -211,6 +235,7 @@
                     $initialDateTo != $dateTo ||
                     $initialDateFrom != $dateFrom ||
                     $tipo > 0 ||
+                    $nivel > 0 ||
                     $initialDurationTo != $durationTo || 
                     $initialDurationFrom != $durationFrom)
                 <div class="flex flex-row justify-between mx-4 pb-1 border-b-2 border-b-red-600">
@@ -251,6 +276,17 @@
                                 <span
                                     class="bg-yellow-600 opacity-75 p-2 rounded-lg">{{ $tipo > 0 ? 'Type (' . $tipo . ')' : '' }}</span>
                                 <a wire:click.prevent="clearFilterTipo" title="Clear" class="cursor-pointer">
+                                    <span class="text-red-600 hover:text-black px-2 absolute -top-2 -right-4"><i
+                                            class="fa-lg fa-solid fa-circle-xmark"></i></span>
+                                </a>
+                            </div>
+                        @endif
+                        <!-- Level -->
+                        @if ($nivel > 0)
+                            <div class="flex relative">
+                                <span
+                                    class="bg-orange-600 opacity-75 p-2 rounded-lg">{{ $nivel > 0 ? 'Type (' . $nivel . ')' : '' }}</span>
+                                <a wire:click.prevent="clearFilterNivel" title="Clear" class="cursor-pointer">
                                     <span class="text-red-600 hover:text-black px-2 absolute -top-2 -right-4"><i
                                             class="fa-lg fa-solid fa-circle-xmark"></i></span>
                                 </a>
@@ -379,6 +415,11 @@
                                         <span>Type <span class="text-xs">{{ '(' . $differentTypes . ')' }}</span>
                                             {!! $sortLink !!}</span>
                                     </th>
+                                    <th wire:click="sorting('level_name')" scope="col"
+                                        class="hover:cursor-pointer  hover:text-green-600 {{ $column == 'type_name' ? 'text-green-600' : '' }} px-2 min-w-[6rem] max-w-[8rem]">
+                                        <span>Level <span class="text-xs">{{ '(' . $differentLevels . ')' }}</span>
+                                            {!! $sortLink !!}</span>
+                                    </th>
                                     <th wire:click="sorting('duration')" scope="col"
                                         class="hover:cursor-pointer  hover:text-green-600 {{ $column == 'category_name' ? 'text-green-600' : '' }} px-2 min-w-[8rem] max-w-[10rem]">
                                         <span>Duration <span
@@ -414,6 +455,7 @@
                                         </td>
                                         <td class="px-2">{{ $entry->author }}</td>
                                         <td class="px-2">{{ $entry->type_name }}</td>
+                                        <td class="px-2">{{ $entry->level_name }}</td>
                                         <td class="px-2 text-center">{{ $entry->duration }}</td>
                                         <td class="px-2">{{ date('d-m-Y', strtotime($entry->created)) }}</td>                                        
                                         <td class="text-sm text-black p-2">

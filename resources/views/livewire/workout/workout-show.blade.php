@@ -113,6 +113,24 @@
                     <span class="bg-yellow-400 text-sm font-bold rounded-md p-2">{{ $workout->type->name }}</span>
                 </div>
             </div>
+            <!-- Level -->
+            <div class="flex flex-col sm:flex-row py-2 px-3 gap-2 sm:gap-1 border-b border-b-gray-200">
+                <div class="flex flex-row justify-start items-center gap-2">
+                    <i class="fa-solid fa-gauge w-6 text-center"></i>
+                    <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Level</span>
+                </div>
+                <div class="w-full px-8 sm:px-2">
+                    @if ($workout->level->id == 4)
+                        <span class="bg-green-400 text-sm font-bold rounded-md p-2">{{ $workout->level->name }}</span>
+                    @endif
+                    @if ($workout->level->id == 5)
+                        <span class="bg-yellow-400 text-sm font-bold rounded-md p-2">{{ $workout->level->name }}</span>
+                    @endif
+                    @if ($workout->level->id == 6)
+                        <span class="bg-red-400 text-sm font-bold rounded-md p-2">{{ $workout->level->name }}</span>
+                    @endif
+                </div>
+            </div>
             <!-- URL -->
             <div class="flex flex-col sm:flex-row py-2 px-3 gap-1 border-b border-b-gray-200">
                 <div class="flex flex-row justify-start items-center gap-2">

@@ -14,6 +14,7 @@ class WorkoutEdit extends Component
     public $author;
     public $duration;
     public $type_id;
+    public $level_id;
     public $url;
     public $description;
 
@@ -23,6 +24,7 @@ class WorkoutEdit extends Component
         'author'        => 'required|min:3',
         'duration'      => 'required|numeric',
         'type_id'       => 'required',
+        'level_id'      => 'required',
         'url'           => 'nullable|url',
         // Because Quill Editor include at least <p></p>, always have at least 7 extra characters
         'description'   => 'nullable|min:10',       
@@ -76,6 +78,7 @@ class WorkoutEdit extends Component
         $this->author       = $this->workout->author;
         $this->duration     = $this->workout->duration;
         $this->type_id      = $this->workout->type_id;        
+        $this->level_id     = $this->workout->level_id;        
         $this->url          = $this->workout->url;
         $this->description  = $this->workout->description;
 
@@ -96,8 +99,9 @@ class WorkoutEdit extends Component
     public function render()
     {
         return view('livewire.workout.workout-edit', [
-            'workout' => $this->workout,
-            'types' => $this->workoutService->getTypes()
+            'workout'   => $this->workout,
+            'types'     => $this->workoutService->getTypes(),
+            'levels'    => $this->workoutService->getLevels()
         ])->layout('layouts.app');
     }
 }

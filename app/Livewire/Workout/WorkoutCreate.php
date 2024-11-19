@@ -4,6 +4,7 @@ namespace App\Livewire\Workout;
 
 use App\Livewire\Texteditor\Quill;
 use App\Models\Workout\Workout;
+use App\Models\Workout\WorkoutLevel;
 use App\Models\Workout\WorkoutType;
 use App\Services\WorkoutService;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class WorkoutCreate extends Component
     public $author;
     public $duration;
     public $type_id;
+    public $level_id;
     public $url;
     public $description;
 
@@ -25,6 +27,7 @@ class WorkoutCreate extends Component
         'author'        => 'required|min:3',
         'duration'      => 'required|numeric',
         'type_id'       => 'required',
+        'level_id'      => 'required',
         'url'           => 'nullable|url',
         // Because Quill Editor include at least <p></p>, always have at least 7 extra characters
         'description'   => 'nullable|min:10',       
@@ -71,7 +74,9 @@ class WorkoutCreate extends Component
     // Hook Runs once, immediately after the component is instantiated, but before render() is called. This is only called once on initial page load and never called again, even on component refreshes
     public function mount()
     {
+        // If not selected, get the ID value of the first element show in the select element
         $this->type_id = WorkoutType::orderBy('name', 'asc')->pluck('id')->first();
+        $this->level_id = WorkoutLevel::orderBy('id', 'asc')->pluck('id')->first();
     }
 
     public function save(Request $request)
@@ -79,7 +84,7 @@ class WorkoutCreate extends Component
 
         $validated = $this->validate();
         // include the user that created the Workout
-        $validated['user_id'] = $request->user()->id;        
+        $validated['user_id'] = $request->user()->id;    
 
         $workout = Workout::create($validated);
         
@@ -90,7 +95,8 @@ class WorkoutCreate extends Component
     {
 
         return view('livewire.workout.workout-create', [
-            'types' => $this->workoutService->getTypes()
+            'types' => $this->workoutService->getTypes(),
+            'levels' => $this->workoutService->getLevels()
         ])->layout('layouts.app');
     }
 }
