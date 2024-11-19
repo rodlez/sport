@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Pdf\PDFController;
 use Illuminate\Support\Facades\Route;
 
 // Controllers
@@ -114,4 +115,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::put('/wk_levels/{level}', [WorkoutLevelController::class, 'update'])->name('wk_levels.update');
     Route::delete('/wk_levels/{level}', [WorkoutLevelController::class, 'destroy'])->name('wk_levels.destroy');
     Route::get('/wk_levels/edit/{level}', WorkoutLevelsEdit::class)->name('wk_levels.edit');
+
+    /* PDF */
+    Route::get('/generate-pdf/{data}', [PDFController::class, 'generatePDF'])->name('pdf.generate');
+
 });

@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.badge_type {
+    background-color: #facc15;
+    font-size: 0.8rem;
+    color: black;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.badge_category {
+    background-color: #60a5fa;
+    font-size: 0.8rem;
+    color: black;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.badge_tag {
+    background-color: #fb923c;
+    font-size: 0.8rem;
+    color: black;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+table {
+	background-color: #f3f4f6;
+    border-collapse: collapse;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-family: Tahoma, Geneva, sans-serif;
+    width: 100%;
+}
+
+table td {
+	padding: 15px;
+}
+// thead will repeat in every pdf page
+table thead td {
+	background-color: #000;
+	color: #ffffff;
+	font-weight: normal;
+	font-size: 1rem;
+    text-align: left;
+    text-transform: capitalize;
+    padding: 25px 0px 25px 15px;
+	border: 0px solid #54585d;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+table tbody td {
+	font-size: 0.8rem;
+    color: #636363;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.tdHeader {
+    background-color: #000;
+	color: #ffffff;
+	font-weight: normal;
+	font-size: 1rem;
+    text-align: left;
+    text-transform: capitalize;
+    padding: 25px 0px 25px 15px;
+	border: 0px solid #54585d;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.tdInfo {
+    background-color: #d5d8dc;
+    color: #353535; 
+    font-weight: bold; 
+    border-left: 0px solid #FFF;  
+    border-right: 0px solid #FFF;
+    width: 50px;
+}
+
+.url {
+    display: block;
+    padding: 5px;
+}
+
+.icons {
+    text-align: center;
+}
+
+.icon_img {
+    width: 30px;
+    heigth: 30px;
+}
+
+.photo {
+    width: 100px;
+    heigth: 100px;
+}
+
+.code_text {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 0.6rem;
+}
