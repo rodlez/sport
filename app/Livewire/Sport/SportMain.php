@@ -3,8 +3,10 @@
 namespace App\Livewire\Sport;
 
 use App\Models\Sport\Sport;
+use App\Models\Sport\SportCategory;
 use App\Models\Sport\SportTag;
 use App\Services\SportService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Url;
@@ -197,7 +199,7 @@ class SportMain extends Component
             'sport_categories.id as id',
             'sport_categories.name as name'
         )
-            ->join('sport_categories', 'sports.category_id', '=', 'sport_categories.id')->distinct('category_id')->orderBy('name', 'asc')->get()->toArray();
+            ->join('sport_categories', 'sports.category_id', '=', 'sport_categories.id')->distinct('category_id')->orderBy('name', 'asc')->get()->toArray();       
 
         // get only the tags that have at least one sport entry    
         $tags = SportTag::select(
@@ -227,6 +229,10 @@ class SportMain extends Component
             //->join('sport_images', 'sports.id', '=', 'sport_images.sport_id')
             ->distinct('sports.id')
             ->orderby($this->orderColumn, $this->sortOrder);
+
+        // Select the entries for the current user
+        $user = Auth::user();
+        $entries = $entries->where('user_id', '=', $user->id);
             
         // status filter
         if ($this->pending != 2) {
@@ -273,6 +279,9 @@ class SportMain extends Component
             $entries = $entries->where('title', "like", "%" . trim($this->search) . "%");
             $found = $entries->count();
         }
+
+
+        
 
         // total values for display stats
         // clone to make a copy and not have the same values as entries

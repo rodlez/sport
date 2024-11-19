@@ -5,6 +5,7 @@ namespace App\Livewire\Sport;
 use App\Models\Sport\Sport;
 use App\Models\Sport\SportFile;
 use App\Services\SportService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -70,6 +71,11 @@ class SportFileUpload extends Component
 
     public function render()
     {
+        // resticted access - only user who owns the Sport has access
+        if ($this->sport->user_id !== Auth::id()) {
+            abort(403);
+        }  
+
         return view('livewire.sport.sport-file-upload', [
             'sport' => $this->sport
         ])->layout('layouts.app');

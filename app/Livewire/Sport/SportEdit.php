@@ -9,6 +9,7 @@ use App\Models\Sport\SportTag;
 use App\Models\Workout\Workout;
 use App\Services\SportService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SportEdit extends Component
@@ -149,10 +150,10 @@ class SportEdit extends Component
     
     public function render()
     {
-        // Using Service
-        //$categories = $this->sportService->getCategories();
-        //$tags       = $this->sportService->getTags();
-        //$workouts   = $this->sportService->getWorkouts();
+        // resticted access - only user who owns the Sport has access
+        if ($this->sport->user_id !== Auth::id()) {
+            abort(403);
+        }   
 
         // Using Eloquent Collection Methods
         $categories = SportCategory::all()->sortBy('name', SORT_NATURAL|SORT_FLAG_CASE);    

@@ -6,6 +6,7 @@ use App\Models\Sport\Sport;
 use App\Models\Sport\SportTag;
 use App\Services\SportService;
 use App\Services\WorkoutService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SportShow extends Component
@@ -30,6 +31,11 @@ class SportShow extends Component
 
     public function render()
     {
+        // resticted access - only user who owns the Sport has access
+        if ($this->sport->user_id !== Auth::id()) {
+            abort(403);
+        }        
+        
         $playlist       = $this->workoutService->getSportPlaylist($this->sport);        
         $videos         = $this->workoutService->getSportVideoPaths($this->sport);
         $totalVideos    = $this->workoutService->getVideosTotal($videos);
