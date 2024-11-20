@@ -14,10 +14,53 @@ use Illuminate\Support\Facades\Storage;
 
 // Collection
 use Illuminate\Database\Eloquent\Collection;
-use stdClass;
+use Exception;
+// Redirect
+use Illuminate\Http\RedirectResponse;
+// Service
+use App\Services\FileService;
+
 
 class WorkoutService
 {
+    public function __construct(private FileService $fileService)
+    {
+    }
+
+    /**
+     * Given a Workout delete it from the Database and delete all the associated files if any from the Database and Disk
+     * 
+     * Return a message string to use in the redirection in the Controller.
+     *
+     * @param  Workout $workout
+     * @return string
+     */
+    public function deleteWorkout(Workout $workout): string
+    {
+        $message = '';
+        
+        try {
+            $files = $workout->files;
+            $result = $workout->delete();
+
+            // If the Workout Entry is deleted, check if there is associated files and delete them.
+            if ($result) {
+                if ($files->isNotEmpty()) {
+                    $this->fileService->deleteFiles($files);
+                }
+                
+                $message = 'Workout (' . $workout->title . ') successfully deleted.';                
+            } else {
+                $message = 'Error - Workout: ' . $workout->title . ' can not be deleted.';
+            }
+        } catch (Exception $e) {            
+            $message = 'Error (' . $e->getCode() . ') Workout: ' . $workout->title . ' can not be deleted.';
+        } 
+        return $message;
+    }
+
+
+
     /**
      *  Get all the types orderby asc
      */
@@ -119,70 +162,5 @@ class WorkoutService
         return $videos;
     }
 
-    /**
-     * Upload a file and return an array with the info to make the insertion in the DB table
-     */
-
-    public function uploadFile(mixed $request, Workout $workout, string $disk, string $storagePath): array
-    {
-        // Info to store in the DB
-        $original_filename = $request->getClientOriginalName();
-        $media_type = $request->getMimeType();
-        $size = $request->getSize();
-        // Storage in filesystem file config, specify the storagePath
-        $path = Storage::disk($disk)->putFile($storagePath, $request);
-        $storage_filename = basename($path);
-
-        return [
-            'workout_id' => $workout->id,
-            'original_filename' => $original_filename,
-            'storage_filename' => $storage_filename,
-            'path' => $path,
-            'media_type' => $media_type,
-            'size' => $size,
-        ];
-    }
-
-    /**
-     * Download a file, disposition inline(browser) or attachment(download)
-     */
-
-    public function downloadFile(WorkoutFile $file, string $disposition)
-    {
-        // No need to specify the disposition to download the file.
-
-        $dispositionHeader = [
-            'Content-Disposition' => $disposition,
-        ];
-
-        if (Storage::disk('public')->exists($file->path)) {
-            //return Storage::disk('public')->download($file->path, $file->original_filename, $dispositionHeader);
-            return Storage::disk('public')->download($file->path, $file->original_filename);
-        } else {
-            return back()->with('message', 'Error: File ' . $file->original_filename . ' can not be downloaded.');
-        }
-    }
-
-    /**
-     * Inset new Note and insert the tags in the intermediate table note_tag
-     */
-    public function deleteFiles(Collection $files)
-    {
-        foreach ($files as $file) {
-            $this->deleteOneFile($file);
-        }
-    }
-
-    /**
-     * Inset new Note and insert the tags in the intermediate table note_tag
-     */
-    public function deleteOneFile(WorkoutFile $file)
-    {
-        if (Storage::disk('public')->exists($file->path)) {
-            /*  echo $file->path;
-             dd('borradito'); */
-            Storage::disk('public')->delete($file->path);
-            $file->delete();
-        }
-    }
+   
 }
