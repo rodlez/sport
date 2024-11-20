@@ -51,6 +51,42 @@ class SportService
         } 
         return $message;
     }
+
+     /**
+     * Given an array with Sport ids, delete them from the Database and also delete all the associated files if any from the Database and Disk
+     * 
+     * Return a message string to use in the redirection in the Controller.
+     *
+     * @param  array $sportIds
+     * @return string
+     */
+    public function bulkDeleteSports(array $sportIds)
+    {
+        $message = '';
+
+        try {
+        
+            foreach ($sportIds as $sportId) {
+                $sport = Sport::find($sportId);
+                
+                $files = $sport->files;
+                $result = $sport->delete();
+
+                if ($result) {
+                    if ($files->isNotEmpty()) {
+                        $this->fileService->deleteFiles($files);
+                    }                
+                }
+            } 
+            $message = 'Sport(s) successfully deleted.';    
+        }
+        catch (Exception $e) {            
+            $message = 'Error (' . $e->getCode() . ') Sport(s) can not be deleted.';
+        } 
+        
+        return $message;        
+       
+    }
     
     /**
      * Inset new Sport and insert the tags in the pivot table sports_tag and if any, the workouts in the pivot table sports_workouts

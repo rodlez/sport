@@ -160,14 +160,10 @@ class SportMain extends Component
 
     public function bulkDelete()
     {
-        foreach ($this->selections as $selection) {
-            $sport = Sport::find($selection);
-            $sport->delete();
-        }
+        
+        $result = $this->sportService->bulkDeleteSports($this->selections);
 
-        // delete the
-
-        return to_route('sports.index')->with('message', 'Sports Selected successfully deleted.');
+        return to_route('sports.index')->with('message', $result);
     }
 
     public function resetAll()

@@ -59,6 +59,42 @@ class WorkoutService
         return $message;
     }
 
+    /**
+     * Given an array with Workout ids, delete them from the Database and also delete all the associated files if any from the Database and Disk
+     * 
+     * Return a message string to use in the redirection in the Controller.
+     *
+     * @param  array $workoutIds
+     * @return string
+     */
+    public function bulkDeleteWorkouts(array $workoutIds)
+    {
+        $message = '';
+
+        try {
+        
+            foreach ($workoutIds as $workoutId) {
+                $workout = Workout::find($workoutId);
+                
+                $files = $workout->files;
+                $result = $workout->delete();
+
+                if ($result) {
+                    if ($files->isNotEmpty()) {
+                        $this->fileService->deleteFiles($files);
+                    }                
+                }
+            } 
+            $message = 'Workout(s) successfully deleted.';    
+        }
+        catch (Exception $e) {            
+            $message = 'Error (' . $e->getCode() . ') Workout(s) can not be deleted.';
+        } 
+        
+        return $message;        
+       
+    }
+
 
 
     /**

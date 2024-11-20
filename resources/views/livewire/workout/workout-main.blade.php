@@ -309,7 +309,7 @@
             @endif
 
             <!-- Bulk Actions -->
-            {{-- @if (count($selections) > 0)
+            @if (count($selections) > 0)
                 <div class="flex flex-row justify-start items-center mx-4 pt-2 pb-1 border-b-2 border-b-green-600">
 
                     <div class="flex flex-row items-center gap-1">
@@ -327,7 +327,7 @@
                                 <i class="fa-solid fa-trash"></i>
                             </a>
 
-                            <form action="{{ route('codeexportbulk.index') }}" method="POST">
+                            {{-- <form action="{{ route('codeexportbulk.index') }}" method="POST">
                                 <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                                 @csrf
                                 <input type="hidden" id="listEntriesBulk" name="listEntriesBulk"
@@ -335,7 +335,7 @@
                                 <button class="cursor-pointer text-blue-600" title="Export as Excel">
                                     <i class="fa-solid fa-file-export"></i>
                                 </button>
-                            </form>
+                            </form> --}}
 
                         </div>
 
@@ -349,7 +349,7 @@
                     </div>
 
                 </div>
-            @endif --}}
+            @endif
 
             {{-- Bulk Entries {{ var_dump($selections) }} --}}
 
@@ -395,8 +395,8 @@
                             <thead class="h-12">
                                 <tr class="text-black text-left text-sm uppercase border-t-2 border-t-red-600">
                                     <th class="p-2">
-                                        {{-- <input type="checkbox" wire:model.live="selectAll"
-                                            class="text-green-600 outline-none focus:ring-0 checked:bg-green-500"> --}}
+                                        <input type="checkbox" wire:model.live="selectAll"
+                                            class="text-green-600 outline-none focus:ring-0 checked:bg-green-500">
                                     </th>
                                     <th wire:click="sorting('id')" scope="col"
                                         class="hover:cursor-pointer hover:text-green-600 {{ $column == 'id' ? 'text-green-600' : '' }}">
@@ -439,10 +439,10 @@
                                     <tr
                                         class="text-sm even:bg-gray-200 odd:bg-gray-300 transition-all duration-1000 hover:bg-yellow-400">
                                         <td class="px-2">
-                                            {{-- <input wire:model.live="selections" type="checkbox"
+                                            <input wire:model.live="selections" type="checkbox"
                                                 class="text-green-600 outline-none focus:ring-0 checked:bg-green-500"
                                                 value={{ $entry->id }} id={{ $entry->id }}
-                                                {{ in_array($entry->id, $selections) ? 'checked' : '' }}> --}}
+                                                {{ in_array($entry->id, $selections) ? 'checked' : '' }}>
                                         </td>
                                         <td class="px-2">{{ $entry->id }}</td>
                                         <td class="cursor-pointer min-w-[10rem] max-w-[12rem] whitespace-normal leading-relaxed px-2"

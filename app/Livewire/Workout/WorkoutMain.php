@@ -3,6 +3,7 @@
 namespace App\Livewire\Workout;
 
 use App\Models\Workout\Workout;
+use App\Services\WorkoutService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Url;
@@ -42,10 +43,25 @@ class WorkoutMain extends Component
     public $durationTo;
     public $initialDurationTo;
 
+    // multiple batch selections
+    public $selections = [];   
+
+    // select all
+    public $selectAll = false;
 
     public function updated()
     {        
         $this->resetPage();
+    }
+
+    // Dependency Injection to use the Service
+    protected WorkoutService $workoutService;
+
+    // Hook Runs on every request, immediately after the component is instantiated, but before any other lifecycle methods are called
+    public function boot(
+        WorkoutService $workoutService,
+    ) {
+        $this->workoutService = $workoutService;
     }
 
     public function mount() {
@@ -59,6 +75,16 @@ class WorkoutMain extends Component
         $this->durationTo = Workout::max('duration');
         $this->initialDurationTo = Workout::max('duration');
     } 
+
+    // prefix updated method to access the value of the variable wired
+    public function updatedSelectAll($value)
+    {        
+        if ($value) {
+            $this->selections = Workout::pluck('id')->toArray();
+        } else {
+            $this->selections = [];
+        }
+    }  
 
     public function activateFilter()
     {
@@ -100,6 +126,20 @@ class WorkoutMain extends Component
     public function clearSearch()
     {
         $this->search = '';
+    }
+
+    public function bulkClear()
+    {
+        $this->selections = [];
+        $this->selectAll = false;
+    }
+
+    public function bulkDelete()
+    {
+        
+        $result = $this->workoutService->bulkDeleteWorkouts($this->selections);
+
+        return to_route('workouts.index')->with('message', $result);
     }
 
     public function resetAll()
