@@ -19,7 +19,7 @@
                 <span class="text-xl text-white font-bold capitalize sm:mt-8 mx-4">Workout Information</span>
                 <div class="flex flex-row justify-end items-end gap-4 w-fit sm:mt-8 mx-2">
                     <!-- PDF -->
-                    <a href="{{ route('pdf.generate', $workout) }}" title="Download as PDF">
+                    <a href="{{ route('workout_pdf.generate', $workout) }}" title="Download as PDF">
                         <i
                             class="fa-solid fa-file-pdf text-white hover:text-orange-600 transition-all duration-500"></i>
                     </a>

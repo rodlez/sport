@@ -116,7 +116,6 @@
                     </div>
 
                 </div>
-
                 <!-- Tags -->
                 <h2 class="text-lg font-bold pt-2 pb-1 px-2">Tags <span class="text-red-600">*</span></h2>
 

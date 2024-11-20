@@ -89,6 +89,7 @@ class SportCreate extends Component
         $this->fill([
             'inputs' => collect([['url' => '']])
         ]);
+
     }
 
     public function remove($key)
@@ -103,9 +104,7 @@ class SportCreate extends Component
 
 
     public function save(Request $request)
-    //public function save()
     {
-
         $validated = $this->validate();
         $validated['distance'] != "" ?: $validated['distance'] = 0;
         $validated['user_id'] = $request->user()->id;

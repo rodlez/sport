@@ -117,6 +117,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/wk_levels/edit/{level}', WorkoutLevelsEdit::class)->name('wk_levels.edit');
 
     /* PDF */
-    Route::get('/generate-pdf/{data}', [PDFController::class, 'generatePDF'])->name('pdf.generate');
+    Route::get('/generate_sp_pdf/{data}', [PDFController::class, 'generateSportPDF'])->name('sport_pdf.generate');
+    Route::get('/generate_wk_pdf/{data}', [PDFController::class, 'generateWorkoutPDF'])->name('workout_pdf.generate');
 
 });

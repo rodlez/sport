@@ -165,6 +165,8 @@ class SportMain extends Component
             $sport->delete();
         }
 
+        // delete the
+
         return to_route('sports.index')->with('message', 'Sports Selected successfully deleted.');
     }
 

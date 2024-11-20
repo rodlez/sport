@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Sport;
 
 use App\Http\Controllers\Controller;
 use App\Models\Sport\Sport;
+use App\Services\FileService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SportController extends Controller
 {
+    public function __construct(private FileService $fileService) {        
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -61,28 +66,28 @@ class SportController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Sport $sport)
-    {
-        /* resticted access - only user who owns the type has access
-        if ($type->user_id !== request()->user()->id) {
+    {              
+         // resticted access - only user who owns the Sport has access
+         if ($sport->user_id !== Auth::id()) {
             abort(403);
-        }*/
-
-        // First delete the files associated to this workout
-        /*  $files = $workout->files;
-
-        if ($files->count() > 0) {
-            $this->workoutService->deleteFiles($files);
-        }   */
-        // Delete the workout entry in the DB
-        //dd($sport);
+        }   
 
         try {
             
+            $files = $sport->files;           
             $result = $sport->delete();
 
+            // If the Sport Entry is deleted, check if there is associated files and delete them.
             if ($result) {
+                
+                if($files->isNotEmpty()) {
+                    $this->fileService->deleteFiles($files);
+                }                
+
                 return to_route('sports.index')->with('message', 'Sport (' . $sport->title . ') successfully deleted.');
+
             } else {
+
                 return to_route('sports.index')->with('message', 'Error - Sport: ' . $sport->title . ' can not be deleted.');
             }
             

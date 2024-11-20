@@ -619,14 +619,14 @@
                                                     </span>
                                                 </a>
                                                 <!-- PDF -->
-                                                {{-- <a href="{{ route('pdf.generate', $entry) }}"
+                                                <a href="{{ route('sport_pdf.generate', $entry) }}"
                                                     title="Download as PDF">
                                                     <span
                                                         class="text-orange-600 hover:text-black transition-all duration-500 tooltip">
                                                         <i class="fa-lg fa-solid fa-file-pdf"></i>
                                                         <span class="tooltiptext">Download as PDF</span>
                                                     </span>
-                                                </a> --}}
+                                                </a>
                                                 <!-- Upload File -->
                                                 <a href="{{ route('sports.upload', $entry) }}">
                                                     <span

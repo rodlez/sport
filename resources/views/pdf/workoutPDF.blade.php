@@ -49,7 +49,7 @@
                 </tr>
                 <tr>
                     <td class="tdInfo">Level</td>
-                    <td><span class="badge_type">{{ $level_name }}</span></td>
+                    <td>@include('pdf.partial-workout-levels', ['level_name' => $level_name])</td>
                 </tr>
                 @if (isset($url))
                     <tr>
@@ -74,43 +74,32 @@
                     </tr>
                 @endif
 
-                @if (isset($files))
-                    <tr>
-                        <td class="tdInfo">Files</td>
-                        <td>
-                            <table>
-                                <thead>
-                                    <th></th>
-                                    <th></th>
-                                    {{-- <th style="text-align:left; padding-left: 15px;">Filename</th> --}}
-                                    {{-- <th>Size (KB)</th> --}}
-                                    {{-- <th>Format</th> --}}
-                                </thead>
-
-                                @foreach ($files as $file)
-                                    <tbody>
-                                        <tr>
-                                            @include('pdf.partial-media-file', $file)
-                                            {{-- <td><img src="{{ public_path('storage/' . $file['path']) }}"
-                                                    width="100"></td> --}}
-                                            <td>{{ $file['original_filename'] }}</td>
-                                            {{-- <td>{{$file['size']}}</td> --}}
-                                            {{-- <td>{{$file['media_type']}}</td> --}}
-                                        </tr>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                        </td>
-                    </tr>
-                @else
-                    <tr>
-                        <td class="tdInfo">Files</td>
-                        <td>-</td>
-                    </tr>
-                @endif
             </tbody>
 
         </table>
+
+        @if (isset($files))
+
+        <div class="page_break">            
+        </div>
+
+        <div class="page_break">
+
+            <table>
+                <tr>
+                    <td class="tdInfo">Files</td>
+                </tr>
+                @foreach ($files as $file)
+                    <tr>
+                        @include('pdf.partial-media-file', $file)
+                    </tr>
+                @endforeach
+            </table>
+
+        </div>
+
+        @endif
+
 
     </div>
 

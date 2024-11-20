@@ -4,7 +4,7 @@ namespace App\Livewire\Sport;
 
 use App\Models\Sport\Sport;
 use App\Models\Sport\SportFile;
-use App\Services\SportService;
+use App\Services\FileService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -18,7 +18,7 @@ class SportFileUpload extends Component
     public $files = [];
 
     // Dependency Injection to use the Service
-    protected SportService $sportService;
+    protected FileService $fileService;
 
     protected $rules = [
         'files' => 'array|min:1|max:5',
@@ -36,9 +36,9 @@ class SportFileUpload extends Component
 
     // Hook Runs on every request, immediately after the component is instantiated, but before any other lifecycle methods are called
     public function boot(
-        SportService $sportService,
+        FileService $fileService,
     ) {
-        $this->sportService = $sportService;
+        $this->fileService = $fileService;
     }
 
     public function mount(Sport $sport)
@@ -52,20 +52,16 @@ class SportFileUpload extends Component
     }
 
     public function save()
-    {
-        //dd($this->files);
-        
+    {       
         $this->validate();
-
-        //dd($this->validate());
 
         foreach ($this->files as $file) {
             $storagePath = 'sportfiles/' . $file->getClientOriginalExtension();
-            $data = $this->sportService->uploadFile($file, $this->sport, 'public', $storagePath);
-            
+            $data = $this->fileService->uploadFile($file, $this->sport->id, 'sport_id', 'public', $storagePath);
+            // if there is an error, create method will throw an exception
             SportFile::create($data);            
         }
-
+        
         return to_route('sports.show', $this->sport)->with('message', 'File(s) for (' . $this->sport->title . ') successfully uploaded.');
     }
 

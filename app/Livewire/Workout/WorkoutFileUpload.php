@@ -7,7 +7,7 @@ use Livewire\WithFileUploads;
 
 use App\Models\Workout\Workout;
 use App\Models\Workout\WorkoutFile;
-use App\Services\WorkoutService;
+use App\Services\FileService;
 
 
 class WorkoutFileUpload extends Component
@@ -19,7 +19,7 @@ class WorkoutFileUpload extends Component
     public $files = [];
 
     // Dependency Injection to use the Service
-    protected WorkoutService $workoutService;
+    protected FileService $fileService;
 
     protected $rules = [
         'files' => 'array|min:1|max:5',
@@ -37,9 +37,9 @@ class WorkoutFileUpload extends Component
 
     // Hook Runs on every request, immediately after the component is instantiated, but before any other lifecycle methods are called
     public function boot(
-        WorkoutService $workoutService,
+        FileService $fileService,
     ) {
-        $this->workoutService = $workoutService;
+        $this->fileService = $fileService;
     }
 
     public function mount(Workout $workout)
@@ -53,17 +53,14 @@ class WorkoutFileUpload extends Component
     }
 
     public function save()
-    {
-        //dd($this->files);
-        
+    {        
         $this->validate();
-
-        //dd($this->validate());
 
         foreach ($this->files as $file) {
             $storagePath = 'workoutfiles/' . $file->getClientOriginalExtension();
-            $data = $this->workoutService->uploadFile($file, $this->workout, 'public', $storagePath);
-            
+            //$data = $this->workoutService->uploadFile($file, $this->workout, 'public', $storagePath);
+            $data = $this->fileService->uploadFile($file, $this->workout->id, 'workout_id', 'public', $storagePath);
+            // if there is an error, create method will throw an exception
             WorkoutFile::create($data);            
         }
 

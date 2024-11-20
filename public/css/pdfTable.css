@@ -7,19 +7,10 @@ body {
     padding: 20px;
 }
 
-.badge_type {
-    background-color: #facc15;
-    font-size: 0.8rem;
-    color: black;
-    padding: 8px;
-    text-align: center;
-    border-radius: 5px;
-}
-
 .badge_category {
     background-color: #60a5fa;
     font-size: 0.8rem;
-    color: black;
+    color: #ffffff;
     padding: 8px;
     text-align: center;
     border-radius: 5px;
@@ -28,11 +19,48 @@ body {
 .badge_tag {
     background-color: #fb923c;
     font-size: 0.8rem;
-    color: black;
+    color: #ffffff;
     padding: 8px;
     text-align: center;
     border-radius: 5px;
     margin-right: 5px;
+}
+
+.badge_workout {
+    background-color: #e43e16;
+    font-size: 0.8rem;
+    color: #ffffff;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.badge_level_begginer {
+    background-color: #16e445;
+    font-size: 0.8rem;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.badge_level_intermediate {
+    background-color: #e4e416;
+    font-size: 0.8rem;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.badge_level_advanced {
+    background-color: #f70f08;
+    font-size: 0.8rem;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
 }
 
 table {
@@ -46,6 +74,8 @@ table {
 
 table td {
 	padding: 15px;
+    word-wrap: break-word;
+    
 }
 // thead will repeat in every pdf page
 table thead td {
@@ -89,6 +119,12 @@ table tbody td {
     width: 50px;
 }
 
+.tdWorkout {   
+    color: #353535; 
+    word-wrap: break-word;  
+    line-height: 33px;  
+}
+
 .url {
     display: block;
     padding: 5px;
@@ -104,8 +140,8 @@ table tbody td {
 }
 
 .photo {
-    width: 100px;
-    heigth: 100px;
+    width: 400px;
+   /*  heigth: 400px; */ 
 }
 
 .code_text {
@@ -113,4 +149,8 @@ table tbody td {
     white-space: pre-wrap;
     word-wrap: break-word;
     font-size: 0.6rem;
+}
+
+.page_break {
+    page-break-after: always;
 }
