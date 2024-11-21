@@ -482,7 +482,7 @@
                     <span class="text-xs text-gray-500 font-bold">Export to Excel </span>
 
                     @if ($entries->count() > 0)
-                        {{-- <form action="{{ route('codeexporting.index') }}" method="POST">
+                        <form action="{{ route('sport.exportselected') }}" method="POST">
                             <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                             @csrf
                             <input type="hidden" id="listEntries" name="listEntries"
@@ -492,14 +492,14 @@
                                 title="Export Current Page">
                                 <span class="text-xs">Page</span>
                             </button>
-                        </form> --}}
+                        </form>
                     @endif
 
-                    {{-- <a href="{{ route('codeexport.index') }}"
+                    <a href="{{ route('sport.exportall') }}"
                         class="text-white text-sm sm:text-md rounded-md p-2 bg-black hover:bg-slate-600 transition duration-1000 ease-in-out"
                         title="Export All Entries">
                         <span class="text-xs px-1">All</span>
-                    </a> --}}
+                    </a>
                 </div>
 
             </div>

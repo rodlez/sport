@@ -54,7 +54,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    
     /* DASHBOARD */
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -63,14 +62,21 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     /* SPORTS */
     Route::get('/sports', SportMain::class)->name('sports.index');
     Route::get('/sports/create', SportCreate::class)->name('sports.create');
+
+    // EXCEL 
+    Route::get('/sports/export', [SportController::class, 'exportAll'])->name('sport.exportall')->middleware(['auth', 'verified']);
+    Route::post('/sports/export', [SportController::class, 'exportSelected'])->name('sport.exportselected')->middleware(['auth', 'verified']);
+
     Route::get('/sports/{sport}', SportShow::class)->name('sports.show');
     Route::delete('/sports/{sport}', [SportController::class, 'destroy'])->name('sports.destroy');
     Route::get('/sports/edit/{sport}', SportEdit::class)->name('sports.edit');
 
-     /* SPORT FILES */
-     Route::get('/sports/{sport}/file', SportFileUpload::class)->name('sports.upload');
-     Route::get('/sports/{sport}/file/{file}', [SportFileController::class, 'download'])->name('sportsfile.download');
-     Route::delete('/sports/{sport}/file/{file}', [SportFileController::class, 'destroy'])->name('sportsfile.destroy');
+    /* SPORT FILES */
+    Route::get('/sports/{sport}/file', SportFileUpload::class)->name('sports.upload');
+    Route::get('/sports/{sport}/file/{file}', [SportFileController::class, 'download'])->name('sportsfile.download');
+    Route::delete('/sports/{sport}/file/{file}', [SportFileController::class, 'destroy'])->name('sportsfile.destroy');
+
+    
 
     /* SPORT CATEGORIES */
     Route::get('/sp_categories', SportCategories::class)->name('sp_categories.index');
@@ -120,4 +126,5 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/generate_sp_pdf/{data}', [PDFController::class, 'generateSportPDF'])->name('sport_pdf.generate');
     Route::get('/generate_wk_pdf/{data}', [PDFController::class, 'generateWorkoutPDF'])->name('workout_pdf.generate');
 
+    
 });

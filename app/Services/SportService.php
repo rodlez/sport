@@ -186,13 +186,50 @@ class SportService
         return $tagsNames;
     }
 
+
+    /**
+     *  Get array with the name of the tags for this entry
+     * 
+     * @param Sport $entry
+     * @param string $separator Value to separate between tags (- / *) 
+     */
+    public function getSportTagsNames(Sport $entry): array
+    {
+        $tags = $entry->tags;        
+        $result = [];
+
+        foreach ($tags as $tag) {         
+                $result[] = $tag->name;         
+        }
+
+        return $result;
+    }
+
+    /**
+     *  Get array with the name of the tags for this entry
+     * 
+     * @param Sport $entry
+     * @param string $separator Value to separate between tags (- / *) 
+     */
+    public function getSportWorkoutsTitles(Sport $entry): array
+    {
+        $workouts = $entry->workouts;        
+        $result = [];
+
+        foreach ($workouts as $workout) {         
+                $result[] = $workout->title;         
+        }
+
+        return $result;
+    }
+
     /**
      *  Get tags for this entry
      * 
      * @param Sport $entry
      * @param string $separator Value to separate between tags (- / *) 
      */
-    public function displaySportEntryRelatedTags(Sport $entry, string $separator): array
+    /* public function displaySportEntryRelatedTags(Sport $entry, string $separator): array
     {
         $tags = $entry->tags;
         $count = 0;
@@ -209,6 +246,6 @@ class SportService
         }
 
         return $result;
-    }
+    } */
 
 }

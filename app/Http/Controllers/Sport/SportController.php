@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Sport;
 
+
 use App\Http\Controllers\Controller;
 use App\Models\Sport\Sport;
 use App\Services\SportService;
-use Exception;
+// Auth
 use Illuminate\Support\Facades\Auth;
+// Excel Export
+use App\Exports\SportExport;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SportController extends Controller
 {
@@ -27,5 +32,37 @@ class SportController extends Controller
 
         return to_route('sports.index')->with('message', $result);
        
+    }
+
+    /**
+     * Export the collection as excel file
+     */
+    public function exportAll() 
+    {        
+        //$totalEntries = $this->codeService->totalEntries();
+
+        $totalEntries = Sport::get()->count();
+        $excelFileName = 'AllSports('. $totalEntries .').xlsx';
+
+        return Excel::download(new SportExport(true, [], $this->sportService), $excelFileName);
+    }
+
+     /**
+     * Export the collection as excel file
+     */
+    public function exportSelected(Request $request) 
+    {
+        
+        //dd($request->listEntries);
+        //echo "listEntries -> " . gettype($request->listEntries);
+        
+        // listEntries is a string, remove [ ] from start and end of the string
+        $stringListEntries = substr($request->listEntries, 1, -1);
+
+        // convert string to array of Ids
+        $listIds = explode(',',$stringListEntries);
+        $excelFileName = 'SelectionSports('. count($listIds) .').xlsx';                
+        
+        return Excel::download(new SportExport(false, $listIds, $this->sportService),  $excelFileName);
     }
 }
