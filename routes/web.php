@@ -66,6 +66,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     // EXCEL 
     Route::get('/sports/export', [SportController::class, 'exportAll'])->name('sport.exportall')->middleware(['auth', 'verified']);
     Route::post('/sports/export', [SportController::class, 'exportSelected'])->name('sport.exportselected')->middleware(['auth', 'verified']);
+    Route::post('/sports/exportbulk', [SportController::class, 'exportBulk'])->name('sport.exportbulk')->middleware(['auth', 'verified']);
 
     Route::get('/sports/{sport}', SportShow::class)->name('sports.show');
     Route::delete('/sports/{sport}', [SportController::class, 'destroy'])->name('sports.destroy');

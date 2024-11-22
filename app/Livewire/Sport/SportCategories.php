@@ -3,6 +3,7 @@
 namespace App\Livewire\Sport;
 
 use App\Models\Sport\SportCategory;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -64,7 +65,7 @@ class SportCategories extends Component
         $found = 0;
 
         $categories = SportCategory::orderby($this->orderColumn, $this->sortOrder)->select('*');
-        
+
         if (!empty($this->search)) {
 
             $found = $categories->where('name', "like", "%" . $this->search . "%")->count();

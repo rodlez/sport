@@ -449,7 +449,7 @@
                                 <i class="fa-solid fa-trash"></i>
                             </a>
 
-                            {{-- <form action="{{ route('codeexportbulk.index') }}" method="POST">
+                            <form action="{{ route('sport.exportbulk') }}" method="POST">
                                 <!-- Add Token to prevent Cross-Site Request Forgery (CSRF) -->
                                 @csrf
                                 <input type="hidden" id="listEntriesBulk" name="listEntriesBulk"
@@ -457,7 +457,7 @@
                                 <button class="cursor-pointer text-blue-600" title="Export as Excel">
                                     <i class="fa-solid fa-file-export"></i>
                                 </button>
-                            </form> --}}
+                            </form>
 
                         </div>
 

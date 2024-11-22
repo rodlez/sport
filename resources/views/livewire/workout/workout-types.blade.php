@@ -82,7 +82,7 @@
                                     <th wire:click="sorting('workout_types.updated_at')" scope="col"
                                         class="p-2 hover:cursor-pointer hover:text-yellow-600 {{ $column == 'workout_types.updated_at' ? 'text-yellow-600' : '' }}">
                                         updated {!! $sortLink !!}</th>
-                                        <th scope="col" class="p-2 text-center capitalize">Workouts</th>
+                                    <th scope="col" class="p-2 text-center capitalize">Workouts</th>
                                     <th scope="col" class="p-2 text-center capitalize">actions</th>
                                 </tr>
                             </thead>
@@ -99,7 +99,7 @@
                                                 href="{{ route('wk_types.show', $type) }}">{{ $type->name }}</a></td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($type->created_at)) }}</td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($type->updated_at)) }}</td>
-                                        <td class="p-2 text-center">{{ $type->total }}</td>
+                                        <td class="p-2 text-center">{{ $type->workouts->count() }}</td>
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-2">
                                                 <!-- Show -->

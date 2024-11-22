@@ -3,6 +3,7 @@
 namespace App\Livewire\Workout;
 
 use App\Models\Workout\WorkoutLevel;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,7 +12,7 @@ class WorkoutLevels extends Component
     use WithPagination;
 
     //protected $paginationTheme = "bootstrap";
-    public $orderColumn = "id";
+    public $orderColumn = "workout_levels.id";
     public $sortOrder = "desc";
     public $sortLink = '<i class="fa-solid fa-caret-down"></i>';
     public $search = "";
@@ -37,8 +38,8 @@ class WorkoutLevels extends Component
     public function bulkDelete()
     {
         foreach ($this->selections as $selection) {
-            $type = WorkoutLevel::find($selection);
-            $type->delete();
+            $level = WorkoutLevel::find($selection);
+            $level->delete();
         }
 
         return to_route('wk_levels.index')/* ->with('message', 'levels successfully deleted.') */;
@@ -62,7 +63,7 @@ class WorkoutLevels extends Component
     public function render()
     {
         $found = 0;
-
+        
         $levels = WorkoutLevel::orderby($this->orderColumn, $this->sortOrder)->select('*');
 
         if (!empty($this->search)) {
@@ -75,7 +76,7 @@ class WorkoutLevels extends Component
         $levels = $levels->paginate($this->perPage);
 
         return view('livewire.workout.workout-levels', [
-            'levels'     => $levels,
+            'levels'    => $levels,
             'found'     => $found,
             'column'    => $this->orderColumn,
             'total'     => $total

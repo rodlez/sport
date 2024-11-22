@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+use Illuminate\Support\Facades\Auth;
+
 class SportCategory extends Model
 {
     use HasFactory;
@@ -15,11 +17,24 @@ class SportCategory extends Model
     /**
      * Get the sport entries associated with the category.
      */
-    /* public function sports()
+    public function sports()
     {
         return $this->hasMany(
             Sport::class,
             foreignKey: 'category_id'
         );
-    } */
+    }
+
+    /**
+     * Get the sport entries associated with the category for the current User.
+     */
+    public function sportsUser()
+    {
+        return $this->hasMany(
+            Sport::class,
+            foreignKey: 'category_id'
+        )->where('user_id', Auth::id());
+    }
+    
+
 }

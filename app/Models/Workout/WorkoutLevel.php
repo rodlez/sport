@@ -17,11 +17,12 @@ class WorkoutLevel extends Model
     /**
      * Get the entries associated with the category.
      */
-    /* public function workouts()
+    public function workouts()
     {
         return $this->hasMany(
             Workout::class,
             foreignKey: 'level_id'
         );
-    } */
+    }
+    
 }

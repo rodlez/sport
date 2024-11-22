@@ -83,6 +83,7 @@
                                     <th wire:click="sorting('updated_at')" scope="col"
                                         class="p-2 hover:cursor-pointer hover:text-blue-600 {{ $column == 'updated_at' ? 'text-blue-600' : '' }}">
                                         updated {!! $sortLink !!}</th>
+                                        <th scope="col" class="p-2 text-center capitalize">Sports</th>
                                     <th scope="col" class="p-2 text-center capitalize">actions</th>
                                 </tr>
                             </thead>
@@ -101,6 +102,15 @@
                                         </td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($category->created_at)) }}</td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($category->updated_at)) }}</td>
+                                        <td class="p-2 text-center">
+                                            @if ($category->sportsUser->count() > 0)
+                                            <a href="http://sport.local/sports?o=id&so=desc&c={{$category->name}}" class="text-green-600 hover:text-white">
+                                                {{ $category->sportsUser->count() }}
+                                            </a>
+                                            @else
+                                                {{ $category->sportsUser->count() }}
+                                            @endif
+                                        </td>
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-2">
                                                 <!-- Show -->

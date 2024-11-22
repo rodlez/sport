@@ -5,6 +5,8 @@ namespace App\Models\Sport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Facades\Auth;
+
 class SportTag extends Model
 {
     use HasFactory;
@@ -21,6 +23,19 @@ class SportTag extends Model
             table: 'sports_tag',
             relatedPivotKey: 'sport_id'
         )->withTimestamps();
+    }
+
+
+    /**
+     * Get the sport entries associated with the category for the current User.
+     */
+    public function sportsUser()
+    {
+        return $this->belongsToMany(
+            Sport::class,
+            table: 'sports_tag',
+            relatedPivotKey: 'sport_id'
+        )->withTimestamps()->where('user_id', Auth::id());       
     }
 
 }

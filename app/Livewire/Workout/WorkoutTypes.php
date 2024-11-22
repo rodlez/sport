@@ -67,10 +67,12 @@ class WorkoutTypes extends Component
         // TODO: workouts total as column to order        
 
         /* Query builder */
-        $types = WorkoutType::leftjoin('workouts', 'workout_types.id', '=', 'workouts.type_id')
+        /* $types = WorkoutType::leftjoin('workouts', 'workout_types.id', '=', 'workouts.type_id')
         ->select('workout_types.name', 'workout_types.id as id','workout_types.created_at','workout_types.updated_at', DB::raw('count(workouts.id) as total'))
         ->groupBy('workout_types.name', 'workout_types.id', 'workout_types.created_at', 'workout_types.updated_at')
-        ->orderby($this->orderColumn, $this->sortOrder);
+        ->orderby($this->orderColumn, $this->sortOrder); */
+
+        $types = WorkoutType::orderby($this->orderColumn, $this->sortOrder)->select('*');
         
         if (!empty($this->search)) {
 
@@ -78,7 +80,6 @@ class WorkoutTypes extends Component
         }
 
         $total = $types->count();
-
         $types = $types->paginate($this->perPage);
 
         return view('livewire.workout.workout-types', [

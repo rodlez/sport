@@ -72,18 +72,18 @@ class SportMain extends Component
     }
 
     public function mount() {
-        $this->dateFrom = date('Y-m-d', strtotime(Sport::min('date')));
-        $this->initialDateFrom = date('Y-m-d', strtotime(Sport::min('date')));
-        $this->dateTo = date('Y-m-d', strtotime(Sport::max('date')));
-        $this->initialDateTo = date('Y-m-d', strtotime(Sport::max('date')));
-        $this->durationFrom = Sport::min('duration');
-        $this->initialDurationFrom = Sport::min('duration');
-        $this->durationTo = Sport::max('duration');
-        $this->initialDurationTo = Sport::max('duration');
-        $this->distanceFrom = Sport::min('distance');
-        $this->initialDistanceFrom = Sport::min('distance');
-        $this->distanceTo = Sport::max('distance');
-        $this->initialDistanceTo = Sport::max('distance');
+        $this->dateFrom = date('Y-m-d', strtotime(Sport::where('user_id', Auth::id())->min('date')));
+        $this->initialDateFrom = date('Y-m-d', strtotime(Sport::where('user_id', Auth::id())->min('date')));
+        $this->dateTo = date('Y-m-d', strtotime(Sport::where('user_id', Auth::id())->max('date')));
+        $this->initialDateTo = date('Y-m-d', strtotime(Sport::where('user_id', Auth::id())->max('date')));
+        $this->durationFrom = Sport::where('user_id', Auth::id())->min('duration');
+        $this->initialDurationFrom = Sport::where('user_id', Auth::id())->min('duration');
+        $this->durationTo = Sport::where('user_id', Auth::id())->max('duration');
+        $this->initialDurationTo = Sport::where('user_id', Auth::id())->max('duration');
+        $this->distanceFrom = Sport::where('user_id', Auth::id())->min('distance');
+        $this->initialDistanceFrom = Sport::where('user_id', Auth::id())->min('distance');
+        $this->distanceTo = Sport::where('user_id', Auth::id())->max('distance');
+        $this->initialDistanceTo = Sport::where('user_id', Auth::id())->max('distance');
     }   
 
     // prefix updated method to access the value of the variable wired
@@ -104,14 +104,14 @@ class SportMain extends Component
     public function clearFilters()
     {
         $this->pending = 2;
-        $this->dateFrom = date('Y-m-d', strtotime(Sport::min('date')));
-        $this->dateTo = date('Y-m-d', strtotime(Sport::max('date')));
+        $this->dateFrom = date('Y-m-d', strtotime(Sport::where('user_id', Auth::id())->min('date')));
+        $this->dateTo = date('Y-m-d', strtotime(Sport::where('user_id', Auth::id())->max('date')));
         $this->cat = 0;
         $this->selectedTags = [];
-        $this->durationFrom = Sport::min('duration');
-        $this->durationTo = Sport::max('duration');
-        $this->distanceFrom = Sport::min('distance');
-        $this->distanceTo = Sport::max('distance');
+        $this->durationFrom = Sport::where('user_id', Auth::id())->min('duration');
+        $this->durationTo = Sport::where('user_id', Auth::id())->max('duration');
+        $this->distanceFrom = Sport::where('user_id', Auth::id())->min('distance');
+        $this->distanceTo = Sport::where('user_id', Auth::id())->max('distance');
     }
 
     public function clearSearch()
@@ -126,8 +126,8 @@ class SportMain extends Component
     
     public function clearFilterDate()
     {
-        $this->dateFrom = date('Y-m-d', strtotime(Sport::min('date')));
-        $this->dateTo = date('Y-m-d', strtotime(Sport::max('date')));
+        $this->dateFrom = date('Y-m-d', strtotime(Sport::where('user_id', Auth::id())->min('date')));
+        $this->dateTo = date('Y-m-d', strtotime(Sport::where('user_id', Auth::id())->max('date')));
     }
 
     public function clearFilterCategory()
@@ -142,14 +142,14 @@ class SportMain extends Component
 
     public function clearFilterDuration()
     {
-        $this->durationFrom = Sport::min('duration');
-        $this->durationTo = Sport::max('duration');
+        $this->durationFrom = Sport::where('user_id', Auth::id())->min('duration');
+        $this->durationTo = Sport::where('user_id', Auth::id())->max('duration');
     }
 
     public function clearFilterDistance()
     {
-        $this->distanceFrom = Sport::min('distance');
-        $this->distanceTo = Sport::max('distance');
+        $this->distanceFrom = Sport::where('user_id', Auth::id())->min('distance');
+        $this->distanceTo = Sport::where('user_id', Auth::id())->max('distance');
     }
 
     public function bulkClear()
@@ -191,20 +191,30 @@ class SportMain extends Component
     public function render()
     {
         $found = 0;
-
         // get only the categories that have at least one sport entry
         $categories = Sport::select(
             'sport_categories.id as id',
             'sport_categories.name as name'
         )
-            ->join('sport_categories', 'sports.category_id', '=', 'sport_categories.id')->distinct('category_id')->orderBy('name', 'asc')->get()->toArray();       
+            ->join('sport_categories', 'sports.category_id', '=', 'sport_categories.id')
+            ->where('user_id', Auth::id())
+            ->distinct('category_id')
+            ->orderBy('name', 'asc')
+            ->get()            
+            ->toArray();       
 
         // get only the tags that have at least one sport entry    
         $tags = SportTag::select(
             'sport_tags.id as id',
             'sport_tags.name as name'
         )
-            ->join('sports_tag', 'sports_tag.sport_tag_id', '=', 'sport_tags.id')->distinct('sport_tags.id')->orderBy('name', 'asc')->get()->toArray();
+            ->join('sports_tag', 'sports_tag.sport_tag_id', '=', 'sport_tags.id')   
+            ->join('sports', 'sports.id', '=', 'sports_tag.sport_id')  
+            ->where('user_id', Auth::id())       
+            ->distinct('sport_tags.id')
+            ->orderBy('name', 'asc')
+            ->get()
+            ->toArray();
 
         // Main Selection, Join tables sports, sport_categories and sports_tag
         $entries = Sport::select(
@@ -229,8 +239,8 @@ class SportMain extends Component
             ->orderby($this->orderColumn, $this->sortOrder);
 
         // Select the entries for the current user
-        $user = Auth::user();
-        $entries = $entries->where('user_id', '=', $user->id);
+        /* $user = Auth::user(); */
+        $entries = $entries->where('user_id', Auth::id());
             
         // status filter
         if ($this->pending != 2) {
