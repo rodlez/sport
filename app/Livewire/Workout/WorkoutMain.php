@@ -7,6 +7,7 @@ use App\Services\WorkoutService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Url;
+use Illuminate\Support\Facades\Auth;
 
 class WorkoutMain extends Component
 {
@@ -65,15 +66,15 @@ class WorkoutMain extends Component
     }
 
     public function mount() {
-        $this->dateFrom = date('Y-m-d', strtotime(Workout::min('created_at')));
-        $this->initialDateFrom = date('Y-m-d', strtotime(Workout::min('created_at')));
-        $this->dateTo = date('Y-m-d', strtotime(Workout::max('created_at')));
-        $this->initialDateTo = date('Y-m-d', strtotime(Workout::max('created_at')));
+        $this->dateFrom = date('Y-m-d', strtotime(Workout::where('user_id', Auth::id())->min('created_at')));
+        $this->initialDateFrom = date('Y-m-d', strtotime(Workout::where('user_id', Auth::id())->min('created_at')));
+        $this->dateTo = date('Y-m-d', strtotime(Workout::where('user_id', Auth::id())->max('created_at')));
+        $this->initialDateTo = date('Y-m-d', strtotime(Workout::where('user_id', Auth::id())->max('created_at')));
 
-        $this->durationFrom = Workout::min('duration');
-        $this->initialDurationFrom = Workout::min('duration');
-        $this->durationTo = Workout::max('duration');
-        $this->initialDurationTo = Workout::max('duration');
+        $this->durationFrom = Workout::where('user_id', Auth::id())->min('duration');
+        $this->initialDurationFrom = Workout::where('user_id', Auth::id())->min('duration');
+        $this->durationTo = Workout::where('user_id', Auth::id())->max('duration');
+        $this->initialDurationTo = Workout::where('user_id', Auth::id())->max('duration');
     } 
 
     // prefix updated method to access the value of the variable wired
@@ -93,24 +94,24 @@ class WorkoutMain extends Component
 
     public function clearFilters()
     {
-        $this->dateFrom = date('Y-m-d', strtotime(Workout::min('created_at')));
-        $this->dateTo = date('Y-m-d', strtotime(Workout::max('created_at')));
+        $this->dateFrom = date('Y-m-d', strtotime(Workout::where('user_id', Auth::id())->min('created_at')));
+        $this->dateTo = date('Y-m-d', strtotime(Workout::where('user_id', Auth::id())->max('created_at')));
         $this->tipo = 0;
         $this->nivel = 0;
-        $this->durationFrom = Workout::min('duration');
-        $this->durationTo = Workout::max('duration');
+        $this->durationFrom = Workout::where('user_id', Auth::id())->min('duration');
+        $this->durationTo = Workout::where('user_id', Auth::id())->max('duration');
     }
 
     public function clearFilterDate()
     {
-        $this->dateFrom = date('Y-m-d', strtotime(Workout::min('created_at')));
-        $this->dateTo = date('Y-m-d', strtotime(Workout::max('created_at')));
+        $this->dateFrom = date('Y-m-d', strtotime(Workout::where('user_id', Auth::id())->min('created_at')));
+        $this->dateTo = date('Y-m-d', strtotime(Workout::where('user_id', Auth::id())->max('created_at')));
     }
 
     public function clearFilterDuration()
     {
-        $this->durationFrom = Workout::min('duration');
-        $this->durationTo = Workout::max('duration');
+        $this->durationFrom = Workout::where('user_id', Auth::id())->min('duration');
+        $this->durationTo = Workout::where('user_id', Auth::id())->max('duration');
     }
 
     public function clearFilterTipo()
@@ -175,14 +176,22 @@ class WorkoutMain extends Component
             'workout_types.id as id',
             'workout_types.name as name'
         )
-            ->join('workout_types', 'workouts.type_id', '=', 'workout_types.id')->distinct('type_id')->orderBy('name', 'asc')->get()->toArray();
+            ->join('workout_types', 'workouts.type_id', '=', 'workout_types.id')
+            ->where('user_id', Auth::id())
+            ->distinct('type_id')->orderBy('name', 'asc')
+            ->get()
+            ->toArray();
 
         // get only the levels that have at least one entry
         $levels = Workout::select(
             'workout_levels.id as id',
             'workout_levels.name as name'
         )
-            ->join('workout_levels', 'workouts.level_id', '=', 'workout_levels.id')->distinct('level_id')->orderBy('id', 'asc')->get()->toArray();
+            ->join('workout_levels', 'workouts.level_id', '=', 'workout_levels.id')
+            ->distinct('level_id')
+            ->orderBy('id', 'asc')
+            ->get()
+            ->toArray();
 
         // Main Selection, Join tables code_entries, code_categories and code_entry_tag
         $entries = Workout::select(
@@ -200,6 +209,9 @@ class WorkoutMain extends Component
             ->join('workout_levels', 'workouts.level_id', '=', 'workout_levels.id')
             ->distinct('workouts.id')
             ->orderby($this->orderColumn, $this->sortOrder);
+
+        // Select the entries for the current user
+        $entries = $entries->where('user_id', Auth::id());
 
         // interval date filter
         if (isset($this->dateFrom)) {

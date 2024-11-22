@@ -239,7 +239,6 @@ class SportMain extends Component
             ->orderby($this->orderColumn, $this->sortOrder);
 
         // Select the entries for the current user
-        /* $user = Auth::user(); */
         $entries = $entries->where('user_id', Auth::id());
             
         // status filter
