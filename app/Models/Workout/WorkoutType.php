@@ -5,6 +5,7 @@ namespace App\Models\Workout;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
 
@@ -22,12 +23,16 @@ class WorkoutType extends Model
         return $this->hasMany(Workout::class, foreignKey: 'type_id');
     }
 
-   /*  public function workoutsCount()
+   /**
+     * Get the sport entries associated with the category for the current User.
+     */
+    public function workoutsUser()
     {
-        return $this->workouts()
-        ->selectRaw('id, count(id) as aggregate')
-        ->groupBy('id');
-    } */
+        return $this->hasMany(
+            Workout::class,
+            foreignKey: 'type_id'
+        )->where('user_id', Auth::id());
+    }
 
 
 }

@@ -2,10 +2,14 @@
 
 namespace App\Livewire\Sport;
 
+use App\Models\Sport\Sport;
 use App\Models\Sport\SportCategory;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
+
+use Illuminate\Support\Facades\Auth;
+
 
 class SportCategories extends Component
 {
@@ -47,6 +51,8 @@ class SportCategories extends Component
 
     public function sorting($columnName = "")
     {
+       
+
         $caretOrder = "up";
         if ($this->sortOrder == 'asc') {
             $this->sortOrder = 'desc';
@@ -63,8 +69,17 @@ class SportCategories extends Component
     public function render()
     {
         $found = 0;
+        //$categories = SportCategory::orderby($this->orderColumn, $this->sortOrder)->select('*');
+        
+        $categories = SportCategory::orderby($this->orderColumn, $this->sortOrder)->select(
+            'sport_categories.id as id',
+            'sport_categories.name as name',
+            'sport_categories.created_at as created_at',
+            'sport_categories.updated_at as updated_at'
+        )
+            ->join('sports', 'sports.category_id', '=', 'sport_categories.id')
+            ->where('user_id', Auth::id());        
 
-        $categories = SportCategory::orderby($this->orderColumn, $this->sortOrder)->select('*');
 
         if (!empty($this->search)) {
 
@@ -74,7 +89,7 @@ class SportCategories extends Component
         $total = $categories->count();
 
         $categories = $categories->paginate($this->perPage);
-
+        //dd($categories->count());
         return view('livewire.sport.sport-categories', [
             'categories'    => $categories,
             'found'         => $found,

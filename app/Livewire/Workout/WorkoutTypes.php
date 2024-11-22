@@ -2,10 +2,13 @@
 
 namespace App\Livewire\Workout;
 
+
 use App\Models\Workout\WorkoutType;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
+use PhpOffice\PhpSpreadsheet\Calculation\Web;
+use Illuminate\Support\Facades\Auth;
 
 class WorkoutTypes extends Component
 {
@@ -71,8 +74,18 @@ class WorkoutTypes extends Component
         ->select('workout_types.name', 'workout_types.id as id','workout_types.created_at','workout_types.updated_at', DB::raw('count(workouts.id) as total'))
         ->groupBy('workout_types.name', 'workout_types.id', 'workout_types.created_at', 'workout_types.updated_at')
         ->orderby($this->orderColumn, $this->sortOrder); */
+        
+        //$types = WorkoutType::orderby($this->orderColumn, $this->sortOrder)->select('*');       
 
-        $types = WorkoutType::orderby($this->orderColumn, $this->sortOrder)->select('*');
+        $types = WorkoutType::orderby($this->orderColumn, $this->sortOrder)->select(
+            'workout_types.id as id',
+            'workout_types.name as name',
+            'workout_types.created_at as created_at',
+            'workout_types.updated_at as updated_at'
+        )
+            ->join('workouts', 'workouts.type_id', '=', 'workout_types.id')
+            ->where('user_id', Auth::id());        
+                    
         
         if (!empty($this->search)) {
 

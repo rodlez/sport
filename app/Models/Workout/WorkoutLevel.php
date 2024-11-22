@@ -4,6 +4,7 @@ namespace App\Models\Workout;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class WorkoutLevel extends Model
 {
@@ -23,6 +24,17 @@ class WorkoutLevel extends Model
             Workout::class,
             foreignKey: 'level_id'
         );
+    }
+
+    /**
+     * Get the sport entries associated with the category for the current User.
+     */
+    public function workoutsUser()
+    {
+        return $this->hasMany(
+            Workout::class,
+            foreignKey: 'level_id'
+        )->where('user_id', Auth::id());
     }
     
 }

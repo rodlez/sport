@@ -101,7 +101,7 @@
                                         </td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($level->created_at)) }}</td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($level->updated_at)) }}</td>
-                                        <td class="p-2 text-center">{{ $level->workouts->count() }}</td>
+                                        <td class="p-2 text-center">{{ $level->workoutsUser->count() }}</td>
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-2">
                                                 <!-- Show -->
