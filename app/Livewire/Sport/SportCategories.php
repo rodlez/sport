@@ -69,16 +69,16 @@ class SportCategories extends Component
     public function render()
     {
         $found = 0;
-        //$categories = SportCategory::orderby($this->orderColumn, $this->sortOrder)->select('*');
+        $categories = SportCategory::orderby($this->orderColumn, $this->sortOrder)->select('*');
         
-        $categories = SportCategory::orderby($this->orderColumn, $this->sortOrder)->select(
+        /* $categories = SportCategory::orderby($this->orderColumn, $this->sortOrder)->select(
             'sport_categories.id as id',
             'sport_categories.name as name',
             'sport_categories.created_at as created_at',
             'sport_categories.updated_at as updated_at'
         )
             ->join('sports', 'sports.category_id', '=', 'sport_categories.id')
-            ->where('user_id', Auth::id());        
+            ->where('user_id', Auth::id()); */        
 
 
         if (!empty($this->search)) {

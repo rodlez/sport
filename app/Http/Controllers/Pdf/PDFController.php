@@ -89,7 +89,7 @@ class PDFController extends Controller
         //dd($dataToPdf);
         $pdf = PDF::loadView('pdf.workoutPDF', $dataToPdf);
         
-        $documentName = 'workout_' . $data->id . '.pdf';
+        $documentName = $dataToPdf["user_name"] . '_Workout_ID(' . $data->id . ').pdf';
 
         return $pdf->download($documentName);
        

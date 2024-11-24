@@ -99,7 +99,15 @@
                                                 href="{{ route('wk_types.show', $type) }}">{{ $type->name }}</a></td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($type->created_at)) }}</td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($type->updated_at)) }}</td>
-                                        <td class="p-2 text-center">{{ $type->workoutsUser->count() }}</td>
+                                        <td class="p-2 text-center">
+                                            @if ($type->workoutsUser->count() > 0)
+                                            <a href="http://sport.local/workouts?o=id&so=desc&ty={{$type->name}}&lev=0" class="text-green-600 hover:text-white">
+                                                {{ $type->workoutsUser->count() }}
+                                            </a>
+                                            @else                                            
+                                                {{ $type->workoutsUser->count() }}
+                                            @endif
+                                        </td>
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-2">
                                                 <!-- Show -->

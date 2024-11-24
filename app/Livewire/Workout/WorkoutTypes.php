@@ -75,16 +75,16 @@ class WorkoutTypes extends Component
         ->groupBy('workout_types.name', 'workout_types.id', 'workout_types.created_at', 'workout_types.updated_at')
         ->orderby($this->orderColumn, $this->sortOrder); */
         
-        //$types = WorkoutType::orderby($this->orderColumn, $this->sortOrder)->select('*');       
+        $types = WorkoutType::orderby($this->orderColumn, $this->sortOrder)->select('*');       
 
-        $types = WorkoutType::orderby($this->orderColumn, $this->sortOrder)->select(
+        /* $types = WorkoutType::orderby($this->orderColumn, $this->sortOrder)->select(
             'workout_types.id as id',
             'workout_types.name as name',
             'workout_types.created_at as created_at',
             'workout_types.updated_at as updated_at'
         )
             ->join('workouts', 'workouts.type_id', '=', 'workout_types.id')
-            ->where('user_id', Auth::id());        
+            ->where('user_id', Auth::id());         */
                     
         
         if (!empty($this->search)) {

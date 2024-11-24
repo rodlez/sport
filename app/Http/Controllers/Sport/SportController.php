@@ -42,7 +42,7 @@ class SportController extends Controller
         //$totalEntries = $this->codeService->totalEntries();
 
         $totalEntries = Sport::get()->where('user_id', Auth::id())->count();
-        $excelFileName = 'AllSports('. $totalEntries .').xlsx';
+        $excelFileName = Auth::user()->name . '_AllSports('. $totalEntries .').xlsx';
 
         return Excel::download(new SportExport(true, [], $this->sportService), $excelFileName);
     }
@@ -57,7 +57,7 @@ class SportController extends Controller
 
         // convert string to array of Ids
         $listIds = explode(',',$stringListEntries);
-        $excelFileName = 'SelectionSports('. count($listIds) .').xlsx';                
+        $excelFileName = Auth::user()->name . '_SelectionSports('. count($listIds) .').xlsx';                
         
         return Excel::download(new SportExport(false, $listIds, $this->sportService),  $excelFileName);
     }
@@ -69,7 +69,7 @@ class SportController extends Controller
     {                
         // convert string to array of Ids
         $listIds = explode(',',$request->listEntriesBulk);        
-        $excelFileName = 'BulkSports('. count($listIds) .').xlsx';
+        $excelFileName = Auth::user()->name . '_BulkSports('. count($listIds) .').xlsx';
 
         return Excel::download(new SportExport(false, $listIds, $this->sportService), $excelFileName);
     }

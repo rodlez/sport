@@ -101,7 +101,15 @@
                                         </td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($level->created_at)) }}</td>
                                         <td class="p-2">{{ date('d-m-Y', strtotime($level->updated_at)) }}</td>
-                                        <td class="p-2 text-center">{{ $level->workoutsUser->count() }}</td>
+                                        <td class="p-2 text-center">
+                                            @if ($level->workoutsUser->count() > 0)
+                                            <a href="http://sport.local/workouts?o=id&so=desc&ty=0&lev={{$level->name}}" class="text-green-600 hover:text-white">
+                                                {{ $level->workoutsUser->count() }}
+                                            </a>
+                                            @else                                            
+                                                {{ $level->workoutsUser->count() }}
+                                            @endif
+                                        </td>
                                         <td class="p-2">
                                             <div class="flex justify-center items-center gap-2">
                                                 <!-- Show -->

@@ -65,16 +65,7 @@ class WorkoutLevels extends Component
     {
         $found = 0;
         
-        //$levels = WorkoutLevel::orderby($this->orderColumn, $this->sortOrder)->select('*');
-
-        $levels = WorkoutLevel::orderby($this->orderColumn, $this->sortOrder)->select(
-            'workout_levels.id as id',
-            'workout_levels.name as name',
-            'workout_levels.created_at as created_at',
-            'workout_levels.updated_at as updated_at'
-        )
-            ->join('workouts', 'workouts.level_id', '=', 'workout_levels.id')
-            ->where('user_id', Auth::id());  
+        $levels = WorkoutLevel::orderby($this->orderColumn, $this->sortOrder)->select('*');       
 
         if (!empty($this->search)) {
 
