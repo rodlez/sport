@@ -12,7 +12,7 @@
             <!-- Header -->
             <div class="flex flex-row justify-between items-center py-4 bg-green-600">
                 <div>
-                    <span class="text-lg text-white px-4">Entries <span
+                    <span class="text-lg text-white px-4">Entries <span id="totalin"
                             class="text-md">({{ $search != '' ? $found : $total }})</span></span>
                 </div>
                 <div class="px-4">
@@ -28,7 +28,7 @@
                     <span class="px-2 text-lg text-zinc-800">Filters</span>
                 </div>
                 <!-- Open/Close Buttons -->
-                <div>
+                {{-- <div>
                     @if ($showFilters % 2 != 0)
                         <a wire:click="activateFilter" class="cursor-pointer tooltip">
                             <i class="fa-solid fa-minus"></i>
@@ -40,109 +40,113 @@
                             <span class="tooltiptext">Open</span>
                         </a>
                     @endif
-                </div>
+                </div> --}}
+
+                {{-- 
+                // TODO: SHOW HIDE
+                <div>
+                    <button onclick="showHide()" id="botonini">Show</button>
+                </div> --}}
             </div>
             <!-- Filters -->
-            @if ($showFilters % 2 != 0)
-                <div class="text-black bg-gray-200 rounded-lg mx-4 my-2 py-2 w-100">
+            {{-- @if ($showFilters % 2 != 0) --}}
+            <div id="filtrini" class="text-black bg-gray-200 rounded-lg mx-4 my-2 py-2 w-100">
 
-                    <!-- Status -->
-                    <div
-                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2">
-                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
-                            <span><i class="text-yellow-600 fa-lg fa-solid fa-circle-check"></i></span>
-                            <span class="px-2">Status</span>
-                        </div>
-                        <div class="flex flex-row items-center w-full md:w-1/2 md:text-start">
-                            <select wire:model.live="pending" class="rounded-lg w-full md:w-80">
-                                <option value="2">All</option>
-                                <option value="0">0 - Complete</option>
-                                <option value="1">1 - Pending</option>
-                            </select>
-                            @if ($pending != 2)
-                                <a wire:click.prevent="clearFilterStatus" title="Reset Filter" class="cursor-pointer">
-                                    <span class="text-red-600 hover:text-red-400 px-2"><i
-                                            class="fa-solid fa-circle-xmark"></i></span>
-                                </a>
-                            @endif
-                        </div>
+                <!-- Status -->
+                <div
+                    class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2">
+                    <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
+                        <span><i class="text-yellow-600 fa-lg fa-solid fa-circle-check"></i></span>
+                        <span class="px-2">Status</span>
+                    </div>
+                    <div class="flex flex-row items-center w-full md:w-1/2 md:text-start">
+                        <select wire:model.live="pending" class="rounded-lg w-full md:w-80">
+                            <option value="2">All</option>
+                            <option value="0">0 - Complete</option>
+                            <option value="1">1 - Pending</option>
+                        </select>
+                        @if ($pending != 2)
+                            <a wire:click.prevent="clearFilterStatus" title="Reset Filter" class="cursor-pointer">
+                                <span class="text-red-600 hover:text-red-400 px-2"><i
+                                        class="fa-solid fa-circle-xmark"></i></span>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Date -->
+                <div
+                    class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
+
+                    <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
+                        <span><i class="text-violet-600 fa-lg fa-solid fa-calendar-days"></i></span>
+                        <span class="px-2">Date</span>
                     </div>
 
-                    <!-- Date -->
-                    <div
-                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
-
-                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
-                            <span><i class="text-violet-600 fa-lg fa-solid fa-calendar-days"></i></span>
-                            <span class="px-2">Date</span>
-                        </div>
-
-                        <div class="flex flex-col justify-start items-start w-full md:w-1/2 md:text-start">
-                            <div class="w-full md:w-80">
-                                <span class="text-sm font-bold px-2">From</span>
-                                <div class="flex flex-row justify-center items-center">
-                                    <input type="date" class="rounded-lg w-full" placeholder="From"
-                                        wire:model.live="dateFrom">
-                                    @if ($initialDateFrom != $dateFrom)
-                                        <a wire:click.prevent="clearFilterDate" title="Reset Filter"
-                                            class="cursor-pointer">
-                                            <span class="text-red-600 hover:text-red-400 px-2">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="w-full md:w-80">
-                                <span class="text-sm font-bold px-2">To</span>
-                                <div class="flex flex-row justify-center items-center">
-                                    <input type="date" class="rounded-lg w-full" placeholder="To"
-                                        wire:model.live="dateTo">
-                                    @if ($initialDateTo != $dateTo)
-                                        <a wire:click.prevent="clearFilterDate" title="Reset Filter"
-                                            class="cursor-pointer">
-                                            <span class="text-red-600 hover:text-red-400 px-2">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                            <!-- Filter Error Date -->
-                            <div>
-                                @if ($dateTo < $dateFrom)
-                                    <span class="text-sm text-red-600 px-2">To must be bigger than From</span>
+                    <div class="flex flex-col justify-start items-start w-full md:w-1/2 md:text-start">
+                        <div class="w-full md:w-80">
+                            <span class="text-sm font-bold px-2">From</span>
+                            <div class="flex flex-row justify-center items-center">
+                                <input type="date" class="rounded-lg w-full" placeholder="From"
+                                    wire:model.live="dateFrom">
+                                @if ($initialDateFrom != $dateFrom)
+                                    <a wire:click.prevent="clearFilterDate" title="Reset Filter" class="cursor-pointer">
+                                        <span class="text-red-600 hover:text-red-400 px-2">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </span>
+                                    </a>
                                 @endif
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Category -->
-                    <div
-                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2">
-                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
-                            <span><i class="text-yellow-600 fa-lg fa-solid fa-sitemap"></i></span>
-                            <span class="px-2">Category (<span
-                                    class="font-semibold text-sm">{{ count($categories) }}</span>)</span>
+                        <div class="w-full md:w-80">
+                            <span class="text-sm font-bold px-2">To</span>
+                            <div class="flex flex-row justify-center items-center">
+                                <input type="date" class="rounded-lg w-full" placeholder="To"
+                                    wire:model.live="dateTo">
+                                @if ($initialDateTo != $dateTo)
+                                    <a wire:click.prevent="clearFilterDate" title="Reset Filter" class="cursor-pointer">
+                                        <span class="text-red-600 hover:text-red-400 px-2">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </span>
+                                    </a>
+                                @endif
+                            </div>
                         </div>
-                        <div class="flex flex-row items-center w-full md:w-1/2 md:text-start">
-                            <select wire:model.live="cat" class="rounded-lg w-full md:w-80">
-                                <option value="0">All</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category['name'] }}">{{ $category['name'] }}</option>
-                                @endforeach
-                            </select>
-                            @if ($cat > 0)
-                                <a wire:click.prevent="clearFilterCategory" title="Reset Filter" class="cursor-pointer">
-                                    <span class="text-red-600 hover:text-red-400 px-2"><i
-                                            class="fa-solid fa-circle-xmark"></i></span>
-                                </a>
+                        <!-- Filter Error Date -->
+                        <div>
+                            @if ($dateTo < $dateFrom)
+                                <span class="text-sm text-red-600 px-2">To must be bigger than From</span>
                             @endif
                         </div>
                     </div>
+                </div>
 
-                    <!-- Tags -->
-                    <div
+                <!-- Category -->
+                <div
+                    class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2">
+                    <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
+                        <span><i class="text-yellow-600 fa-lg fa-solid fa-sitemap"></i></span>
+                        <span class="px-2">Category (<span
+                                class="font-semibold text-sm">{{ count($categories) }}</span>)</span>
+                    </div>
+                    <div class="flex flex-row items-center w-full md:w-1/2 md:text-start">
+                        <select wire:model.live="cat" class="rounded-lg w-full md:w-80">
+                            <option value="0">All</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category['name'] }}">{{ $category['name'] }}</option>
+                            @endforeach
+                        </select>
+                        @if ($cat > 0)
+                            <a wire:click.prevent="clearFilterCategory" title="Reset Filter" class="cursor-pointer">
+                                <span class="text-red-600 hover:text-red-400 px-2"><i
+                                        class="fa-solid fa-circle-xmark"></i></span>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                {{-- <div
                         class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-start gap-1 px-4 py-2">
                         <div class="w-full px-2 md:w-60 md:mx-auto md:text-start ">
                             <span><i class="text-orange-600 fa-lg fa-solid fa-tags"></i></span>
@@ -164,143 +168,146 @@
                                 </a>
                             @endif
                         </div>
+                    </div> --}}
+                {{-- Selected tags {{var_dump($selectedTags)}} --}}
+                <div
+                    class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-start gap-1 px-4 py-2">
+                    <div class="w-full px-2 md:w-60 md:mx-auto md:text-start ">
+                        <span><i class="text-orange-600 fa-lg fa-solid fa-tags"></i></span>
+                        <span class="px-2">Tags (<span
+                                class="font-semibold text-sm">{{ count($tags) }}</span>)</span>
                     </div>
-                    {{-- <div
-                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-start gap-1 px-4 py-2">
-                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start ">
-                            <span><i class="text-orange-600 fa-lg fa-solid fa-tags"></i></span>
-                            <span class="px-2">Tagis (<span
-                                    class="font-semibold text-sm">{{ count($tags) }}</span>)</span>
-                        </div>
-                        <div wire:ignore class="flex flex-row items-start w-full md:w-1/2 md:text-start">
-                            <select wire:model="selectedTags" name="selectedTags" id="selectedTags" multiple
-                                class="rounded-lg w-full md:w-80" size="6">
+                    <div class="flex flex-row items-start w-full md:w-1/2 md:text-start">
+                        <div wire:ignore class="rounded-lg w-full md:w-80">
+                            <select wire:model.live="selectedTags" name="selectedTags" id="selectedTags" multiple>
                                 <option value="0">All</option>
                                 @foreach ($tags as $tag)
                                     <option value="{{ $tag['id'] }}">{{ $tag['name'] }}</option>
                                 @endforeach
                             </select>
-                            @if ($selectedTags != [])
-                                <a wire:click.prevent="clearFilterTag" title="Reset Filter" class="cursor-pointer">
-                                    <span class="text-red-600 hover:text-red-400 px-2"><i
-                                            class="fa-solid fa-circle-xmark"></i></span>
-                                </a>
+                        </div>
+                        @if ($selectedTags != [])
+                            <a wire:click="clearFilterTag" title="Reset Filter" class="cursor-pointer">
+                                <span class="text-red-600 hover:text-red-400 px-2"><i
+                                        class="fa-solid fa-circle-xmark"></i></span>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Duration -->
+                <div
+                    class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
+
+                    <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
+                        <span><i class="text-blue-600 fa-lg fa-solid fa-clock"></i></span>
+                        <span class="px-2">Duration <span class="text-xs">(mins)</span></span>
+                    </div>
+
+                    <div class="flex flex-col justify-start items-start w-full md:w-1/2 md:text-start">
+                        <div class="w-full md:w-80">
+                            <span class="text-sm font-bold px-2">From</span>
+                            <div class="flex flex-row justify-center items-center">
+                                <input type="number" class="rounded-lg w-full" placeholder="From"
+                                    wire:model.live="durationFrom">
+                                @if ($initialDurationFrom != $durationFrom)
+                                    <a wire:click.prevent="clearFilterDuration" title="Reset Filter"
+                                        class="cursor-pointer">
+                                        <span class="text-red-600 hover:text-red-400 px-2">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </span>
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="w-full md:w-80">
+                            <span class="text-sm font-bold px-2">To</span>
+                            <div class="flex flex-row justify-center items-center">
+                                <input type="number" class="rounded-lg w-full" placeholder="To"
+                                    wire:model.live="durationTo">
+                                @if ($initialDurationTo != $durationTo)
+                                    <a wire:click.prevent="clearFilterDuration" title="Reset Filter"
+                                        class="cursor-pointer">
+                                        <span class="text-red-600 hover:text-red-400 px-2">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </span>
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                        <!-- Filter Error Duration -->
+                        <div>
+                            @if ($durationTo < $durationFrom)
+                                <span class="text-sm text-red-600 px-2">To must be bigger than From</span>
                             @endif
                         </div>
-                    </div> --}}
-
-                    <!-- Duration -->
-                    <div
-                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
-
-                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
-                            <span><i class="text-blue-600 fa-lg fa-solid fa-clock"></i></span>
-                            <span class="px-2">Duration <span class="text-xs">(mins)</span></span>
-                        </div>
-
-                        <div class="flex flex-col justify-start items-start w-full md:w-1/2 md:text-start">
-                            <div class="w-full md:w-80">
-                                <span class="text-sm font-bold px-2">From</span>
-                                <div class="flex flex-row justify-center items-center">
-                                    <input type="number" class="rounded-lg w-full" placeholder="From"
-                                        wire:model.live="durationFrom">
-                                    @if ($initialDurationFrom != $durationFrom)
-                                        <a wire:click.prevent="clearFilterDuration" title="Reset Filter"
-                                            class="cursor-pointer">
-                                            <span class="text-red-600 hover:text-red-400 px-2">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="w-full md:w-80">
-                                <span class="text-sm font-bold px-2">To</span>
-                                <div class="flex flex-row justify-center items-center">
-                                    <input type="number" class="rounded-lg w-full" placeholder="To"
-                                        wire:model.live="durationTo">
-                                    @if ($initialDurationTo != $durationTo)
-                                        <a wire:click.prevent="clearFilterDuration" title="Reset Filter"
-                                            class="cursor-pointer">
-                                            <span class="text-red-600 hover:text-red-400 px-2">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                            <!-- Filter Error Duration -->
-                            <div>
-                                @if ($durationTo < $durationFrom)
-                                    <span class="text-sm text-red-600 px-2">To must be bigger than From</span>
-                                @endif
-                            </div>
-                        </div>
                     </div>
-
-                    <!-- Distance -->
-                    <div
-                        class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
-
-                        <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
-                            <span><i class="text-blue-600 fa-lg fa-solid fa-route"></i></span>
-                            <span class="px-2">Distance <span class="text-xs">(km)</span></span>
-                        </div>
-
-                        <div class="flex flex-col justify-start items-start w-full md:w-1/2 md:text-start">
-                            <div class="w-full md:w-80">
-                                <span class="text-sm font-bold px-2">From</span>
-                                <div class="flex flex-row justify-center items-center">
-                                    <input type="number" class="rounded-lg w-full" placeholder="From"
-                                        wire:model.live="distanceFrom">
-                                    @if ($initialDistanceFrom != $distanceFrom)
-                                        <a wire:click.prevent="clearFilterDistance" title="Reset Filter"
-                                            class="cursor-pointer">
-                                            <span class="text-red-600 hover:text-red-400 px-2">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="w-full md:w-80">
-                                <span class="text-sm font-bold px-2">To</span>
-                                <div class="flex flex-row justify-center items-center">
-                                    <input type="number" class="rounded-lg w-full" placeholder="To"
-                                        wire:model.live="distanceTo">
-                                    @if ($initialDistanceTo != $distanceTo)
-                                        <a wire:click.prevent="clearFilterDistance" title="Reset Filter"
-                                            class="cursor-pointer">
-                                            <span class="text-red-600 hover:text-red-400 px-2">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                            <!-- Filter Error Distance -->
-                            <div>
-                                @if ($distanceTo < $distanceFrom)
-                                    <span class="text-sm text-red-600 px-2">To must be bigger than From</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Reset Filters -->
-                    <div class="flex flex-row md:justify-end md:w-full px-4 py-2">
-                        <div class="w-full md:w-1/2">
-                            <button type="button"
-                                class="w-full md:w-80 bg-black text-white p-2 hover:bg-slate-700 rounded-lg"
-                                wire:click="clearFilters">
-                                <span> Reset Filters </span>
-                                <span class="px-2"><i class="fa-solid fa-delete-left"></i></span>
-                            </button>
-                        </div>
-                    </div>
-
                 </div>
-            @endif
+
+                <!-- Distance -->
+                <div
+                    class="flex flex-col justify-start items-start sm:flex-row sm:justify-between sm:items-center gap-1 px-4 py-2 ">
+
+                    <div class="w-full px-2 md:w-60 md:mx-auto md:text-start">
+                        <span><i class="text-emerald-600 fa-lg fa-solid fa-route"></i></span>
+                        <span class="px-2">Distance <span class="text-xs">(km)</span></span>
+                    </div>
+
+                    <div class="flex flex-col justify-start items-start w-full md:w-1/2 md:text-start">
+                        <div class="w-full md:w-80">
+                            <span class="text-sm font-bold px-2">From</span>
+                            <div class="flex flex-row justify-center items-center">
+                                <input type="number" class="rounded-lg w-full" placeholder="From"
+                                    wire:model.live="distanceFrom">
+                                @if ($initialDistanceFrom != $distanceFrom)
+                                    <a wire:click.prevent="clearFilterDistance" title="Reset Filter"
+                                        class="cursor-pointer">
+                                        <span class="text-red-600 hover:text-red-400 px-2">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </span>
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="w-full md:w-80">
+                            <span class="text-sm font-bold px-2">To</span>
+                            <div class="flex flex-row justify-center items-center">
+                                <input type="number" class="rounded-lg w-full" placeholder="To"
+                                    wire:model.live="distanceTo">
+                                @if ($initialDistanceTo != $distanceTo)
+                                    <a wire:click.prevent="clearFilterDistance" title="Reset Filter"
+                                        class="cursor-pointer">
+                                        <span class="text-red-600 hover:text-red-400 px-2">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </span>
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                        <!-- Filter Error Distance -->
+                        <div>
+                            @if ($distanceTo < $distanceFrom)
+                                <span class="text-sm text-red-600 px-2">To must be bigger than From</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reset Filters -->
+                <div class="flex flex-row md:justify-end md:w-full px-4 py-2">
+                    <div class="w-full md:w-1/2">
+                        <button type="button"
+                            class="w-full md:w-80 bg-black text-white p-2 hover:bg-slate-700 rounded-lg"
+                            wire:click="clearFilters">
+                            <span> Reset Filters </span>
+                            <span class="px-2"><i class="fa-solid fa-delete-left"></i></span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            {{-- @endif --}}
+
             <!-- Search -->
             <div class="flex flex-col items-start sm:justify-between sm:flex-row px-4 py-4 w-100 gap-2">
                 <div class="relative w-full">
@@ -417,7 +424,7 @@
                         @if ($initialDistanceTo != $distanceTo || $initialDistanceFrom != $distanceFrom)
                             <div class="flex relative">
                                 <span
-                                    class="bg-blue-600 opacity-75 p-2 rounded-lg">{{ $initialDistanceTo != $distanceTo || $initialDistanceFrom != $distanceFrom ? 'Distance (' . $distanceFrom . ' - ' . $distanceTo . ')' : '' }}</span>
+                                    class="bg-emerald-600 opacity-75 p-2 rounded-lg">{{ $initialDistanceTo != $distanceTo || $initialDistanceFrom != $distanceFrom ? 'Distance (' . $distanceFrom . ' - ' . $distanceTo . ')' : '' }}</span>
                                 <a wire:click.prevent="clearFilterDistance" title="Clear" class="cursor-pointer">
                                     <span class="text-red-600 hover:text-black px-2 absolute -top-2 -right-4"><i
                                             class="fa-lg fa-solid fa-circle-xmark"></i></span>
@@ -507,7 +514,7 @@
             {{-- Entries ({{gettype($entries)}}) -> {{$entries->count()}} -> IDs ({{$entries->pluck('id')}}) --}}
 
             {{-- Bulk Entries Selections {{ var_dump($selections) }} selectAll -> {{var_dump($selectAll)}} --}}
-            <!-- Table -->
+            <!-- TABLE -->
             <div class="flex flex-col px-4 py-1">
 
                 <div class="overflow-x-auto">
@@ -560,9 +567,10 @@
                                         class="hover:cursor-pointer hover:text-green-600 {{ $column == 'date' ? 'text-green-600' : '' }} px-2">
                                         <span>Date {!! $sortLink !!}</span>
                                     </th>
+                                    <th scope="col" class="capitalize text-left">Tags</th>
                                     <th scope="col" class="capitalize text-center">WKs</th>
                                     <th scope="col" class="capitalize text-center">Files</th>
-                                    <th scope="col" class="capitalize text-center">actions</th>
+                                    <th scope="col" class="uppercase text-center">actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -591,6 +599,13 @@
                                         <td class="px-2 text-center">{{ $entry->duration }}</td>
                                         <td class="px-2 text-center">{{ $entry->distance }}</td>
                                         <td class="px-2">{{ date('d-m-Y', strtotime($entry->date)) }}</td>
+                                        <td class="text-sm text-black p-2">
+                                            <div class="flex flex-col justify-between items-left gap-2">
+                                                @foreach ($entry->tags as $tag)
+                                                    {{ $tag->name }}
+                                                @endforeach
+                                            </div>
+                                        </td>
                                         <td
                                             class="text-sm {{ $entry->workouts->count() > 0 ? 'text-green-600' : 'text-black' }}  p-2">
                                             {{ $entry->workouts->count() }}
@@ -608,7 +623,7 @@
                                         </td>
 
                                         <!-- ACTIONS-->
-                                        <td class="p-2">
+                                        <td class="p-2 bg-gray-100 border-b border-b-white border-l border-l-white">
                                             <div class="flex justify-center items-center gap-3">
                                                 <!-- Show -->
                                                 <a href="{{ route('sports.show', $entry) }}">
@@ -682,6 +697,11 @@
             <div class="py-2 px-4">
                 {{ $entries->links() }}
             </div>
+
+            <!-- To the Top Button -->
+            <button onclick="topFunction()" id="myBtn" title="Go to top"><i
+                    class="fa-solid fa-angle-up"></i></button>
+
             <!-- Footer -->
             <div class="flex flex-row justify-end items-center py-4 px-4 bg-green-600 sm:rounded-b-lg">
                 <a href="{{ route('dashboard') }}">
@@ -695,23 +715,41 @@
 
     </div>
 
-    {{-- @script()
-    <script>
-        $(document).ready(function() {
-            $('#selectedTags').select2();
+    @script()
+        <script>
+            // TODO: Bind JS value and Livewire selecteTags, when the clear filters delete the array
+            // must be also updated in the select2 plugin.
 
-            // event
-            $('#selectedTags').on('change', function() {
-                let selected = $(this).val();
-                //console.log(selected);
-                //$wire.set('selectedTags', selected); -> equivalent to model.live, makes a request for each selection
-                //$wire.set('selectedTags', selected, false);     // only update when click, equivalent to model
-                $wire.selectedTags = selected; // same as $wire.set('selectedTags', selected, false);
+            $(document).ready(function() {
+                $('#selectedTags').select2();
+                $('#selectedTags').on('change', function(e) {
+                    var data = $('#selectedTags').select2("val");
+
+                    @this.set('selectedTags', data);
+                    console.log(data);
+                });
+
             });
+        </script>
+    @endscript
 
-        });
-       
-    </script>
-@endscript --}}
+    {{-- <script>
+        function showHide() {            
+
+            /* let botonName = document.getElementById("botonini").innerText;
+
+            console.log(botonName); */
+
+        var x = document.getElementById("filtrini");  
+        console.log(x.style.display);
+        if (x.style.display === "none") {
+        x.style.display = "block";
+        document.getElementById("botonini").innerHTML = "Hide";
+        } else {
+        x.style.display = "none";
+        document.getElementById("botonini").innerHTML = "Show";
+        }
+        }
+        </script> --}}
 
 </div>
