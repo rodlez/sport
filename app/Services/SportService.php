@@ -94,7 +94,7 @@ class SportService
     public function insertSport(array $data): Sport
     {
         // If category_id is NOT 12 (Workout), selectedWorkouts must be empty
-        if ($data['category_id'] != 12) {
+        if ($data['category_id'] != 2) {
             $data['selectedWorkouts'] = [];
         }
 
@@ -111,7 +111,7 @@ class SportService
     public function updateSport(Sport $sport,array $data): Sport
     {
         // If category_id is NOT 12 (Workout), selectedWorkouts must be empty
-        if ($data['category_id'] != 12) {
+        if ($data['category_id'] != 2) {
             $data['selectedWorkouts'] = [];
         }       
        

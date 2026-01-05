@@ -101,7 +101,7 @@
                                         <td class="p-2">{{ date('d-m-Y', strtotime($type->updated_at)) }}</td>
                                         <td class="p-2 text-center">
                                             @if ($type->workoutsUser->count() > 0)
-                                            <a href="http://sport.local/workouts?o=id&so=desc&ty={{$type->name}}&lev=0" class="text-green-600 hover:text-white">
+                                            <a href="/workouts?o=id&so=desc&ty={{$type->name}}&lev=0" class="text-green-600 hover:text-white">
                                                 {{ $type->workoutsUser->count() }}
                                             </a>
                                             @else                                            

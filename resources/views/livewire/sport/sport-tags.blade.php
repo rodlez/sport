@@ -104,7 +104,7 @@
                                         <td class="p-2">{{ date('d-m-Y', strtotime($tag->updated_at)) }}</td>
                                         <td class="p-2 text-center">
                                             @if ($tag->sportsUser->count() > 0)
-                                            <a href="http://sport.local/sports?o=id&so=desc&c=0&ta[0]={{$tag->id}}" class="text-green-600 hover:text-white">
+                                            <a href="/sports?o=id&so=desc&c=0&ta[0]={{$tag->id}}" class="text-green-600 hover:text-white">
                                                 {{ $tag->sportsUser->count() }}
                                             </a>
                                             @else

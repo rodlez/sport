@@ -119,7 +119,7 @@
                     @enderror
                 </div>
 
-                @if ($category_id == 12)
+                @if ($category_id == 2)
                     <!-- Workouts -->
                     <h2 class="text-lg font-bold pt-2 pb-1 px-2">Workouts</h2>
 

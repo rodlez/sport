@@ -120,13 +120,13 @@
                     <span class="sm:text-lg font-bold sm:font-normal sm:w-24">Level</span>
                 </div>
                 <div class="w-full px-8 sm:px-2">
-                    @if ($workout->level->id == 4)
+                    @if ($workout->level->id == 1)
                         <span class="bg-green-400 text-sm font-bold rounded-md p-2">{{ $workout->level->name }}</span>
                     @endif
-                    @if ($workout->level->id == 5)
+                    @if ($workout->level->id == 2)
                         <span class="bg-yellow-400 text-sm font-bold rounded-md p-2">{{ $workout->level->name }}</span>
                     @endif
-                    @if ($workout->level->id == 6)
+                    @if ($workout->level->id == 3)
                         <span class="bg-red-400 text-sm font-bold rounded-md p-2">{{ $workout->level->name }}</span>
                     @endif
                 </div>

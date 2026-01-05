@@ -92,7 +92,7 @@
                     @enderror
                 </div>
 
-                <div class="{{($category_id == 12) ? '' : 'hidden'}}">
+                <div class="{{($category_id == 2) ? '' : 'hidden'}}">
                     <!-- Workouts -->
                     <h2 class="text-lg font-bold pt-2 pb-1 px-2">Workouts<span class="text-red-600">*</span></h2>
 

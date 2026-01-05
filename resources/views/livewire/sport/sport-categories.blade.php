@@ -104,7 +104,7 @@
                                         <td class="p-2">{{ date('d-m-Y', strtotime($category->updated_at)) }}</td>
                                         <td class="p-2 text-center">
                                             @if ($category->sportsUser->count() > 0)
-                                            <a href="http://sport.local/sports?o=id&so=desc&c={{$category->name}}" class="text-green-600 hover:text-white">
+                                            <a href="/sports?o=id&so=desc&c={{$category->name}}" class="text-green-600 hover:text-white">
                                                 {{ $category->sportsUser->count() }}
                                             </a>
                                             @else
