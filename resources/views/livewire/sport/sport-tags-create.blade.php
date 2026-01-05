@@ -2,7 +2,7 @@
 
     <!-- Sitemap -->
     <div class="flex flex-row justify-start items-start gap-1 text-sm py-3 px-4 text-slate-500">
-        <a href="/sp_tags" class="text-black hover:text-orange-600">WK Tags</a> /
+        <a href="/sp_tags" class="text-black hover:text-orange-600">SP Tags</a> /
         <a href="/sp_tags/create" class="font-bold text-black border-b-2 border-b-orange-600">New</a>
     </div>
 

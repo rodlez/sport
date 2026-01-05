@@ -2,7 +2,7 @@
 
     <!-- Sitemap -->
     <div class="flex flex-row justify-start items-start gap-1 text-sm py-3 px-4 text-slate-500">
-        <a href="/sp_categories" class="font-bold text-black border-b-2 border-b-blue-600">WK Categories</a>
+        <a href="/sp_categories" class="font-bold text-black border-b-2 border-b-blue-600">SP Categories</a>
     </div>
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

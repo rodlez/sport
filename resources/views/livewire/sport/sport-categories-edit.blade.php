@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto sm:pb-8 sm:px-6 lg:px-8">
     <!-- Sitemap -->
     <div class="flex flex-row justify-start items-start gap-1 text-sm py-3 px-4 text-slate-500">
-        <a href="/sp_categories" class="hover:text-blue-600">WK Categories</a> /
+        <a href="/sp_categories" class="hover:text-blue-600">SP Categories</a> /
         <a href="/sp_categories/{{$category->id}}" class="hover:text-blue-600">Info</a> /
         <a href="/sp_categories/edit/{{ $category->id }}" class="font-bold text-black border-b-2 border-b-blue-600">Edit</a>
     </div>

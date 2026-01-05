@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto sm:pb-8 sm:px-6 lg:px-8">
     <!-- Sitemap -->
     <div class="flex flex-row justify-start items-start gap-1 text-sm py-3 px-4 text-slate-500">
-        <a href="/sp_tags" class="hover:text-orange-600">WK Tags</a> /
+        <a href="/sp_tags" class="hover:text-orange-600">SP Tags</a> /
         <a href="/sp_tags/{{$tag->id}}" class="hover:text-orange-600">Info</a> /
         <a href="/sp_tags/edit/{{ $tag->id }}" class="font-bold text-black border-b-2 border-b-orange-600">Edit</a>
     </div>
