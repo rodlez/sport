@@ -162,6 +162,42 @@
             </x-responsive-nav-link>
         </div>
 
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('sports.index') }}" :active="request()->routeIs('sports.index')">
+                {{ __('Sports') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('sp_categories.index') }}" :active="request()->routeIs('sp_categories.index')">
+                {{ __('SP Categories') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('sp_tags.index') }}" :active="request()->routeIs('sp_tags.index')">
+                {{ __('SP Tags') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('workouts.index') }}" :active="request()->routeIs('workouts.index')">
+                {{ __('Workouts') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('wk_types.index') }}" :active="request()->routeIs('wk_types.index')">
+                {{ __('WK Types') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('wk_levels.index') }}" :active="request()->routeIs('wk_levels.index')">
+                {{ __('WK Levels') }}
+            </x-responsive-nav-link>
+        </div>
+
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">

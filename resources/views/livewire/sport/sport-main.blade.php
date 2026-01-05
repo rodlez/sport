@@ -28,7 +28,7 @@
                     <span class="px-2 text-lg text-zinc-800">Filters</span>
                 </div>
                 <!-- Open/Close Buttons -->
-                {{-- <div>
+                <div>
                     @if ($showFilters % 2 != 0)
                         <a wire:click="activateFilter" class="cursor-pointer tooltip">
                             <i class="fa-solid fa-minus"></i>
@@ -40,16 +40,13 @@
                             <span class="tooltiptext">Open</span>
                         </a>
                     @endif
-                </div> --}}
-
-                {{-- 
-                // TODO: SHOW HIDE
-                <div>
+                </div> 
+                <!--<div>
                     <button onclick="showHide()" id="botonini">Show</button>
-                </div> --}}
+                </div>--> 
             </div>
             <!-- Filters -->
-            {{-- @if ($showFilters % 2 != 0) --}}
+            @if ($showFilters % 2 != 0)
             <div id="filtrini" class="text-black bg-gray-200 rounded-lg mx-4 my-2 py-2 w-100">
 
                 <!-- Status -->
@@ -306,7 +303,7 @@
                 </div>
 
             </div>
-            {{-- @endif --}}
+            @endif
 
             <!-- Search -->
             <div class="flex flex-col items-start sm:justify-between sm:flex-row px-4 py-4 w-100 gap-2">
